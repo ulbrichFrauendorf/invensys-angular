@@ -75,7 +75,7 @@ export class CrudDataListComponent<T> {
     console.log('displayDialog');
     if (this.addNewdialogComponent) {
       this.ref = this.dialogService.open(this.addNewdialogComponent, {
-        header: this.dialogHeader,
+        header: this.addNewDialogHeader,
         width: '50rem',
         contentStyle: { overflow: 'auto' },
         breakpoints: {
