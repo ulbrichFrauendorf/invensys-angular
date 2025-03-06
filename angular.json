@@ -7,7 +7,7 @@
       "projectType": "library",
       "root": "projects/invensys-angular-shared",
       "sourceRoot": "projects/invensys-angular-shared/src",
-      "prefix": "inv",
+      "prefix": "i",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
