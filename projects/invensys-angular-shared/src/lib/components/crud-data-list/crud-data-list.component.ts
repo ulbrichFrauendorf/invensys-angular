@@ -37,9 +37,9 @@ export class CrudDataListComponent<T> {
   @ViewChildren('dataRow') dataRows!: QueryList<any>;
 
   @Input() data$!: Observable<T[]>;
-  @Input() dialogComponent?: Type<any>;
-  @Input() dialogTemplate?: TemplateRef<any>;
-  @Input() dialogHeader: string = 'Add New Orgaization';
+  @Input() addNewdialogComponent?: Type<any>;
+  @Input() addNewButtonText: string = 'Add New';
+  @Input() dialogHeader: string = 'Add New';
   @Input() expansionComponent?: Type<any>;
 
   expandeddata: { [key: string]: boolean } = {};
@@ -73,8 +73,8 @@ export class CrudDataListComponent<T> {
 
   displayDialog() {
     console.log('displayDialog');
-    if (this.dialogComponent) {
-      this.ref = this.dialogService.open(this.dialogComponent, {
+    if (this.addNewdialogComponent) {
+      this.ref = this.dialogService.open(this.addNewdialogComponent, {
         header: this.dialogHeader,
         width: '50rem',
         contentStyle: { overflow: 'auto' },
