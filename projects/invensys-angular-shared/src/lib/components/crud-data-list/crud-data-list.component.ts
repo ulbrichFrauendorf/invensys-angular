@@ -38,8 +38,8 @@ export class CrudDataListComponent<T> {
 
   @Input() data$!: Observable<T[]>;
   @Input() addNewdialogComponent?: Type<any>;
+  @Input() addNewDialogHeader: string = 'Add New';
   @Input() addNewButtonText: string = 'Add New';
-  @Input() dialogHeader: string = 'Add New';
   @Input() expansionComponent?: Type<any>;
 
   expandeddata: { [key: string]: boolean } = {};
