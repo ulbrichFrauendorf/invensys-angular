@@ -9,6 +9,7 @@
 /src/environments/environment*.ts
 
 ## IDE and editor specific ##
+/.vs/
 /.vscode/
 /.idea/
 *.sublime-workspace
