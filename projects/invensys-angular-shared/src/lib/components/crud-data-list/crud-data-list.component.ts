@@ -17,18 +17,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'i-crud-data-list',
-  standalone: true,
-  templateUrl: './crud-data-list.component.html',
-  styleUrl: './crud-data-list.component.scss',
-  imports: [
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    InputTextModule,
-    FormsModule,
-  ],
-  providers: [DialogService],
+    selector: 'i-crud-data-list',
+    templateUrl: './crud-data-list.component.html',
+    styleUrl: './crud-data-list.component.scss',
+    imports: [
+        CommonModule,
+        TableModule,
+        ButtonModule,
+        InputTextModule,
+        FormsModule,
+    ],
+    providers: [DialogService]
 })
 export class CrudDataListComponent<T> {
   @ViewChild('dataTable', { static: false })
