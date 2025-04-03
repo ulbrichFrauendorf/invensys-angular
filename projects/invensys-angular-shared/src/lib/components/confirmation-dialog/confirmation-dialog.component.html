@@ -14,8 +14,8 @@
       <p class="mb-2 mt-2">{{ message.message }}</p>
       <i-dialog-actions
         [submitLabel]="'Confirm'"
-        (cancelEvent)="cd.reject()"
-        (submitEvent)="cd.accept()"
+        (cancelEvent)="cd.onReject()"
+        (submitEvent)="cd.onAccept()"
       ></i-dialog-actions>
     </div>
   </ng-template>
