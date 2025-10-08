@@ -1,14 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-import { ButtonModule } from 'primeng/button';
+import { IButton } from '../button/button.component';
 
 @Component({
-    selector: 'i-dialog-actions',
-    imports: [ButtonModule],
-    templateUrl: './dialog-actions.component.html',
-    styleUrl: './dialog-actions.component.scss'
+  selector: 'i-dialog-actions',
+  imports: [IButton],
+  templateUrl: './dialog-actions.component.html',
+  styleUrl: './dialog-actions.component.scss',
 })
-export class DialogActionsComponent {
+export class IDialogActions {
   @Input() submitLabel = 'Submit';
   @Output() cancelEvent = new EventEmitter<void>();
   @Output() submitEvent = new EventEmitter<void>();

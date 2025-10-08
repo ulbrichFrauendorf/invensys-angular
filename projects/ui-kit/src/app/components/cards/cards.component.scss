@@ -1,0 +1,79 @@
+.demo-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #e5e7eb;
+
+  h1 {
+    color: #f9fafb;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .description {
+    color: #9ca3af;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.example-section {
+  h2 {
+    color: #d1d5db;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 0.5rem;
+  }
+}
+
+// Simple button for demos
+.btn {
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #2563eb;
+  }
+}
+
+// Closed card message
+.closed-message {
+  padding: 2rem;
+  text-align: center;
+  border: 2px dashed #4b5563;
+  border-radius: 8px;
+  background: rgba(55, 65, 81, 0.3);
+
+  p {
+    color: #9ca3af;
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .demo-container {
+    padding: 1rem;
+  }
+}

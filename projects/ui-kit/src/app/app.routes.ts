@@ -1,0 +1,13 @@
+import { Routes } from '@angular/router';
+import { ButtonsComponent } from './components/buttons/buttons.component';
+import { InputTextsComponent } from './components/input-texts/input-texts.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { DialogsComponent } from './components/dialogs/dialogs.component';
+
+export const routes: Routes = [
+  { path: 'buttons', component: ButtonsComponent },
+  { path: 'input-texts', component: InputTextsComponent },
+  { path: 'cards', component: CardsComponent },
+  { path: 'dialogs', component: DialogsComponent },
+  { path: '', redirectTo: '/input-texts', pathMatch: 'full' },
+];

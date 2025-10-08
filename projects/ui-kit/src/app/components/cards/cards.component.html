@@ -1,0 +1,67 @@
+<div class="demo-container">
+  <h1>Card Component</h1>
+  <p class="description">
+    Simple card component with header, body, and footer sections
+  </p>
+
+  <div class="examples-grid">
+    <!-- Default Card -->
+    <div class="example-section">
+      <h2>Basic Card</h2>
+      <i-card title="Card Title" subtitle="Optional subtitle">
+        <p>This is the card content in the body section.</p>
+      </i-card>
+    </div>
+
+    <!-- Card with Footer -->
+    <div class="example-section">
+      <h2>Card with Footer</h2>
+      <i-card title="Card with Actions">
+        <p>This card includes footer content.</p>
+        <div slot="footer">
+          <button class="btn">Action</button>
+        </div>
+      </i-card>
+    </div>
+
+    <!-- Card with Custom Header -->
+    <div class="example-section">
+      <h2>Custom Header</h2>
+      <i-card>
+        <div slot="header">
+          <h3>Custom Header Content</h3>
+        </div>
+        <p>Using the header slot for custom content.</p>
+      </i-card>
+    </div>
+
+    <!-- Content Only -->
+    <div class="example-section">
+      <h2>Content Only</h2>
+      <i-card>
+        <p>Simple card with just content, no title or footer.</p>
+      </i-card>
+    </div>
+
+    <!-- Closable Card -->
+    <div class="example-section">
+      <h2>Closable Card</h2>
+      @if (showClosableCard) {
+      <i-card
+        title="Closable Card"
+        [closable]="true"
+        (closeCard)="onCardClosed()"
+      >
+        <p>This card can be closed using the X button in the header.</p>
+        <p>
+          <small>It will reappear after 3 seconds for demo purposes.</small>
+        </p>
+      </i-card>
+      } @else {
+      <div class="closed-message">
+        <p>Card was closed. It will reappear in a few seconds...</p>
+      </div>
+      }
+    </div>
+  </div>
+</div>

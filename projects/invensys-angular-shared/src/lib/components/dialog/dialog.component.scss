@@ -1,0 +1,69 @@
+@use "./dialog.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
+
+@include theme.i-dialog-theme();
+
+.i-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.i-dialog-container {
+  max-width: 90vw;
+  max-height: 90vh;
+  animation: slideInDown 0.3s ease-out;
+
+  @media (max-width: 960px) {
+    width: 75vw !important;
+    max-width: 75vw;
+  }
+
+  @media (max-width: 640px) {
+    width: 90vw !important;
+    max-width: 90vw;
+  }
+
+  // The card component will handle its own styling
+  // We just need to ensure the dialog behavior works
+  i-card {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+
+    .i-card-body {
+      overflow-y: auto;
+      min-height: 0;
+      flex: 1;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

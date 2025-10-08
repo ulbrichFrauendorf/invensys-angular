@@ -1,0 +1,17 @@
+@use "../../invensys-angular-shared/src/lib/themes/colors.theme.scss" as
+  colors-theme;
+
+@use "../../invensys-angular-shared/src/lib/themes/generate-color-css-vars.scss"
+  as generate-color-css-vars;
+
+@use "../../invensys-angular-shared/src/lib/themes/color-variables.scss" as vars;
+
+@import "primeicons/primeicons.css";
+
+@include colors-theme.define-color-palette(light);
+@include colors-theme.define-color-palette(dark);
+@include generate-color-css-vars.generate-color-css-vars();
+
+body {
+  background-color: vars.$color-surface-ground;
+}

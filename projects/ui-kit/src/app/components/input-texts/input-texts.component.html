@@ -1,0 +1,232 @@
+<div class="showcase-container">
+  <h1>Input Text Component Showcase</h1>
+
+  <!-- Basic Input Types Section -->
+  <section class="showcase-section">
+    <h2>Basic Input Types</h2>
+    <p>Demonstrates different input types and basic usage</p>
+
+    <form [formGroup]="basicForm" class="showcase-form">
+      <div class="input-row">
+        <i-input-text
+          label="Text Input"
+          type="text"
+          id="text-input"
+          formControlName="textInput"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Email Input"
+          type="email"
+          id="email-input"
+          formControlName="emailInput"
+        >
+        </i-input-text>
+      </div>
+
+      <div class="input-row">
+        <i-input-text
+          label="Password Input"
+          type="password"
+          id="password-input"
+          formControlName="passwordInput"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Number Input"
+          type="number"
+          id="number-input"
+          formControlName="numberInput"
+        >
+        </i-input-text>
+      </div>
+
+      <div class="input-row">
+        <i-input-text
+          label="Search Input"
+          type="search"
+          id="search-input"
+          formControlName="searchInput"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="URL Input"
+          type="url"
+          id="url-input"
+          formControlName="urlInput"
+        >
+        </i-input-text>
+      </div>
+
+      <div class="input-row">
+        <i-input-text
+          label="Pre-filled Input"
+          type="text"
+          id="prefilled-input"
+          formControlName="prefilledInput"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Disabled Input"
+          type="text"
+          id="disabled-input"
+          formControlName="disabledInput"
+        >
+        </i-input-text>
+      </div>
+
+      <button type="button" (click)="onSubmit('basic')" class="submit-btn">
+        Submit Basic Form
+      </button>
+    </form>
+  </section>
+
+  <!-- Form Validation Section -->
+  <section class="showcase-section">
+    <h2>Form Validation Examples</h2>
+    <p>Demonstrates built-in validation and error handling</p>
+
+    <form [formGroup]="validationForm" class="showcase-form">
+      <div class="input-row">
+        <i-input-text
+          label="Required Field"
+          type="text"
+          id="required-field"
+          formControlName="requiredField"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Min Length (5 chars)"
+          type="text"
+          id="minlength-field"
+          formControlName="minLengthField"
+        >
+        </i-input-text>
+      </div>
+
+      <div class="input-row">
+        <i-input-text
+          label="Max Length (10 chars)"
+          type="text"
+          id="maxlength-field"
+          formControlName="maxLengthField"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Letters Only Pattern"
+          type="text"
+          id="pattern-field"
+          formControlName="patternField"
+        >
+        </i-input-text>
+      </div>
+
+      <div class="input-row">
+        <i-input-text
+          label="Email Validation"
+          type="email"
+          id="email-validation"
+          formControlName="emailValidation"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Combined Validation"
+          type="text"
+          id="combined-validation"
+          formControlName="combinedValidation"
+        >
+        </i-input-text>
+      </div>
+
+      <button type="button" (click)="onSubmit('validation')" class="submit-btn">
+        Submit Validation Form
+      </button>
+    </form>
+  </section>
+
+  <!-- Custom Error Messages Section -->
+  <section class="showcase-section">
+    <h2>Custom Error Messages</h2>
+    <p>Demonstrates custom error message configuration</p>
+
+    <form [formGroup]="customErrorForm" class="showcase-form">
+      <div class="input-row">
+        <i-input-text
+          label="Username"
+          type="text"
+          id="username-field"
+          formControlName="usernameField"
+          [errorMessages]="usernameErrors"
+        >
+        </i-input-text>
+
+        <i-input-text
+          label="Phone Number"
+          type="tel"
+          id="phone-field"
+          formControlName="phoneField"
+          [errorMessages]="phoneErrors"
+        >
+        </i-input-text>
+      </div>
+
+      <button
+        type="button"
+        (click)="onSubmit('customError')"
+        class="submit-btn"
+      >
+        Submit Custom Error Form
+      </button>
+    </form>
+  </section>
+
+  <!-- Instructions Section -->
+  <section class="showcase-section">
+    <h2>Usage Instructions</h2>
+    <div class="instructions">
+      <h3>Available Input Types:</h3>
+      <ul>
+        <li><strong>text</strong> - Standard text input</li>
+        <li><strong>email</strong> - Email input with email validation</li>
+        <li><strong>password</strong> - Password input (masked)</li>
+        <li><strong>number</strong> - Numeric input</li>
+        <li><strong>search</strong> - Search input</li>
+        <li><strong>url</strong> - URL input</li>
+        <li><strong>tel</strong> - Telephone input</li>
+      </ul>
+
+      <h3>Available Properties:</h3>
+      <ul>
+        <li><strong>label</strong> - The floating label text</li>
+        <li><strong>type</strong> - Input type (default: 'text')</li>
+        <li><strong>id</strong> - Optional HTML id attribute</li>
+        <li><strong>errorMessages</strong> - Custom error message mapping</li>
+      </ul>
+
+      <h3>Validation Support:</h3>
+      <ul>
+        <li><strong>required</strong> - Field is required</li>
+        <li><strong>minlength</strong> - Minimum character length</li>
+        <li><strong>maxlength</strong> - Maximum character length</li>
+        <li><strong>pattern</strong> - RegExp pattern validation</li>
+        <li><strong>email</strong> - Email format validation</li>
+      </ul>
+
+      <h3>Features:</h3>
+      <ul>
+        <li>Floating label animation</li>
+        <li>Automatic error display when field is dirty and invalid</li>
+        <li>Disabled state support</li>
+        <li>Custom error message override</li>
+        <li>Reactive Forms integration</li>
+      </ul>
+    </div>
+  </section>
+</div>

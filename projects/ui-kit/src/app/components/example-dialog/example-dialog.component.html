@@ -1,0 +1,26 @@
+<div class="example-dialog-content">
+  <h4>Example Dialog Content</h4>
+  <p>This is a dynamically loaded dialog component.</p>
+
+  @if (data) {
+  <div class="data-section">
+    <h5>Passed Data:</h5>
+    <pre>{{ data | json }}</pre>
+  </div>
+  }
+
+  <p>You can close this dialog by:</p>
+  <ul>
+    <li>Clicking the X button</li>
+    <li>Pressing Escape</li>
+    <li>Clicking outside the dialog</li>
+  </ul>
+</div>
+
+<div slot="footer">
+  <i-dialog-actions
+    [submitLabel]="'Confirm'"
+    (cancelEvent)="onBasicDialogHide()"
+    (submitEvent)="onBasicDialogHide()"
+  ></i-dialog-actions>
+</div>

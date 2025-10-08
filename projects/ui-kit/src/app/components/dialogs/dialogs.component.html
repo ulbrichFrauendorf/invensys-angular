@@ -1,0 +1,60 @@
+<div class="demo-container">
+  <h1>Dialog Component</h1>
+  <p class="description">
+    Dialog component with service-based dynamic content loading
+  </p>
+
+  <div class="examples-grid">
+    <!-- Dialog Service Example -->
+    <div class="example-section">
+      <h2>Dynamic Dialog (via Service)</h2>
+      <p>
+        Opens a dialog with dynamically loaded component using the
+        DialogService.
+      </p>
+      <button class="btn btn-primary" (click)="displayExampleDialog()">
+        Open Dynamic Dialog
+      </button>
+    </div>
+
+    <!-- Basic Dialog Example -->
+    <div class="example-section">
+      <h2>Basic Dialog</h2>
+      <p>Simple dialog using the dialog component directly.</p>
+      <button class="btn btn-outline" (click)="showBasicDialogModal()">
+        Open Basic Dialog
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Basic Dialog Template -->
+<i-dialog
+  [visible]="showBasicDialog"
+  (visibleChange)="showBasicDialog = $event"
+  (onHide)="onBasicDialogHide()"
+  [closable]="true"
+  header="Basic Dialog Example"
+  width="20rem"
+>
+  <div class="basic-dialog-content">
+    <h4>Basic Dialog</h4>
+    <p>This is a basic dialog component used directly in the template.</p>
+    <p>It demonstrates the dialog component's core functionality:</p>
+    <ul>
+      <li>Modal overlay</li>
+      <li>Header with title</li>
+      <li>Closable with X button</li>
+      <li>Keyboard (ESC) support</li>
+      <li>Click outside to close</li>
+    </ul>
+  </div>
+
+  <div slot="footer">
+    <i-dialog-actions
+      [submitLabel]="'Confirm'"
+      (cancelEvent)="onBasicDialogHide()"
+      (submitEvent)="onBasicDialogHide()"
+    ></i-dialog-actions>
+  </div>
+</i-dialog>

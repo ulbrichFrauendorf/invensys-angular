@@ -1,0 +1,96 @@
+import { Component, Input, Optional, Self } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+    ControlValueAccessor,
+    NgControl,
+    AbstractControl,
+} from '@angular/forms';
+
+@Component({
+    selector: 'i-input-text',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './input-text.component.html',
+    styleUrls: ['./input-text.component.scss'],
+})
+export class IInputText implements ControlValueAccessor {
+    @Input() label = 'Label';
+    @Input() type: string = 'text';
+    @Input() id?: string;
+
+    value: string | null = null;
+    disabled = false;
+
+    private onChange: (v: string | null) => void = () => {};
+    private onTouched: () => void = () => {};
+
+    constructor(@Optional() @Self() public ngControl: NgControl | null) {
+        if (this.ngControl) {
+            this.ngControl.valueAccessor = this;
+        }
+    }
+
+    // optional custom error messages
+    @Input() errorMessages: { [key: string]: string } = {};
+
+    writeValue(obj: string | null): void {
+        this.value = obj == null ? null : obj;
+    }
+    registerOnChange(fn: (v: string | null) => void): void {
+        this.onChange = fn;
+    }
+    registerOnTouched(fn: () => void): void {
+        this.onTouched = fn;
+    }
+    setDisabledState(isDisabled: boolean): void {
+        this.disabled = isDisabled;
+    }
+
+    handleInput(event: Event) {
+        const v = (event.target as HTMLInputElement).value;
+        this.value = v;
+        this.onChange(v);
+    }
+
+    touch() {
+        this.onTouched();
+    }
+
+    get control(): AbstractControl | null {
+        return this.ngControl ? this.ngControl.control : null;
+    }
+
+    get showErrors(): boolean {
+        const c = this.control;
+        return !!(c && c.invalid && c.dirty);
+    }
+
+    get firstErrorKey(): string | null {
+        const c = this.control;
+        if (!c || !c.errors) return null;
+        return Object.keys(c.errors)[0] || null;
+    }
+
+    getErrorMessage(): string | null {
+        const key = this.firstErrorKey;
+        if (!key) return null;
+        const c = this.control;
+        if (this.errorMessages && this.errorMessages[key])
+            return this.errorMessages[key];
+        const err = c?.errors || {};
+        switch (key) {
+            case 'required':
+                return `${this.label} is required`;
+            case 'minlength':
+                return `Minimum ${err['minlength']?.requiredLength} characters required`;
+            case 'maxlength':
+                return `Maximum ${err['maxlength']?.requiredLength} characters allowed`;
+            case 'pattern':
+                return `${this.label} is not valid`;
+            default:
+                return err[key] && typeof err[key] === 'string'
+                    ? err[key]
+                    : 'Invalid value';
+        }
+    }
+}
