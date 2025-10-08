@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IButton } from '../button/button.component';
+import { IButton } from '../../../button/button.component';
 
 @Component({
   selector: 'i-dialog-actions',

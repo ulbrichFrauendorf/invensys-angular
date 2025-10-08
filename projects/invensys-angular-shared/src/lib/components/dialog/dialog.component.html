@@ -14,7 +14,11 @@
 
       <!-- Footer -->
       <div class="i-dialog-footer" slot="footer">
-        <ng-content select="[slot=footer]"></ng-content>
+        <i-dialog-actions
+          [submitLabel]="'Confirm'"
+          (cancelEvent)="onCloseClick()"
+          (submitEvent)="onSubmit()"
+        ></i-dialog-actions>
       </div>
     </i-card>
   </div>

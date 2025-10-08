@@ -7,6 +7,7 @@ import {
   AfterViewInit,
   ElementRef,
   ViewChild,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 export type IButtonSeverity =
@@ -30,7 +31,6 @@ export type IButtonSize = 'small' | 'medium' | 'large';
 export class IButton implements AfterViewInit {
   @Input() severity: IButtonSeverity = 'primary';
   @Input() size: IButtonSize = 'small';
-  /** native button type: 'button' | 'submit' | 'reset' */
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() disabled = false;
   @Input() outlined = false;
@@ -43,9 +43,13 @@ export class IButton implements AfterViewInit {
   projected?: ElementRef<HTMLElement>;
   iconOnly = false;
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngAfterViewInit(): void {
     var text = this.projected?.nativeElement?.textContent;
     const hasProjected = text && text.trim()?.length > 0;
     this.iconOnly = !!this.icon && !hasProjected;
+    // Trigger change detection to ensure CSS classes are applied correctly
+    this.cdr.detectChanges();
   }
 }

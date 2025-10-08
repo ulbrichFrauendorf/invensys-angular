@@ -3,11 +3,10 @@ import { ExampleDialogComponent } from '../example-dialog/example-dialog.compone
 import { IDialog } from '../../../../../invensys-angular-shared/src/lib/components/dialog/dialog.component';
 import { DialogService } from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.service';
 import { DynamicDialogRef } from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.interfaces';
-import { IDialogActions } from '../../../../../invensys-angular-shared/src/lib/components/dialog-actions/dialog-actions.component';
 
 @Component({
   selector: 'i-dialogs',
-  imports: [IDialog, IDialogActions],
+  imports: [IDialog],
   templateUrl: './dialogs.component.html',
   styleUrl: './dialogs.component.scss',
 })
@@ -20,7 +19,7 @@ export class DialogsComponent {
   displayExampleDialog() {
     this.ref = this.dialogService.open(ExampleDialogComponent, {
       header: 'Example Dynamic Dialog',
-      width: '50rem',
+      width: '300px',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',
