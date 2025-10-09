@@ -1,96 +1,99 @@
 import { Component, Input, Optional, Self } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    ControlValueAccessor,
-    NgControl,
-    AbstractControl,
+  ControlValueAccessor,
+  NgControl,
+  AbstractControl,
 } from '@angular/forms';
+import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 @Component({
-    selector: 'i-input-text',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './input-text.component.html',
-    styleUrls: ['./input-text.component.scss'],
+  selector: 'i-input-text',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './input-text.component.html',
+  styleUrls: ['./input-text.component.scss'],
 })
 export class IInputText implements ControlValueAccessor {
-    @Input() label = 'Label';
-    @Input() type: string = 'text';
-    @Input() id?: string;
+  @Input() label = 'Label';
+  @Input() type: string = 'text';
+  @Input() id?: string;
 
-    value: string | null = null;
-    disabled = false;
+  value: string | null = null;
+  disabled = false;
 
-    private onChange: (v: string | null) => void = () => {};
-    private onTouched: () => void = () => {};
+  componentId = UniqueComponentId('i-input-text-');
 
-    constructor(@Optional() @Self() public ngControl: NgControl | null) {
-        if (this.ngControl) {
-            this.ngControl.valueAccessor = this;
-        }
-    }
+  private onChange: (v: string | null) => void = () => {};
+  private onTouched: () => void = () => {};
 
-    // optional custom error messages
-    @Input() errorMessages: { [key: string]: string } = {};
+  constructor(@Optional() @Self() public ngControl: NgControl | null) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
-    writeValue(obj: string | null): void {
-        this.value = obj == null ? null : obj;
-    }
-    registerOnChange(fn: (v: string | null) => void): void {
-        this.onChange = fn;
-    }
-    registerOnTouched(fn: () => void): void {
-        this.onTouched = fn;
-    }
-    setDisabledState(isDisabled: boolean): void {
-        this.disabled = isDisabled;
-    }
+  // optional custom error messages
+  @Input() errorMessages: { [key: string]: string } = {};
 
-    handleInput(event: Event) {
-        const v = (event.target as HTMLInputElement).value;
-        this.value = v;
-        this.onChange(v);
-    }
+  writeValue(obj: string | null): void {
+    this.value = obj == null ? null : obj;
+  }
+  registerOnChange(fn: (v: string | null) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 
-    touch() {
-        this.onTouched();
-    }
+  handleInput(event: Event) {
+    const v = (event.target as HTMLInputElement).value;
+    this.value = v;
+    this.onChange(v);
+  }
 
-    get control(): AbstractControl | null {
-        return this.ngControl ? this.ngControl.control : null;
-    }
+  touch() {
+    this.onTouched();
+  }
 
-    get showErrors(): boolean {
-        const c = this.control;
-        return !!(c && c.invalid && c.dirty);
-    }
+  get control(): AbstractControl | null {
+    return this.ngControl ? this.ngControl.control : null;
+  }
 
-    get firstErrorKey(): string | null {
-        const c = this.control;
-        if (!c || !c.errors) return null;
-        return Object.keys(c.errors)[0] || null;
-    }
+  get showErrors(): boolean {
+    const c = this.control;
+    return !!(c && c.invalid && c.dirty);
+  }
 
-    getErrorMessage(): string | null {
-        const key = this.firstErrorKey;
-        if (!key) return null;
-        const c = this.control;
-        if (this.errorMessages && this.errorMessages[key])
-            return this.errorMessages[key];
-        const err = c?.errors || {};
-        switch (key) {
-            case 'required':
-                return `${this.label} is required`;
-            case 'minlength':
-                return `Minimum ${err['minlength']?.requiredLength} characters required`;
-            case 'maxlength':
-                return `Maximum ${err['maxlength']?.requiredLength} characters allowed`;
-            case 'pattern':
-                return `${this.label} is not valid`;
-            default:
-                return err[key] && typeof err[key] === 'string'
-                    ? err[key]
-                    : 'Invalid value';
-        }
+  get firstErrorKey(): string | null {
+    const c = this.control;
+    if (!c || !c.errors) return null;
+    return Object.keys(c.errors)[0] || null;
+  }
+
+  getErrorMessage(): string | null {
+    const key = this.firstErrorKey;
+    if (!key) return null;
+    const c = this.control;
+    if (this.errorMessages && this.errorMessages[key])
+      return this.errorMessages[key];
+    const err = c?.errors || {};
+    switch (key) {
+      case 'required':
+        return `${this.label} is required`;
+      case 'minlength':
+        return `Minimum ${err['minlength']?.requiredLength} characters required`;
+      case 'maxlength':
+        return `Maximum ${err['maxlength']?.requiredLength} characters allowed`;
+      case 'pattern':
+        return `${this.label} is not valid`;
+      default:
+        return err[key] && typeof err[key] === 'string'
+          ? err[key]
+          : 'Invalid value';
     }
+  }
 }

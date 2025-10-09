@@ -9,6 +9,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from '@angular/core';
+import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 export type IButtonSeverity =
   | 'primary'
@@ -42,6 +43,8 @@ export class IButton implements AfterViewInit {
   @ViewChild('projected', { read: ElementRef })
   projected?: ElementRef<HTMLElement>;
   iconOnly = false;
+
+  componentId = UniqueComponentId('i-button-');
 
   constructor(private cdr: ChangeDetectorRef) {}
 
