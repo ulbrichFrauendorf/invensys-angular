@@ -1,5 +1,9 @@
 @if (visible) {
-<div class="i-dialog-overlay" (click)="onOverlayClick($event)">
+<div
+  class="i-dialog-overlay"
+  (click)="onOverlayClick($event)"
+  [attr.id]="componentId"
+>
   <div
     #dialogElement
     [style.width]="width"

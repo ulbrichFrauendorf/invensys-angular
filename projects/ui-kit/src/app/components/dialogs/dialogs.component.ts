@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
-import { IDialog } from '../../../../../invensys-angular-shared/src/lib/components/dialog/dialog.component';
-import { DialogService } from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.service';
-import { DynamicDialogRef } from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.interfaces';
+import {
+  IDialog,
+  DialogService,
+  DynamicDialogRef,
+} from 'invensys-angular-shared';
 
 @Component({
   selector: 'i-dialogs',

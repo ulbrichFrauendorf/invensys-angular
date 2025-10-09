@@ -1,5 +1,6 @@
 export interface DynamicDialogConfig {
   header?: string;
+  message?: string;
   width?: string;
   height?: string;
   contentStyle?: { [key: string]: any };

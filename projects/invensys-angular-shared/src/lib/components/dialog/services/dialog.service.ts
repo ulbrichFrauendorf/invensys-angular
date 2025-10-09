@@ -33,7 +33,7 @@ export class DialogService {
 
     // Set dialog properties
     dialogRef.instance.header = config.header;
-    dialogRef.instance.width = config.width || '50rem';
+    dialogRef.instance.width = config.width || '300px';
     dialogRef.instance.height = config.height;
     dialogRef.instance.contentStyle = config.contentStyle;
     dialogRef.instance.breakpoints = config.breakpoints;
@@ -72,7 +72,13 @@ export class DialogService {
       if ('dialogRef' in componentRef.instance) {
         (componentRef.instance as any).dialogRef = ref;
       }
+      if ('config' in componentRef.instance) {
+        (componentRef.instance as any).config = config;
+      }
     }
+
+    // Trigger change detection to ensure ngOnInit is called with the injected data
+    componentRef.changeDetectorRef.detectChanges();
 
     document.body.appendChild(dialogRef.location.nativeElement);
 

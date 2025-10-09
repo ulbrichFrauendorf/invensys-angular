@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
+import { DynamicDialogConfig, DynamicDialogRef } from 'invensys-angular-shared';
 
 @Component({
   selector: 'app-example-dialog',
@@ -8,8 +9,8 @@ import { JsonPipe } from '@angular/common';
   styleUrl: './example-dialog.component.scss',
 })
 export class ExampleDialogComponent {
-  @Input() data?: any;
-  @Input() dialogRef?: any;
+  public dialogRef?: DynamicDialogRef;
+  public config: DynamicDialogConfig = {};
 
   onAccept() {
     this.dialogRef?.close('accepted');

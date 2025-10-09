@@ -2,10 +2,10 @@
   <h4>Example Dialog Content</h4>
   <p>This is a dynamically loaded dialog component.</p>
 
-  @if (data) {
+  @if (config.data) {
   <div class="data-section">
-    <h5>Passed Data:</h5>
-    <pre>{{ data | json }}</pre>
+    <h5>Full Config:</h5>
+    <pre>{{ config | json }}</pre>
   </div>
   }
 

@@ -13,5 +13,6 @@
 @include generate-color-css-vars.generate-color-css-vars();
 
 body {
+  font-family: "Roboto", sans-serif;
   background-color: vars.$color-surface-ground;
 }

@@ -13,6 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ICard } from '../card/card.component';
 import { IDialogActions } from './inner/dialog-actions/dialog-actions.component';
+import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 @Component({
   selector: 'i-dialog',
@@ -38,6 +39,8 @@ export class IDialog implements OnInit, OnDestroy {
   @Output() onHide = new EventEmitter<void>();
 
   @ViewChild('dialogElement', { static: false }) dialogElement?: ElementRef;
+
+  componentId = UniqueComponentId('i-dialog-');
 
   constructor(private cdr: ChangeDetectorRef) {}
 

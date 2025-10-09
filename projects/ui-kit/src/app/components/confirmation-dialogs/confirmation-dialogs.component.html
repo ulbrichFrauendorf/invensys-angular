@@ -1,0 +1,31 @@
+<div class="confirmation-dialogs-demo">
+  <h2>Confirmation Dialog Examples</h2>
+
+  <div class="demo-section">
+    <h3>Basic Confirmation</h3>
+    <p>A simple yes/no confirmation dialog.</p>
+    <i-button [severity]="'danger'" (click)="showBasicConfirmation()">
+      Delete Item
+    </i-button>
+  </div>
+
+  <div class="demo-section">
+    <h3>Custom Labels</h3>
+    <p>Confirmation dialog with custom button labels.</p>
+    <i-button [severity]="'warning'" (click)="showCustomConfirmation()">
+      Unlink Report
+    </i-button>
+  </div>
+
+  <div class="demo-section">
+    <h3>Discard Changes</h3>
+    <p>Another example with different messaging.</p>
+    <i-button
+      [severity]="'secondary'"
+      [outlined]="true"
+      (click)="showDiscardChanges()"
+    >
+      Discard Changes
+    </i-button>
+  </div>
+</div>
