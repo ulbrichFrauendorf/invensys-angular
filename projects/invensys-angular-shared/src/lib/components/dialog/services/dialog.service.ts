@@ -35,6 +35,8 @@ export class DialogService {
     dialogRef.instance.header = config.header;
     dialogRef.instance.width = config.width || '300px';
     dialogRef.instance.height = config.height;
+    dialogRef.instance.submitLabel = config.submitLabel || 'Submit';
+    dialogRef.instance.cancelLabel = config.cancelLabel || 'Cancel';
     dialogRef.instance.contentStyle = config.contentStyle;
     dialogRef.instance.breakpoints = config.breakpoints;
     dialogRef.instance.closable = config.closable !== false;
@@ -62,6 +64,7 @@ export class DialogService {
       onClose: new Promise((resolve) => {
         resolveClose = resolve;
       }),
+      instance: dialogRef.instance,
     };
 
     // Inject data and dialog reference into the dynamic component

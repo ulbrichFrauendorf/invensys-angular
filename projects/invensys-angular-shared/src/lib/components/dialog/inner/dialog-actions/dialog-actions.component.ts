@@ -9,6 +9,7 @@ import { IButton } from '../../../button/button.component';
 })
 export class IDialogActions {
   @Input() submitLabel = 'Submit';
+  @Input() cancelLabel = 'Cancel';
   @Output() cancelEvent = new EventEmitter<void>();
   @Output() submitEvent = new EventEmitter<void>();
 

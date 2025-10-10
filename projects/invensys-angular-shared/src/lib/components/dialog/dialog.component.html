@@ -19,8 +19,9 @@
       <!-- Footer -->
       <div class="i-dialog-footer" slot="footer">
         <i-dialog-actions
-          [submitLabel]="'Confirm'"
-          (cancelEvent)="onCloseClick()"
+          [submitLabel]="submitLabel"
+          [cancelLabel]="cancelLabel"
+          (cancelEvent)="onCancel()"
           (submitEvent)="onSubmit()"
         ></i-dialog-actions>
       </div>

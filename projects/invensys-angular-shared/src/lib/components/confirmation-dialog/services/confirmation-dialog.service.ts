@@ -25,6 +25,8 @@ export class ConfirmationDialogService {
     const ref = this.dialogService.open(ConfirmationDialogComponent, {
       header: config.header || 'Confirmation',
       width: '400px',
+      submitLabel: config.acceptLabel || 'Yes',
+      cancelLabel: config.rejectLabel || 'No',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',
@@ -32,18 +34,29 @@ export class ConfirmationDialogService {
       },
       data: {
         message: config.message,
-        acceptLabel: config.acceptLabel || 'Yes',
-        rejectLabel: config.rejectLabel || 'No',
       },
     });
 
-    ref.onClose.then((result) => {
-      if (result === 'accept' && config.accept) {
-        config.accept();
-      } else if (result === 'reject' && config.reject) {
-        config.reject();
-      }
-    });
+    // Set up event handlers on the dialog instance
+    if (ref.instance) {
+      const dialogInstance = ref.instance;
+
+      // Subscribe to submit event (accept)
+      dialogInstance.submitEvent.subscribe(() => {
+        if (config.accept) {
+          config.accept();
+        }
+        ref.close('accept');
+      });
+
+      // Subscribe to cancel event (reject)
+      dialogInstance.cancelEvent.subscribe(() => {
+        if (config.reject) {
+          config.reject();
+        }
+        ref.close('reject');
+      });
+    }
 
     return ref;
   }

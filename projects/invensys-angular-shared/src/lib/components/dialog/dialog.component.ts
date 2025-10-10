@@ -31,8 +31,10 @@ export class IDialog implements OnInit, OnDestroy {
   @Input() breakpoints?: { [key: string]: string };
   @Input() visible: boolean = false;
   @Input() submitLabel = 'Submit';
+  @Input() cancelLabel = 'Cancel';
 
   @Output() submitEvent = new EventEmitter<void>();
+  @Output() cancelEvent = new EventEmitter<void>();
 
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() onShow = new EventEmitter<void>();
@@ -86,6 +88,10 @@ export class IDialog implements OnInit, OnDestroy {
     if (this.closable) {
       this.hide();
     }
+  }
+
+  onCancel() {
+    this.cancelEvent.emit();
   }
 
   onSubmit() {
