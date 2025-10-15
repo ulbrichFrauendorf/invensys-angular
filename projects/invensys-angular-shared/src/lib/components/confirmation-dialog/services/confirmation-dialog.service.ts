@@ -23,10 +23,10 @@ export class ConfirmationDialogService {
     );
 
     const ref = this.dialogService.open(ConfirmationDialogComponent, {
-      header: config.header || 'Confirmation',
+      header: ' ',
       width: '400px',
-      submitLabel: config.acceptLabel || 'Yes',
-      cancelLabel: config.rejectLabel || 'No',
+      submitLabel: config.acceptLabel || 'Confirm',
+      cancelLabel: config.rejectLabel || 'Cancel',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',
@@ -34,6 +34,7 @@ export class ConfirmationDialogService {
       },
       data: {
         message: config.message,
+        header: config.header,
       },
     });
 

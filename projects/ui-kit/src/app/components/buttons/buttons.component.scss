@@ -1,6 +1,5 @@
-.icon-container {
+:host {
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 16px;
+  flex-direction: column;
+  gap: 2rem;
 }

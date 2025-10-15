@@ -15,4 +15,22 @@
 body {
   font-family: "Roboto", sans-serif;
   background-color: vars.$color-surface-ground;
+  box-sizing: border-box;
+  scrollbar-gutter: stable;
+}
+
+.component-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .ui-section {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .code-section {
+  }
 }

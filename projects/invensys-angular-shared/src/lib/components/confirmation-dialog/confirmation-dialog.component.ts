@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import {
   DynamicDialogConfig,
   DynamicDialogRef,
@@ -11,13 +11,18 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss',
 })
-export class ConfirmationDialogComponent {
+export class ConfirmationDialogComponent implements OnInit {
   public dialogRef?: DynamicDialogRef;
   public config: DynamicDialogConfig = {};
 
   componentId = UniqueComponentId('i-confirmation-dialog-');
 
-  get message(): string {
-    return this.config.data?.message || '';
+  message = signal('');
+  header = signal('Are you sure?');
+
+  ngOnInit() {
+    // Update signals after config is set by the dialog service
+    this.message.set(this.config.data?.message || '');
+    this.header.set(this.config.data?.header || 'Are you sure?');
   }
 }

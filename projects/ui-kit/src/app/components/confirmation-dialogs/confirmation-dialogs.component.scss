@@ -1,29 +1,5 @@
-.confirmation-dialogs-demo {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.demo-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.demo-section h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.demo-section p {
-  margin-bottom: 1rem;
-  color: #666;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #333;
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }

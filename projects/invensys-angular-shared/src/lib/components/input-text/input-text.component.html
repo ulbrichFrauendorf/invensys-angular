@@ -1,25 +1,8 @@
-<div
-  class="i-input-wrapper"
-  [class.invalid]="showErrors"
-  [attr.id]="componentId"
->
+<div class="i-input-wrapper" [class.invalid]="showErrors" [class.i-input--fluid]="fluid" [attr.id]="componentId">
   <div class="float-label">
-    <input
-      [id]="id || null"
-      [type]="type"
-      [disabled]="disabled"
-      [value]="value || ''"
-      (input)="handleInput($event)"
-      (blur)="touch()"
-      placeholder=" "
-      class="i-input"
-    />
-    <label
-      [for]="id"
-      class="i-label"
-      [class.floated]="(value && value.length) || false"
-      >{{ label }}</label
-    >
+    <input [id]="id || null" [type]="type" [disabled]="disabled" [value]="value || ''" (input)="handleInput($event)"
+      (blur)="touch()" placeholder=" " class="i-input" />
+    <label [for]="id" class="i-label" [class.floated]="(value && value.length) || false">{{ label }}</label>
     @if(showErrors) {
     <small class="i-error" *ngIf="showErrors">{{ getErrorMessage() }}</small>
     }

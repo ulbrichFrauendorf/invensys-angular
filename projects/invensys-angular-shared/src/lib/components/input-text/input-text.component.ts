@@ -18,6 +18,7 @@ export class IInputText implements ControlValueAccessor {
   @Input() label = 'Label';
   @Input() type: string = 'text';
   @Input() id?: string;
+  @Input() fluid = false;
 
   value: string | null = null;
   disabled = false;

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { DynamicDialogConfig, DynamicDialogRef } from 'invensys-angular-shared';
+import {
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.interfaces';
 
 @Component({
   selector: 'app-example-dialog',

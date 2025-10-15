@@ -15,11 +15,13 @@
 
       // Text colors
       --color-text-primary: #{color.get-color("gray", 700)};
+      --color-text-contrast: #ffffffde;
       --color-text-secondary: #{color.get-color("gray", 500)};
       --color-text-tertiary: #{color.get-color("bluegray", 500)};
 
       // Background colors
       --color-component-background: #ffffff;
+      --color-component-background-solid: #{color.get-color("bluegray", 900)};
 
       // Border colors
       --color-border: #{get-color("gray", 300)};
@@ -43,11 +45,13 @@
 
       // Text colors
       --color-text-primary: #ffffffde;
+      --color-text-contrast: #ffffffde;
       --color-text-secondary: #{color.get-color("gray", 500)};
       --color-text-tertiary: #{color.get-color("bluegray", 500)};
 
       // Background colors
       --color-component-background: #{color.get-color("gray", 900)};
+      --color-component-background-solid: #{color.get-color("bluegray", 900)};
 
       // Border colors
       --color-border: #{get-color("bluegray", 700)};

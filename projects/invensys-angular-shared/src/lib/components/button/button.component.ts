@@ -31,7 +31,7 @@ export type IButtonSize = 'small' | 'medium' | 'large';
 })
 export class IButton implements AfterViewInit {
   @Input() severity: IButtonSeverity = 'primary';
-  @Input() size: IButtonSize = 'small';
+  @Input() size: IButtonSize = 'medium';
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() disabled = false;
   @Input() outlined = false;
