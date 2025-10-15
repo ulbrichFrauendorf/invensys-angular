@@ -11,9 +11,7 @@ import {
   Injector,
   EnvironmentInjector,
 } from '@angular/core';
-import { TooltipComponent } from './tooltip.component';
-
-export type TooltipPosition = 'above' | 'below' | 'left' | 'right';
+import { TooltipComponent, TooltipPosition } from './tooltip.component';
 
 @Directive({
   selector: '[iTooltip]',
@@ -94,6 +92,19 @@ export class TooltipDirective implements OnDestroy {
     this.tooltipComponent.instance.text = this.tooltipText;
     this.tooltipComponent.instance.position = this.tooltipPosition;
 
+    // Add a unique identifier to the tooltip element to avoid conflicts
+    const tooltipId = `tooltip-${Math.random().toString(36).substr(2, 9)}`;
+    this.renderer.setAttribute(
+      this.tooltipComponent.location.nativeElement,
+      'id',
+      tooltipId
+    );
+    this.renderer.setAttribute(
+      this.tooltipComponent.location.nativeElement,
+      'data-tooltip-for',
+      this.elementRef.nativeElement.id || 'unknown'
+    );
+
     // Register with ApplicationRef for change detection first
     this.applicationRef.attachView(this.tooltipComponent.hostView);
 
@@ -101,9 +112,9 @@ export class TooltipDirective implements OnDestroy {
     document.body.appendChild(this.tooltipComponent.location.nativeElement);
 
     // Position the tooltip after a brief delay to ensure rendering
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.positionTooltip();
-    }, 0);
+    });
   }
 
   private positionTooltip(): void {
@@ -112,11 +123,16 @@ export class TooltipDirective implements OnDestroy {
     const hostElement = this.elementRef.nativeElement;
     const tooltipElement = this.tooltipComponent.location.nativeElement;
 
+    // Ensure we're working with the correct tooltip instance
+    if (!tooltipElement || !document.body.contains(tooltipElement)) {
+      return;
+    }
+
     // Make tooltip visible but off-screen to measure its dimensions
-    this.renderer.setStyle(tooltipElement, 'position', 'fixed');
+    this.renderer.setStyle(tooltipElement, 'position', 'absolute');
     this.renderer.setStyle(tooltipElement, 'visibility', 'hidden');
-    this.renderer.setStyle(tooltipElement, 'top', '0px');
-    this.renderer.setStyle(tooltipElement, 'left', '0px');
+    this.renderer.setStyle(tooltipElement, 'top', '-9999px');
+    this.renderer.setStyle(tooltipElement, 'left', '-9999px');
     this.renderer.setStyle(tooltipElement, 'z-index', '9999');
 
     // Force a layout to get accurate measurements
@@ -193,6 +209,14 @@ export class TooltipDirective implements OnDestroy {
 
   private destroyTooltip(): void {
     if (this.tooltipComponent) {
+      const tooltipElement = this.tooltipComponent.location.nativeElement;
+
+      // Remove from DOM first
+      if (tooltipElement && document.body.contains(tooltipElement)) {
+        document.body.removeChild(tooltipElement);
+      }
+
+      // Then cleanup Angular references
       this.applicationRef.detachView(this.tooltipComponent.hostView);
       this.tooltipComponent.destroy();
       this.tooltipComponent = null;

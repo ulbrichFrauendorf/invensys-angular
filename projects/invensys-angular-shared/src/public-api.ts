@@ -13,8 +13,8 @@ export * from './lib/components/empty-state/empty-state.component';
 export * from './lib/components/empty-state-table/empty-state-table.component';
 
 /* Directives */
-export * from './lib/directives/tooltip/tooltip.directive';
 export * from './lib/directives/tooltip/tooltip.component';
+export * from './lib/directives/tooltip/tooltip.directive';
 
 /* Services */
 export * from './lib/services/data-update-event/data-update-event.service';

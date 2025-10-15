@@ -3,11 +3,12 @@
 @include theme.i-input-theme();
 
 .i-input-wrapper {
+  font-size: 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  height: 60px;
+  height: 48px;
   margin-top: 20px;
 
   &.i-input--fluid {
@@ -44,15 +45,6 @@
     .i-input:not(:placeholder-shown) + .i-label,
     .i-label.floated {
       top: -20px;
-    }
-
-    .i-error {
-      position: absolute;
-      right: 8px;
-      top: -20px;
-      pointer-events: none;
-      transition: all 0.15s ease;
-      padding: 0 4px;
     }
   }
 }

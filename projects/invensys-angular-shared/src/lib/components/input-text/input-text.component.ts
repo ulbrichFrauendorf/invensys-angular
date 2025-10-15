@@ -6,11 +6,12 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
+import { TooltipDirective } from '../../directives/tooltip/tooltip.directive';
 
 @Component({
   selector: 'i-input-text',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TooltipDirective],
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss'],
 })
