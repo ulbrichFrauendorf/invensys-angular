@@ -1,171 +1,163 @@
 <div class="multi-selects-demo">
-  <h1>Multi-Select Components</h1>
-  <p>
-    Multi-selection dropdown components with filtering, chips display, and
-    reactive forms support.
-  </p>
+  <header class="demo-header">
+    <h1>Multi-Select Components</h1>
+    <p>
+      Multi-selection dropdown components with filtering, chips display, and
+      reactive forms support. Perfect for handling multiple option selections
+      with a clean, user-friendly interface.
+    </p>
+  </header>
 
-  <!-- Basic Multi-Select Examples -->
-  <section class="demo-section">
-    <h2>Basic Multi-Select</h2>
-    <form
-      [formGroup]="basicForm"
-      (ngSubmit)="onSubmit('basic')"
-      class="demo-form"
+  <div class="cards-container">
+    <!-- Basic Multi-Select Examples -->
+    <app-demo-card title="Basic Multi-Select" [sourceCode]="codeExamples.basic">
+      <form
+        [formGroup]="basicForm"
+        (ngSubmit)="onSubmit(basicForm, 'basic')"
+        class="demo-form"
+      >
+        <div class="form-grid">
+          <i-multi-select
+            label="Skills"
+            [options]="selectData.skills"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select skills"
+            formControlName="skills"
+          >
+          </i-multi-select>
+
+          <i-multi-select
+            label="Departments"
+            [options]="selectData.departments"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select departments"
+            formControlName="departments"
+          >
+          </i-multi-select>
+
+          <i-multi-select
+            label="Preselected Skills"
+            [options]="selectData.skills"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Preselected values"
+            formControlName="preselected"
+          >
+          </i-multi-select>
+
+          <i-multi-select
+            label="Disabled Multi-Select"
+            [options]="selectData.departments"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="This is disabled"
+            formControlName="disabled"
+          >
+          </i-multi-select>
+        </div>
+
+        <i-button
+          type="submit"
+          severity="primary"
+        >Submit Basic Form</i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Validation Example -->
+    <app-demo-card
+      title="Required Validation"
+      [sourceCode]="codeExamples.validation"
     >
-      <div class="form-row">
+      <form
+        [formGroup]="validationForm"
+        (ngSubmit)="onSubmit(validationForm, 'validation')"
+        class="demo-form"
+      >
         <i-multi-select
-          label="Skills"
-          [options]="skills"
+          label="Required Skills"
+          [options]="selectData.skills"
           optionLabel="label"
           optionValue="value"
-          placeholder="Select skills"
-          formControlName="skills"
+          placeholder="Select at least 2 skills"
+          formControlName="requiredSkills"
         >
         </i-multi-select>
-      </div>
 
-      <div class="form-row">
-        <i-multi-select
-          label="Departments"
-          [options]="departments"
-          placeholder="Select departments"
-          formControlName="departments"
-        >
-        </i-multi-select>
-      </div>
+        <i-button
+          type="submit"
+          severity="primary"
+        >Submit Validation Form</i-button>
+      </form>
+    </app-demo-card>
 
-      <div class="form-row">
-        <i-multi-select
-          label="Preselected Skills"
-          [options]="skills"
-          placeholder="Preselected values"
-          formControlName="preselected"
-        >
-        </i-multi-select>
-      </div>
-
-      <div class="form-row">
-        <i-multi-select
-          label="Disabled Multi-Select"
-          [options]="departments"
-          placeholder="This is disabled"
-          formControlName="disabled"
-        >
-        </i-multi-select>
-      </div>
-
-      <button type="submit" class="submit-btn">Submit Basic Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="basicMultiSelectCode"></app-code-display>
-  </section>
-
-  <!-- Validation Example -->
-  <section class="demo-section">
-    <h2>Required Validation</h2>
-    <form
-      [formGroup]="validationForm"
-      (ngSubmit)="onSubmit('validation')"
-      class="demo-form"
+    <!-- Advanced Configuration -->
+    <app-demo-card
+      title="Advanced Features"
+      [sourceCode]="codeExamples.advanced"
     >
-      <div class="form-row">
+      <form
+        [formGroup]="advancedForm"
+        (ngSubmit)="onSubmit(advancedForm, 'advanced')"
+        class="demo-form"
+      >
         <i-multi-select
-          label="Departments (Required)"
-          [options]="departments"
-          placeholder="Select departments"
-          formControlName="departments"
-        >
-        </i-multi-select>
-      </div>
-
-      <button type="submit" class="submit-btn">Submit Validation Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="requiredMultiSelectCode"></app-code-display>
-  </section>
-
-  <!-- Custom Configuration Example (Like PrimeNG) -->
-  <section class="demo-section">
-    <h2>Custom Configuration (Like PrimeNG)</h2>
-    <p>This example mimics the PrimeNG multiSelect usage from your example.</p>
-    <form
-      [formGroup]="customForm"
-      (ngSubmit)="onSubmit('custom')"
-      class="demo-form"
-    >
-      <div class="form-row">
-        <i-multi-select
-          formControlName="fieldName"
-          [options]="formFieldOptions"
-          placeholder="Select options"
-          optionLabel="formFieldOptions"
+          label="Categories with Filtering"
+          [options]="selectData.categories"
+          [filter]="true"
+          [showClear]="true"
+          filterBy="name"
+          optionLabel="name"
           optionValue="value"
-          (onChange)="onSelectionChange()"
-          (onClear)="onSelectionClear()"
+          placeholder="Select Categories"
+          [maxSelectedLabels]="3"
+          formControlName="selectedCategories"
         >
         </i-multi-select>
-      </div>
 
-      <button type="submit" class="submit-btn">Submit Custom Form</button>
-    </form>
+        <i-button
+          type="submit"
+          severity="primary"
+        >Submit Advanced Form</i-button>
+      </form>
+    </app-demo-card>
 
-    <app-code-display [sourceCode]="primeNgStyleCode"></app-code-display>
-  </section>
-
-  <!-- Fluid Layout Example -->
-  <section class="demo-section">
-    <h2>Fluid Layout</h2>
-    <form
-      [formGroup]="fluidForm"
-      (ngSubmit)="onSubmit('fluid')"
-      class="demo-form"
-    >
-      <div class="form-row">
+    <!-- Fluid Layout Example -->
+    <app-demo-card title="Fluid Layout" [sourceCode]="codeExamples.fluid">
+      <form
+        [formGroup]="fluidForm"
+        (ngSubmit)="onSubmit(fluidForm, 'fluid')"
+        class="demo-form"
+      >
         <i-multi-select
-          label="Fluid Multi Select"
-          [options]="skills"
+          label="Fluid Multi-Select"
+          [options]="selectData.skills"
+          optionLabel="label"
+          optionValue="value"
           [fluid]="true"
           placeholder="Select options"
-          formControlName="fluidMultiSelect"
+          formControlName="fluidSelect"
         >
         </i-multi-select>
+
+        <i-button
+          type="submit"
+          severity="primary"
+        >Submit Fluid Form</i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Features Overview -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
       </div>
-
-      <button type="submit" class="submit-btn">Submit Fluid Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="fluidMultiSelectCode"></app-code-display>
-  </section>
-
-  <!-- Features Demonstration -->
-  <section class="demo-section">
-    <h2>Features</h2>
-    <ul>
-      <li>
-        <strong>Reactive Forms:</strong> Full integration with Angular reactive
-        forms
-      </li>
-      <li>
-        <strong>Search/Filter:</strong> Built-in search functionality to filter
-        options
-      </li>
-      <li>
-        <strong>Chip Display:</strong> Selected items displayed as removable
-        chips
-      </li>
-      <li>
-        <strong>Custom Labels:</strong> Configure option label and value
-        properties
-      </li>
-      <li>
-        <strong>Validation Support:</strong> Works with Angular form validators
-      </li>
-      <li><strong>Fluid Layout:</strong> Responsive width to fit container</li>
-      <li><strong>Clear All:</strong> Option to clear all selections</li>
-      <li>
-        <strong>Disabled State:</strong> Support for disabled form controls
-      </li>
-    </ul>
-  </section>
+    </app-demo-card>
+  </div>
 </div>

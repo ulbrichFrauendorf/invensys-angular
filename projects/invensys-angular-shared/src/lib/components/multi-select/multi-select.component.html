@@ -19,13 +19,13 @@
       [hideText]="
         value && value.length > 0 && value.length <= maxSelectedLabels
       "
+      [externalInvalid]="showErrors"
+      [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
       readonly
     >
       <!-- Selected chips overlay (positioned above the input) -->
-      <div
-        class="i-multi-select-chips-overlay"
-        *ngIf="value && value.length > 0 && value.length <= maxSelectedLabels"
-      >
+      @if (value && value.length > 0 && value.length <= maxSelectedLabels) {
+      <div class="i-multi-select-chips-overlay">
         <i-chip
           *ngFor="let selectedValue of value; trackBy: trackByValue"
           [label]="getSelectedLabels()[value.indexOf(selectedValue)]"
@@ -33,14 +33,16 @@
           (onRemove)="removeSelectedItem(selectedValue, $event)"
         ></i-chip>
       </div>
+      }
 
       <!-- Icons overlay on the input -->
       <div class="i-multi-select-icons-overlay">
+        @if (showClear && value && value.length > 0 && !disabled) {
         <i
-          *ngIf="showClear && value && value.length > 0 && !disabled"
           class="pi pi-times i-multi-select-clear"
           (click)="clearSelection(); $event.stopPropagation()"
         ></i>
+        }
         <i
           class="pi pi-chevron-down i-multi-select-arrow"
           [class.flipped]="isOpen"
@@ -49,8 +51,10 @@
     </i-input-text>
   </div>
 
-  <div class="i-multi-select-dropdown" *ngIf="isOpen" [class.open]="isOpen">
-    <div class="i-multi-select-filter" *ngIf="filter">
+  @if (isOpen) {
+  <div class="i-multi-select-dropdown" [class.open]="isOpen">
+    @if (filter) {
+    <div class="i-multi-select-filter">
       <i-input-text
         #searchInput
         [useFloatLabel]="false"
@@ -61,6 +65,7 @@
       >
       </i-input-text>
     </div>
+    }
 
     <div class="i-multi-select-options">
       <div
@@ -80,12 +85,10 @@
         </span>
       </div>
 
-      <div
-        *ngIf="filteredOptions.length === 0"
-        class="i-multi-select-no-options"
-      >
-        No options found
-      </div>
+      @if (filteredOptions.length === 0) {
+      <div class="i-multi-select-no-options">No options found</div>
+      }
     </div>
   </div>
+  }
 </div>

@@ -24,6 +24,8 @@ export class IInputText implements ControlValueAccessor {
   @Input() hideText = false;
   @Input() useFloatLabel = true;
   @Input() placeholder?: string;
+  @Input() externalInvalid = false; // Allow parent to override validation state
+  @Input() externalErrorMessage?: string; // Allow parent to provide error message
 
   value: string | null = null;
   disabled = false;
@@ -70,6 +72,8 @@ export class IInputText implements ControlValueAccessor {
   }
 
   get showErrors(): boolean {
+    // Use external validation state if provided, otherwise use internal
+    if (this.externalInvalid) return true;
     const c = this.control;
     return !!(c && c.invalid && c.dirty);
   }
@@ -81,6 +85,11 @@ export class IInputText implements ControlValueAccessor {
   }
 
   getErrorMessage(): string | null {
+    // Use external error message if provided
+    if (this.externalInvalid && this.externalErrorMessage) {
+      return this.externalErrorMessage;
+    }
+
     const key = this.firstErrorKey;
     if (!key) return null;
     const c = this.control;

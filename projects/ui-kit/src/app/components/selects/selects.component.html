@@ -1,105 +1,91 @@
 <div class="selects-demo">
-  <h1>Select Components</h1>
-  <p>
-    Dropdown select components with filtering, form integration, and reactive
-    forms support.
-  </p>
+  <header class="demo-header">
+    <h1>Select Components</h1>
+    <p>
+      Dropdown select components with filtering, form integration, and reactive
+      forms support. Perfect for option selection with search capabilities.
+    </p>
+  </header>
 
-  <!-- Basic Select Examples -->
-  <section class="demo-section">
-    <h2>Basic Select</h2>
-    <form
-      [formGroup]="basicForm"
-      (ngSubmit)="onSubmit('basic')"
-      class="demo-form"
+  <div class="cards-container">
+    <!-- Basic Select Examples -->
+    <app-demo-card
+      title="Basic Select Options"
+      [sourceCode]="codeExamples.basic"
     >
-      <div class="form-row">
-        <i-select
-          label="Country"
-          [options]="countries"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select a country"
-          formControlName="country"
-        >
-        </i-select>
-      </div>
+      <form [formGroup]="basicForm" class="demo-form">
+        <div class="input-grid">
+          <i-select
+            label="Country"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select a country"
+            formControlName="country"
+          />
 
-      <div class="form-row">
-        <i-select
-          label="Status"
-          [options]="statuses"
-          placeholder="Select status"
-          formControlName="status"
-        >
-        </i-select>
-      </div>
+          <i-select
+            label="Status"
+            [options]="selectData.statuses"
+            placeholder="Select status"
+            formControlName="status"
+          />
 
-      <div class="form-row">
-        <i-select
-          label="Preselected Country"
-          [options]="countries"
-          placeholder="Preselected value"
-          formControlName="preselected"
-        >
-        </i-select>
-      </div>
+          <i-select
+            label="Preselected Country"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Preselected value"
+            formControlName="preselected"
+          />
 
-      <div class="form-row">
-        <i-select
-          label="Disabled Select"
-          [options]="countries"
-          placeholder="This is disabled"
-          formControlName="disabled"
-        >
-        </i-select>
-      </div>
+          <i-select
+            label="Disabled Select"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="This is disabled"
+            formControlName="disabled"
+          />
+        </div>
 
-      <button type="submit" class="submit-btn">Submit Basic Form</button>
-    </form>
+        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+          Submit Basic Form
+        </i-button>
+      </form>
+    </app-demo-card>
 
-    <app-code-display [sourceCode]="basicSelectCode"></app-code-display>
-  </section>
-
-  <!-- Validation Example -->
-  <section class="demo-section">
-    <h2>Required Validation</h2>
-    <form
-      [formGroup]="validationForm"
-      (ngSubmit)="onSubmit('validation')"
-      class="demo-form"
+    <!-- Validation Example -->
+    <app-demo-card
+      title="Required Validation"
+      [sourceCode]="codeExamples.validation"
     >
-      <div class="form-row">
+      <form [formGroup]="validationForm" class="demo-form">
         <i-select
           label="Status (Required)"
-          [options]="statuses"
+          [options]="selectData.statuses"
           placeholder="Select status"
           formControlName="status"
+        />
+
+        <i-button
+          severity="primary"
+          (click)="onSubmit(validationForm, 'validation')"
         >
-        </i-select>
-      </div>
+          Submit Validation Form
+        </i-button>
+      </form>
+    </app-demo-card>
 
-      <button type="submit" class="submit-btn">Submit Validation Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="requiredSelectCode"></app-code-display>
-  </section>
-
-  <!-- Custom Configuration Example -->
-  <section class="demo-section">
-    <h2>Custom Configuration (Like PrimeNG)</h2>
-    <p>
-      This example mimics the PrimeNG dropdown usage from your example with
-      filtering and clear options.
-    </p>
-    <form
-      [formGroup]="customForm"
-      (ngSubmit)="onSubmit('custom')"
-      class="demo-form"
+    <!-- Advanced Features -->
+    <app-demo-card
+      title="Advanced Features (Filtering & Clear)"
+      [sourceCode]="codeExamples.advanced"
     >
-      <div class="form-row">
+      <form [formGroup]="advancedForm" class="demo-form">
         <i-select
-          [options]="reports"
+          [options]="selectData.reports"
           [filter]="true"
           [showClear]="true"
           filterBy="name"
@@ -109,38 +95,50 @@
           formControlName="selectedReport"
           (onClear)="onReportClear()"
           (onChange)="onReportChange()"
+        />
+
+        <i-button
+          severity="primary"
+          (click)="onSubmit(advancedForm, 'advanced')"
         >
-        </i-select>
-      </div>
+          Submit Advanced Form
+        </i-button>
+      </form>
+    </app-demo-card>
 
-      <button type="submit" class="submit-btn">Submit Custom Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="reportSelectCode"></app-code-display>
-  </section>
-
-  <!-- Fluid Layout Example -->
-  <section class="demo-section">
-    <h2>Fluid Layout</h2>
-    <form
-      [formGroup]="fluidForm"
-      (ngSubmit)="onSubmit('fluid')"
-      class="demo-form"
-    >
-      <div class="form-row">
+    <!-- Fluid Layout -->
+    <app-demo-card title="Fluid Layout" [sourceCode]="codeExamples.fluid">
+      <form [formGroup]="fluidForm" class="demo-form">
         <i-select
           label="Fluid Select"
-          [options]="countries"
+          [options]="selectData.countries"
+          optionLabel="label"
+          optionValue="value"
           [fluid]="true"
           placeholder="Select option"
           formControlName="fluidSelect"
+        />
+
+        <i-button
+          severity="primary"
+          [fluid]="true"
+          (click)="onSubmit(fluidForm, 'fluid')"
         >
-        </i-select>
+          Submit Fluid Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
       </div>
-
-      <button type="submit" class="submit-btn">Submit Fluid Form</button>
-    </form>
-
-    <app-code-display [sourceCode]="fluidSelectCode"></app-code-display>
-  </section>
+    </app-demo-card>
+  </div>
 </div>

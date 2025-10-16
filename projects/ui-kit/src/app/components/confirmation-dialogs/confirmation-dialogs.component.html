@@ -1,17 +1,79 @@
-<app-code-display [sourceCode]="basicConfirmationCode">
-  <i-button [severity]="'danger'" (click)="showBasicConfirmation()">
-    Delete Item
-  </i-button>
-</app-code-display>
+<div class="confirmation-dialogs-demo">
+  <header class="demo-header">
+    <h1>Confirmation Dialog Components</h1>
+    <p>
+      Service-based confirmation dialogs for user actions that require explicit
+      confirmation. Perfect for delete operations, unsaved changes, and other
+      critical user decisions.
+    </p>
+  </header>
 
-<app-code-display [sourceCode]="customConfirmationCode">
-  <i-button [severity]="'warning'" (click)="showCustomConfirmation()">
-    Unlink Report
-  </i-button>
-</app-code-display>
+  <div class="cards-container">
+    <!-- Basic Confirmation -->
+    <app-demo-card title="Basic Confirmation" [sourceCode]="codeExamples.basic">
+      <div class="demo-content">
+        <p>Simple confirmation dialog with standard accept/reject options.</p>
+        <i-button
+          severity="danger"
+          (click)="showBasicConfirmation()"
+        >Delete Item</i-button>
+      </div>
+    </app-demo-card>
 
-<app-code-display [sourceCode]="discardChangesCode">
-  <i-button [severity]="'secondary'" [outlined]="true" (click)="showDiscardChanges()">
-    Discard Changes
-  </i-button>
-</app-code-display>
+    <!-- Custom Labels -->
+    <app-demo-card
+      title="Custom Button Labels"
+      [sourceCode]="codeExamples.custom"
+    >
+      <div class="demo-content">
+        <p>Customize the accept and reject button text for specific actions.</p>
+        <i-button
+          severity="warning"
+          (click)="showCustomConfirmation()"
+        >Unlink Report</i-button>
+      </div>
+    </app-demo-card>
+
+    <!-- Discard Changes -->
+    <app-demo-card
+      title="Discard Changes Dialog"
+      [sourceCode]="codeExamples.discard"
+    >
+      <div class="demo-content">
+        <p>Common pattern for handling unsaved changes before navigation.</p>
+        <i-button
+          severity="secondary"
+          [outlined]="true"
+          (click)="showDiscardChanges()"
+        >Discard Changes</i-button>
+      </div>
+    </app-demo-card>
+
+    <!-- Dangerous Action -->
+    <app-demo-card
+      title="Dangerous Action Warning"
+      [sourceCode]="codeExamples.dangerous"
+    >
+      <div class="demo-content">
+        <p>Strong warning for irreversible actions with clear consequences.</p>
+        <i-button
+          severity="danger"
+          [raised]="true"
+          (click)="showDangerousAction()"
+        >Delete Forever</i-button>
+      </div>
+    </app-demo-card>
+
+    <!-- Features Overview -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+  </div>
+</div>

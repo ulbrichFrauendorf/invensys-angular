@@ -24,12 +24,9 @@
       [style.opacity]="checked ? '1' : '0'"
     ></i>
   </div>
-  <label
-    *ngIf="label"
-    [for]="id || componentId"
-    class="i-checkbox-label"
-    (click)="toggle()"
-  >
+  @if (label) {
+  <label [for]="id || componentId" class="i-checkbox-label" (click)="toggle()">
     {{ label }}
   </label>
+  }
 </div>

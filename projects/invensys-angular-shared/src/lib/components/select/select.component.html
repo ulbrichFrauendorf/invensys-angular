@@ -9,15 +9,18 @@
       [errorMessages]="errorMessages"
       [(ngModel)]="inputValue"
       [type]="'text'"
+      [externalInvalid]="showErrors"
+      [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
       readonly
     >
       <!-- Icons overlay on the input -->
       <div class="i-select-icons">
+        @if (showClear && value !== null && value !== undefined) {
         <i
-          *ngIf="showClear && value !== null && value !== undefined"
           class="pi pi-times i-select-clear"
           (click)="clearSelection(); $event.stopPropagation()"
         ></i>
+        }
         <i
           class="pi pi-chevron-down i-multi-select-arrow"
           [class.flipped]="isOpen"
@@ -27,8 +30,10 @@
   </div>
 
   <!-- Dropdown overlay -->
-  <div class="i-select-dropdown" *ngIf="isOpen">
-    <div class="i-select-filter" *ngIf="filter">
+  @if (isOpen) {
+  <div class="i-select-dropdown">
+    @if (filter) {
+    <div class="i-select-filter">
       <i-input-text
         #searchInput
         [useFloatLabel]="false"
@@ -39,6 +44,7 @@
       >
       </i-input-text>
     </div>
+    }
 
     <div class="i-select-options">
       <div
@@ -50,9 +56,10 @@
         {{ getOptionLabel(option) }}
       </div>
 
-      <div *ngIf="filteredOptions.length === 0" class="i-select-no-options">
-        No options found
-      </div>
+      @if (filteredOptions.length === 0) {
+      <div class="i-select-no-options">No options found</div>
+      }
     </div>
   </div>
+  }
 </div>

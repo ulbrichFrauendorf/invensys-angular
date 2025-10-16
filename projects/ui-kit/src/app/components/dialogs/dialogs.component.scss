@@ -1,90 +1,34 @@
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+@import "../shared-demo-styles.scss";
+
+.dialogs-demo {
+  @extend .demo-component;
 }
 
-.btn {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  &.btn-primary {
-    background: #3b82f6;
-    color: white;
-
-    &:hover {
-      background: #2563eb;
-      transform: translateY(-1px);
-    }
-  }
-
-  &.btn-outline {
-    background: transparent;
-    color: #9ca3af;
-    border: 1px solid #4b5563;
-
-    &:hover {
-      background: #374151;
-      color: #f9fafb;
-      border-color: #6b7280;
-    }
-  }
-
-  &.btn-secondary {
-    background: #6b7280;
-    color: white;
-
-    &:hover {
-      background: #4b5563;
-    }
-  }
-}
-
-// Basic dialog content styles
-.basic-dialog-content {
+.dialog-content {
   h4 {
-    margin: 0 0 1rem 0;
-    color: #f9fafb;
-    font-size: 1.125rem;
+    color: var(--primary-color, #007bff);
+    margin-bottom: 16px;
+    font-size: 1.1rem;
   }
 
   p {
-    margin: 0.5rem 0;
-    color: #e5e7eb;
+    color: var(--text-color, #212529);
+    margin-bottom: 16px;
     line-height: 1.6;
   }
 
   ul {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-    color: #e5e7eb;
+    margin: 16px 0;
+    padding-left: 24px;
+    color: var(--text-color, #212529);
 
     li {
-      margin: 0.25rem 0;
+      margin: 4px 0;
+      line-height: 1.5;
+
+      strong {
+        color: var(--primary-color, #007bff);
+      }
     }
-  }
-}
-
-// Responsive design
-@media (max-width: 768px) {
-  .examples-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .demo-container {
-    padding: 1rem;
-  }
-
-  .example-section {
-    padding: 1rem;
   }
 }

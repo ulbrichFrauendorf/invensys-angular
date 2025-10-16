@@ -20,13 +20,14 @@
       tooltipPosition="below"
       [tooltipDelay]="100"
     />
+    @if (useFloatLabel) {
     <label
-      *ngIf="useFloatLabel"
       [for]="id || componentId"
       class="i-label"
       [class.floated]="forceFloated || (value && value.length) || false"
       >{{ label }}</label
     >
+    }
     <ng-content></ng-content>
   </div>
 </div>

@@ -9,12 +9,15 @@ import {
   OnInit,
   OnChanges,
   forwardRef,
+  Injector,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
+  NgControl,
+  AbstractControl,
 } from '@angular/forms';
 import { IInputText } from '../input-text/input-text.component';
 
@@ -89,6 +92,15 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
   private onChangeCallback: (value: any) => void = () => {};
   private onTouchedCallback: () => void = () => {};
 
+  public ngControl: NgControl | null = null;
+
+  constructor(private injector: Injector) {
+    // Get NgControl in a non-circular way
+    setTimeout(() => {
+      this.ngControl = this.injector.get(NgControl, null);
+    });
+  }
+
   ngOnInit() {
     this.updateFilteredOptions();
   }
@@ -103,7 +115,11 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
       this.filterValue = '';
       this.updateFilteredOptions();
       setTimeout(() => {
-        if (this.filter && this.searchInputRef) {
+        if (
+          this.filter &&
+          this.searchInputRef &&
+          this.searchInputRef.nativeElement
+        ) {
           this.searchInputRef.nativeElement.focus();
         }
       });
@@ -202,5 +218,38 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     // Implementation can be added if disabled state is needed
+  }
+
+  // Validation helper methods
+  get control(): AbstractControl | null {
+    return this.ngControl ? this.ngControl.control : null;
+  }
+
+  get showErrors(): boolean {
+    const c = this.control;
+    return !!(c && c.invalid && c.dirty);
+  }
+
+  get firstErrorKey(): string | null {
+    const c = this.control;
+    if (!c || !c.errors) return null;
+    return Object.keys(c.errors)[0] || null;
+  }
+
+  getErrorMessage(): string | null {
+    const key = this.firstErrorKey;
+    if (!key) return null;
+    const c = this.control;
+    if (this.errorMessages && this.errorMessages[key])
+      return this.errorMessages[key];
+    const err = c?.errors || {};
+    switch (key) {
+      case 'required':
+        return `${this.label} is required`;
+      default:
+        return err[key] && typeof err[key] === 'string'
+          ? err[key]
+          : 'Invalid selection';
+    }
   }
 }

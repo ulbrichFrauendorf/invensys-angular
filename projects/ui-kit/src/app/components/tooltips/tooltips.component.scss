@@ -1,77 +1,54 @@
+@import "../shared-demo-styles.scss";
+
+.tooltips-demo {
+  @extend .demo-component;
+}
+
+.tooltip-examples {
+  @extend .demo-examples;
+}
+
 .tooltip-span {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  background-color: var(--surface-100, #f8f9fa);
+  border: 1px solid var(--surface-300, #dee2e6);
   border-radius: 4px;
   cursor: pointer;
-  margin: 8px;
+  color: var(--text-color, #212529);
 
   &:hover {
-    background-color: #e0e0e0;
+    background-color: var(--surface-200, #e9ecef);
   }
 }
 
 .tooltip-div {
   display: inline-block;
   padding: 16px;
-  background-color: #e3f2fd;
-  border: 2px solid #2196f3;
+  background-color: var(--info-100, #e3f2fd);
+  border: 2px solid var(--info-500, #2196f3);
   border-radius: 8px;
   cursor: pointer;
-  margin: 8px;
   min-width: 120px;
   text-align: center;
+  color: var(--info-700, #1976d2);
 
   &:hover {
-    background-color: #bbdefb;
+    background-color: var(--info-200, #bbdefb);
   }
 }
 
 .tooltip-paragraph {
   display: inline-block;
   padding: 12px;
-  background-color: #fff3e0;
-  border-left: 4px solid #ff9800;
+  background-color: var(--warning-100, #fff3e0);
+  border-left: 4px solid var(--warning-500, #ff9800);
   border-radius: 4px;
-  margin: 8px;
   max-width: 300px;
   cursor: pointer;
+  color: var(--warning-700, #f57c00);
 
   &:hover {
-    background-color: #ffe0b2;
-  }
-}
-
-// Dark theme adjustments
-@media (prefers-color-scheme: dark) {
-  .tooltip-span {
-    background-color: #2a2a2a;
-    border-color: #555;
-    color: white;
-
-    &:hover {
-      background-color: #3a3a3a;
-    }
-  }
-
-  .tooltip-div {
-    background-color: #1a237e;
-    border-color: #3f51b5;
-    color: white;
-
-    &:hover {
-      background-color: #283593;
-    }
-  }
-
-  .tooltip-paragraph {
-    background-color: #3e2723;
-    border-left-color: #ff9800;
-    color: white;
-
-    &:hover {
-      background-color: #5d4037;
-    }
+    background-color: var(--warning-200, #ffe0b2);
   }
 }

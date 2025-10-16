@@ -1,49 +1,92 @@
-<form [formGroup]="basicForm">
-  <app-code-display [sourceCode]="textInputCode">
-    <i-input-text label="Text Input" type="text" id="text-input" formControlName="textInput">
-    </i-input-text>
-  </app-code-display>
+<div class="input-texts-demo">
+  <header class="demo-header">
+    <h1>Input Text Components</h1>
+    <p>
+      Versatile input text components with floating labels, validation support,
+      and multiple input types for all your form needs.
+    </p>
+  </header>
 
-  <app-code-display [sourceCode]="emailInputCode">
-    <i-input-text label="Email Input" type="email" id="email-input" formControlName="emailInput">
-    </i-input-text>
-  </app-code-display>
-</form>
+  <div class="cards-container">
+    <!-- Basic Input Types -->
+    <app-demo-card title="Basic Input Types" [sourceCode]="codeExamples.basic">
+      <form [formGroup]="basicForm" class="demo-form">
+        <div class="input-grid">
+          @for (input of inputExamples.basic; track input.formControlName) {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+          />
+          }
+        </div>
 
-<form [formGroup]="validationForm">
-  <app-code-display [sourceCode]="requiredFieldCode">
-    <i-input-text label="Required Field" type="text" id="required-field" formControlName="requiredField">
-    </i-input-text>
-  </app-code-display>
+        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+          Submit Basic Form
+        </i-button>
+      </form>
+    </app-demo-card>
 
-  <app-code-display [sourceCode]="minLengthFieldCode">
-    <i-input-text label="Min Length (5 chars)" type="text" id="minlength-field" formControlName="minLengthField">
-    </i-input-text>
-  </app-code-display>
-</form>
+    <!-- Validation Examples -->
+    <app-demo-card
+      title="Validation Examples"
+      [sourceCode]="codeExamples.validation"
+    >
+      <form [formGroup]="validationForm" class="demo-form">
+        <div class="input-grid">
+          @for (input of inputExamples.validation; track input.formControlName)
+          {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+          />
+          }
+        </div>
 
-<form [formGroup]="customErrorForm">
-  <app-code-display [sourceCode]="usernameFieldCode">
-    <i-input-text label="Username" type="text" id="username-field" formControlName="usernameField"
-      [errorMessages]="usernameErrors">
-    </i-input-text>
-  </app-code-display>
+        <i-button
+          severity="primary"
+          (click)="onSubmit(validationForm, 'validation')"
+        >
+          Submit Validation Form
+        </i-button>
+      </form>
+    </app-demo-card>
 
-  <app-code-display [sourceCode]="phoneFieldCode">
-    <i-input-text label="Phone Number" type="tel" id="phone-field" formControlName="phoneField"
-      [errorMessages]="phoneErrors">
-    </i-input-text>
-  </app-code-display>
-</form>
+    <!-- Fluid Layout -->
+    <app-demo-card title="Fluid Layout" [sourceCode]="codeExamples.fluid">
+      <form [formGroup]="fluidForm" class="demo-form">
+        <div class="input-stack">
+          @for (input of inputExamples.fluid; track input.formControlName) {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+            [fluid]="true"
+          />
+          }
+        </div>
 
-<form [formGroup]="fluidForm">
-  <app-code-display [sourceCode]="fluidInputsCode">
-    <i-input-text label="Fluid Text Input" type="text" id="fluid-text" formControlName="fluidText" [fluid]="true">
-    </i-input-text>
-    <i-input-text label="Fluid Email Input" type="email" id="fluid-email" formControlName="fluidEmail" [fluid]="true">
-    </i-input-text>
-    <i-input-text label="Fluid Password Input" type="password" id="fluid-password" formControlName="fluidPassword"
-      [fluid]="true">
-    </i-input-text>
-  </app-code-display>
-</form>
+        <i-button
+          severity="primary"
+          [fluid]="true"
+          (click)="onSubmit(fluidForm, 'fluid')"
+        >
+          Submit Fluid Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+  </div>
+</div>
