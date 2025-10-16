@@ -15,6 +15,11 @@
     width: 100%;
   }
 
+  &.i-input--no-float {
+    margin-top: 0;
+    height: auto;
+  }
+
   .float-label {
     position: relative;
     display: block;
@@ -31,6 +36,11 @@
       outline: none;
     }
 
+    .i-input.hide-text {
+      color: transparent;
+      text-shadow: none;
+    }
+
     .i-label {
       position: absolute;
       left: 8px;
@@ -45,6 +55,25 @@
     .i-input:not(:placeholder-shown) + .i-label,
     .i-label.floated {
       top: -20px;
+    }
+  }
+
+  .normal-input {
+    .i-input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .i-input:focus {
+      outline: none;
+    }
+
+    .i-input.hide-text {
+      color: transparent;
+      text-shadow: none;
     }
   }
 }

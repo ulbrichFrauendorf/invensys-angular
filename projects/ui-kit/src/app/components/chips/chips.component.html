@@ -1,0 +1,109 @@
+<div class="chips-demo">
+  <h1>Chip Components</h1>
+  <p>
+    Chip components for displaying tags, selections, and other compact
+    information. Similar to PrimeNG's p-chip and p-chips components.
+  </p>
+
+  <!-- Basic Chip Examples -->
+  <section class="demo-section">
+    <h2>Basic Chips</h2>
+    <div class="chip-examples">
+      <i-chip label="Action"></i-chip>
+      <i-chip label="Comedy"></i-chip>
+      <i-chip label="Mystery"></i-chip>
+      <i-chip
+        label="Thriller"
+        [removable]="true"
+        (onRemove)="onChipRemove($event)"
+      ></i-chip>
+      <i-chip label="Apple" icon="pi pi-apple"></i-chip>
+    </div>
+
+    <app-code-display [sourceCode]="basicChipCode"></app-code-display>
+  </section>
+
+  <!-- Chips Input Examples -->
+  <section class="demo-section">
+    <h2>Chips Input (Tags)</h2>
+    <form
+      [formGroup]="basicForm"
+      (ngSubmit)="onSubmit('basic')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-chips
+          placeholder="Enter tags and press Enter"
+          formControlName="tags"
+        ></i-chips>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Basic Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="chipsInputCode"></app-code-display>
+  </section>
+
+  <!-- Validation Example -->
+  <section class="demo-section">
+    <h2>Required Validation</h2>
+    <form
+      [formGroup]="validationForm"
+      (ngSubmit)="onSubmit('validation')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-chips
+          placeholder="Enter at least 2 tags"
+          formControlName="requiredTags"
+        ></i-chips>
+        <div
+          *ngIf="
+            validationForm.get('requiredTags')?.invalid &&
+            validationForm.get('requiredTags')?.touched
+          "
+          class="error-message"
+        >
+          At least 2 tags are required
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Validation Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="validationCode"></app-code-display>
+  </section>
+
+  <!-- Features Demonstration -->
+  <section class="demo-section">
+    <h2>Features</h2>
+    <ul>
+      <li>
+        <strong>Basic Chips:</strong> Display static information as compact
+        chips
+      </li>
+      <li><strong>Removable Chips:</strong> Chips with remove functionality</li>
+      <li>
+        <strong>Icon Support:</strong> Chips can display icons (using
+        PrimeIcons)
+      </li>
+      <li>
+        <strong>Chips Input:</strong> Interactive input for creating multiple
+        chips/tags
+      </li>
+      <li>
+        <strong>Reactive Forms:</strong> Full integration with Angular reactive
+        forms
+      </li>
+      <li><strong>Float Labels:</strong> PrimeNG-style float label support</li>
+      <li><strong>Validation:</strong> Works with Angular form validators</li>
+      <li>
+        <strong>Keyboard Support:</strong> Enter, Tab, and Backspace key
+        handling
+      </li>
+      <li>
+        <strong>Paste Support:</strong> Parse multiple values from clipboard
+      </li>
+    </ul>
+  </section>
+</div>

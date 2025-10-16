@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { IInputText } from '../../../../../invensys-angular-shared/src/lib/components/input-text/input-text.component';
+import { IInputText } from '@shared/components/input-text/input-text.component';
 import { CodeDisplayComponent } from '../code-display/code-display.component';
 
 @Component({

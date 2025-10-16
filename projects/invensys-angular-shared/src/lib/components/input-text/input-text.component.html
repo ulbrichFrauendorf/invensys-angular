@@ -2,27 +2,31 @@
   class="i-input-wrapper"
   [class.invalid]="showErrors"
   [class.i-input--fluid]="fluid"
+  [class.i-input--no-float]="!useFloatLabel"
   [attr.id]="componentId"
 >
-  <div class="float-label">
+  <div [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'">
     <input
       [id]="id || componentId"
       [type]="type"
       [disabled]="disabled"
-      [value]="value || ''"
+      [value]="hideText ? '' : value || ''"
       (input)="handleInput($event)"
       (blur)="touch()"
-      placeholder=" "
+      [placeholder]="useFloatLabel ? ' ' : placeholder || label"
       class="i-input"
+      [class.hide-text]="hideText"
       [iTooltip]="showErrors ? getErrorMessage() || '' : ''"
       tooltipPosition="below"
       [tooltipDelay]="100"
     />
     <label
+      *ngIf="useFloatLabel"
       [for]="id || componentId"
       class="i-label"
-      [class.floated]="(value && value.length) || false"
+      [class.floated]="forceFloated || (value && value.length) || false"
       >{{ label }}</label
     >
+    <ng-content></ng-content>
   </div>
 </div>

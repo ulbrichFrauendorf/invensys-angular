@@ -20,11 +20,15 @@ export class IInputText implements ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() id?: string;
   @Input() fluid = false;
+  @Input() forceFloated = false;
+  @Input() hideText = false;
+  @Input() useFloatLabel = true;
+  @Input() placeholder?: string;
 
   value: string | null = null;
   disabled = false;
 
-  componentId = UniqueComponentId('i-input-text-');
+  componentId = UniqueComponentId('i-input-text');
 
   private onChange: (v: string | null) => void = () => {};
   private onTouched: () => void = () => {};

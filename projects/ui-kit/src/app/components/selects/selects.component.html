@@ -1,0 +1,146 @@
+<div class="selects-demo">
+  <h1>Select Components</h1>
+  <p>
+    Dropdown select components with filtering, form integration, and reactive
+    forms support.
+  </p>
+
+  <!-- Basic Select Examples -->
+  <section class="demo-section">
+    <h2>Basic Select</h2>
+    <form
+      [formGroup]="basicForm"
+      (ngSubmit)="onSubmit('basic')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-select
+          label="Country"
+          [options]="countries"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Select a country"
+          formControlName="country"
+        >
+        </i-select>
+      </div>
+
+      <div class="form-row">
+        <i-select
+          label="Status"
+          [options]="statuses"
+          placeholder="Select status"
+          formControlName="status"
+        >
+        </i-select>
+      </div>
+
+      <div class="form-row">
+        <i-select
+          label="Preselected Country"
+          [options]="countries"
+          placeholder="Preselected value"
+          formControlName="preselected"
+        >
+        </i-select>
+      </div>
+
+      <div class="form-row">
+        <i-select
+          label="Disabled Select"
+          [options]="countries"
+          placeholder="This is disabled"
+          formControlName="disabled"
+        >
+        </i-select>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Basic Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="basicSelectCode"></app-code-display>
+  </section>
+
+  <!-- Validation Example -->
+  <section class="demo-section">
+    <h2>Required Validation</h2>
+    <form
+      [formGroup]="validationForm"
+      (ngSubmit)="onSubmit('validation')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-select
+          label="Status (Required)"
+          [options]="statuses"
+          placeholder="Select status"
+          formControlName="status"
+        >
+        </i-select>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Validation Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="requiredSelectCode"></app-code-display>
+  </section>
+
+  <!-- Custom Configuration Example -->
+  <section class="demo-section">
+    <h2>Custom Configuration (Like PrimeNG)</h2>
+    <p>
+      This example mimics the PrimeNG dropdown usage from your example with
+      filtering and clear options.
+    </p>
+    <form
+      [formGroup]="customForm"
+      (ngSubmit)="onSubmit('custom')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-select
+          [options]="reports"
+          [filter]="true"
+          [showClear]="true"
+          filterBy="name"
+          optionLabel="name"
+          optionValue="value"
+          placeholder="Select Report"
+          formControlName="selectedReport"
+          (onClear)="onReportClear()"
+          (onChange)="onReportChange()"
+        >
+        </i-select>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Custom Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="reportSelectCode"></app-code-display>
+  </section>
+
+  <!-- Fluid Layout Example -->
+  <section class="demo-section">
+    <h2>Fluid Layout</h2>
+    <form
+      [formGroup]="fluidForm"
+      (ngSubmit)="onSubmit('fluid')"
+      class="demo-form"
+    >
+      <div class="form-row">
+        <i-select
+          label="Fluid Select"
+          [options]="countries"
+          [fluid]="true"
+          placeholder="Select option"
+          formControlName="fluidSelect"
+        >
+        </i-select>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Fluid Form</button>
+    </form>
+
+    <app-code-display [sourceCode]="fluidSelectCode"></app-code-display>
+  </section>
+</div>

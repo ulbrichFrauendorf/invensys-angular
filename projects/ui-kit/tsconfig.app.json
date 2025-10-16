@@ -6,8 +6,9 @@
     "outDir": "../../out-tsc/app",
     "composite": true,
     "declaration": true,
-    "types": []
+    "types": [],
+    "rootDir": "../../"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../invensys-angular-shared/src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts"]
 }
