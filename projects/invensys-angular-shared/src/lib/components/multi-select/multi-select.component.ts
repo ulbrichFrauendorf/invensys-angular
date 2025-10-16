@@ -18,6 +18,7 @@ import {
 } from '@angular/forms';
 import { IInputText } from '../input-text/input-text.component';
 import { IChip } from '../chip/chip.component';
+import { ICheckbox } from '../checkbox/checkbox.component';
 
 export interface MultiSelectOption {
   value: any;
@@ -28,7 +29,7 @@ export interface MultiSelectOption {
 @Component({
   selector: 'i-multi-select',
   standalone: true,
-  imports: [CommonModule, FormsModule, IInputText, IChip],
+  imports: [CommonModule, FormsModule, IInputText, IChip, ICheckbox],
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
   providers: [

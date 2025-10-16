@@ -1,0 +1,35 @@
+<div
+  class="i-checkbox-wrapper"
+  [class.i-checkbox--disabled]="disabled"
+  [class.i-checkbox--readonly]="readonly"
+  [class.i-checkbox--small]="size === 'small'"
+  [class.i-checkbox--medium]="size === 'medium'"
+  [class.i-checkbox--large]="size === 'large'"
+>
+  <div
+    class="i-checkbox"
+    [class.i-checkbox--checked]="checked"
+    (click)="toggle()"
+    [attr.id]="id || componentId"
+    role="checkbox"
+    [attr.aria-checked]="checked"
+    [attr.aria-disabled]="disabled"
+    [attr.aria-readonly]="readonly"
+    tabindex="0"
+    (keydown.space)="$event.preventDefault(); toggle()"
+    (keydown.enter)="$event.preventDefault(); toggle()"
+  >
+    <i
+      class="pi pi-check i-checkbox-icon"
+      [style.opacity]="checked ? '1' : '0'"
+    ></i>
+  </div>
+  <label
+    *ngIf="label"
+    [for]="id || componentId"
+    class="i-checkbox-label"
+    (click)="toggle()"
+  >
+    {{ label }}
+  </label>
+</div>

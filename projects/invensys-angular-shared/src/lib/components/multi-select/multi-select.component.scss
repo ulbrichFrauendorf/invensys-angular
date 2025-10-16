@@ -115,8 +115,7 @@
         }
 
         .i-multi-select-checkbox {
-          margin: 0;
-          cursor: pointer;
+          pointer-events: none; // Let the parent handle clicks
         }
 
         .i-multi-select-option-label {

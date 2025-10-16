@@ -12,6 +12,7 @@ export * from './lib/components/chips/chips.component';
 export * from './lib/components/card/card.component';
 export * from './lib/components/dialog/dialog.component';
 export * from './lib/components/confirmation-dialog/confirmation-dialog.component';
+export * from './lib/components/checkbox/checkbox.component';
 
 export * from './lib/components/empty-state/empty-state.component';
 export * from './lib/components/empty-state-table/empty-state-table.component';

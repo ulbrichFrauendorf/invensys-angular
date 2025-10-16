@@ -69,12 +69,12 @@
         [class.selected]="isOptionSelected(option)"
         (click)="toggleOption(option)"
       >
-        <input
-          type="checkbox"
+        <i-checkbox
           [checked]="isOptionSelected(option)"
+          [readonly]="true"
+          size="small"
           class="i-multi-select-checkbox"
-          readonly
-        />
+        ></i-checkbox>
         <span class="i-multi-select-option-label">
           {{ getOptionLabel(option) }}
         </span>
