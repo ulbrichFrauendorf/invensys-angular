@@ -35,8 +35,6 @@ export class DialogService {
     dialogRef.instance.header = config.header;
     dialogRef.instance.width = config.width || '300px';
     dialogRef.instance.height = config.height;
-    dialogRef.instance.submitLabel = config.submitLabel || 'Submit';
-    dialogRef.instance.cancelLabel = config.cancelLabel || 'Cancel';
     dialogRef.instance.contentStyle = config.contentStyle;
     dialogRef.instance.breakpoints = config.breakpoints;
     dialogRef.instance.closable = config.closable !== false;
@@ -85,6 +83,14 @@ export class DialogService {
 
     document.body.appendChild(dialogRef.location.nativeElement);
 
+    // Subscribe to dialog visibility changes to handle close button, ESC key, and overlay clicks
+    dialogRef.instance.visibleChange.subscribe((visible: boolean) => {
+      if (!visible && !isClosing) {
+        // Dialog was closed via close button, ESC, or overlay click
+        ref.close();
+      }
+    });
+
     // Show the dialog and wait for the next tick to ensure DOM is rendered
     dialogRef.instance.show();
 
@@ -94,13 +100,6 @@ export class DialogService {
     if (dialogContent) {
       dialogContent.appendChild(componentRef.location.nativeElement);
     }
-
-    // Handle dialog close events
-    dialogRef.instance.onHide.subscribe(() => {
-      if (!isClosing) {
-        ref.close();
-      }
-    });
 
     return ref;
   }

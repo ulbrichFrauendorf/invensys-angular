@@ -17,16 +17,20 @@ export interface ConfirmationDialogConfig {
 export class ConfirmationDialogService {
   constructor(private dialogService: DialogService) {}
 
+  acceptLabel?: string;
+  rejectLabel?: string;
+
   async confirm(config: ConfirmationDialogConfig): Promise<DynamicDialogRef> {
     const { ConfirmationDialogComponent } = await import(
       '../confirmation-dialog.component'
     );
 
+    this.acceptLabel = config.acceptLabel || 'Confirm';
+    this.rejectLabel = config.rejectLabel || 'Cancel';
+
     const ref = this.dialogService.open(ConfirmationDialogComponent, {
       header: ' ',
       width: '400px',
-      submitLabel: config.acceptLabel || 'Confirm',
-      cancelLabel: config.rejectLabel || 'Cancel',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',
@@ -38,26 +42,14 @@ export class ConfirmationDialogService {
       },
     });
 
-    // Set up event handlers on the dialog instance
-    if (ref.instance) {
-      const dialogInstance = ref.instance;
-
-      // Subscribe to submit event (accept)
-      dialogInstance.submitEvent.subscribe(() => {
-        if (config.accept) {
-          config.accept();
-        }
-        ref.close('accept');
-      });
-
-      // Subscribe to cancel event (reject)
-      dialogInstance.cancelEvent.subscribe(() => {
-        if (config.reject) {
-          config.reject();
-        }
-        ref.close('reject');
-      });
-    }
+    // Subscribe to dialog close event to execute callbacks
+    ref.onClose.then((result: boolean) => {
+      if (result === true && config.accept) {
+        config.accept();
+      } else if (result === false && config.reject) {
+        config.reject();
+      }
+    });
 
     return ref;
   }

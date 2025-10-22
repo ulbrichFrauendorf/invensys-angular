@@ -3,4 +3,10 @@
     <span class="confirmation-header">{{ header() }}</span>
     <p class="confirmation-message">{{ message() }}</p>
   </div>
+  <i-dialog-actions
+    [submitLabel]="acceptLabel"
+    [cancelLabel]="rejectLabel"
+    (cancelEvent)="onCancel()"
+    (submitEvent)="onConfirm()"
+  ></i-dialog-actions>
 </div>

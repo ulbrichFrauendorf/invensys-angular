@@ -12,39 +12,23 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICard } from '../card/card.component';
-import { IDialogActions } from './inner/dialog-actions/dialog-actions.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
+import { AbstractDialog } from './dialog-base';
 
 @Component({
   selector: 'i-dialog',
-  imports: [CommonModule, ICard, IDialogActions],
+  imports: [CommonModule, ICard],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.scss',
 })
-export class IDialog implements OnInit, OnDestroy {
-  @Input() header?: string;
-  @Input() width: string = '50rem';
-  @Input() height?: string;
-  @Input() closable: boolean = true;
-  @Input() modal: boolean = true;
-  @Input() contentStyle?: { [key: string]: any };
-  @Input() breakpoints?: { [key: string]: string };
-  @Input() visible: boolean = false;
-  @Input() submitLabel = 'Submit';
-  @Input() cancelLabel = 'Cancel';
-
-  @Output() submitEvent = new EventEmitter<void>();
-  @Output() cancelEvent = new EventEmitter<void>();
-
-  @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() onShow = new EventEmitter<void>();
-  @Output() onHide = new EventEmitter<void>();
-
+export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
   @ViewChild('dialogElement', { static: false }) dialogElement?: ElementRef;
 
   componentId = UniqueComponentId('i-dialog-');
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit() {
     if (this.visible) {
@@ -57,17 +41,17 @@ export class IDialog implements OnInit, OnDestroy {
   }
 
   show() {
+    console.log('show dialog');
     this.visible = true;
     this.visibleChange.emit(true);
-    this.onShow.emit();
     document.body.style.overflow = 'hidden';
     this.cdr.detectChanges();
   }
 
   hide() {
+    console.log('hide dialog');
     this.visible = false;
     this.visibleChange.emit(false);
-    this.onHide.emit();
     document.body.style.overflow = '';
   }
 
@@ -88,13 +72,5 @@ export class IDialog implements OnInit, OnDestroy {
     if (this.closable) {
       this.hide();
     }
-  }
-
-  onCancel() {
-    this.cancelEvent.emit();
-  }
-
-  onSubmit() {
-    this.submitEvent.emit();
   }
 }

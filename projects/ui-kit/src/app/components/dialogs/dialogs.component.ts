@@ -5,10 +5,11 @@ import { IButton } from '@shared/components/button/button.component';
 import { DynamicDialogRef } from '@shared/components/dialog/services/dialog.interfaces';
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
+import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 
 @Component({
   selector: 'app-dialogs',
-  imports: [IDialog, IButton, DemoCardComponent],
+  imports: [IDialog, IButton, DemoCardComponent, IDialogActions],
   templateUrl: './dialogs.component.html',
   styleUrl: './dialogs.component.scss',
 })
@@ -26,7 +27,15 @@ export class DialogsComponent {
 this.ref = this.dialogService.open(ExampleDialogComponent, {
   header: 'Example Dynamic Dialog',
   width: '300px',
-  data: { message: 'Hello from Dialog Service!' }
+  data: { message: 'Hello from Dialog Service!' },
+  onSubmit: () => {
+    console.log('Submit clicked!');
+    // Handle submit logic
+  },
+  onCancel: () => {
+    console.log('Cancel clicked!');
+    // Handle cancel logic
+  }
 });
 
 // Button
@@ -112,7 +121,7 @@ this.ref = this.dialogService.open(ExampleDialogComponent, {
   displayExampleDialog() {
     this.ref = this.dialogService.open(ExampleDialogComponent, {
       header: 'Example Dynamic Dialog',
-      width: '300px',
+      width: '600px',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',

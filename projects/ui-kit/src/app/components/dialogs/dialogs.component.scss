@@ -6,13 +6,11 @@
 
 .dialog-content {
   h4 {
-    color: var(--primary-color, #007bff);
     margin-bottom: 16px;
     font-size: 1.1rem;
   }
 
   p {
-    color: var(--text-color, #212529);
     margin-bottom: 16px;
     line-height: 1.6;
   }
@@ -20,15 +18,10 @@
   ul {
     margin: 16px 0;
     padding-left: 24px;
-    color: var(--text-color, #212529);
 
     li {
       margin: 4px 0;
       line-height: 1.5;
-
-      strong {
-        color: var(--primary-color, #007bff);
-      }
     }
   }
 }

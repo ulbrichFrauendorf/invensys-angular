@@ -19,10 +19,9 @@
           Use the DialogService to programmatically open dialogs with
           components.
         </p>
-        <i-button
-          severity="primary"
-          (clicked)="displayExampleDialog()"
-        >Open Dynamic Dialog</i-button>
+        <i-button severity="primary" (clicked)="displayExampleDialog()"
+          >Open Dynamic Dialog</i-button
+        >
       </div>
     </app-demo-card>
 
@@ -40,14 +39,13 @@
           severity="secondary"
           [outlined]="true"
           (clicked)="showBasicDialogModal()"
-        >Open Basic Dialog</i-button>
+          >Open Basic Dialog</i-button
+        >
       </div>
 
       <!-- Basic Dialog Template -->
       <i-dialog
-        [visible]="showBasicDialog"
-        (visibleChange)="showBasicDialog = $event"
-        (onHide)="onBasicDialogHide()"
+        [(visible)]="showBasicDialog"
         [closable]="true"
         header="Basic Dialog Example"
         width="20rem"
@@ -64,6 +62,10 @@
             <li>Click outside to close</li>
           </ul>
         </div>
+        <i-dialog-actions
+          (cancelEvent)="onBasicDialogHide()"
+          (submitEvent)="onBasicDialogHide()"
+        ></i-dialog-actions>
       </i-dialog>
     </app-demo-card>
 
@@ -74,17 +76,17 @@
     >
       <div class="demo-content">
         <p>Dialogs that adapt to different screen sizes using breakpoints.</p>
-        <i-button
-          severity="info"
-          (clicked)="showResponsiveDialogModal()"
-        >Open Responsive Dialog</i-button>
+        <i-button severity="info" (clicked)="showResponsiveDialogModal()"
+          >Open Responsive Dialog</i-button
+        >
       </div>
 
       <!-- Responsive Dialog Template -->
       <i-dialog
-        [visible]="showResponsiveDialog"
-        (visibleChange)="showResponsiveDialog = $event"
+        [(visible)]="showResponsiveDialog"
         (onHide)="onResponsiveDialogHide()"
+        (submitEvent)="onResponsiveDialogHide()"
+        (cancelEvent)="onResponsiveDialogHide()"
         header="Responsive Dialog"
         width="50vw"
         [breakpoints]="{
@@ -111,21 +113,20 @@
     <app-demo-card title="Large Dialog" [sourceCode]="codeExamples.fullscreen">
       <div class="demo-content">
         <p>Dialogs with larger dimensions for complex content.</p>
-        <i-button
-          severity="warning"
-          (clicked)="showFullscreenDialogModal()"
-        >Open Large Dialog</i-button>
+        <i-button severity="warning" (clicked)="showFullscreenDialogModal()"
+          >Open Large Dialog</i-button
+        >
       </div>
 
       <!-- Fullscreen Dialog Template -->
       <i-dialog
-        [visible]="showFullscreenDialog"
-        (visibleChange)="showFullscreenDialog = $event"
+        [(visible)]="showFullscreenDialog"
         (onHide)="onFullscreenDialogHide()"
+        (submitEvent)="onFullscreenDialogHide()"
+        (cancelEvent)="onFullscreenDialogHide()"
         header="Large Dialog"
         [modal]="true"
         width="80vw"
-        height="80vh"
       >
         <div class="dialog-content">
           <h4>Large Dialog</h4>

@@ -1,15 +1,21 @@
 import { Component } from '@angular/core';
 import { ICard } from '../../../../../invensys-angular-shared/src/lib/components/card/card.component';
-import { IButton } from '../../../../../invensys-angular-shared/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
+import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 
 @Component({
   selector: 'i-cards',
-  imports: [ICard, IButton, DemoCardComponent],
+  imports: [ICard, DemoCardComponent, IDialogActions],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss',
 })
 export class CardsComponent {
+  onSubmit() {
+    throw new Error('Method not implemented.');
+  }
+  onCancel() {
+    throw new Error('Method not implemented.');
+  }
   showClosableCard = true;
 
   // Code examples organized by category

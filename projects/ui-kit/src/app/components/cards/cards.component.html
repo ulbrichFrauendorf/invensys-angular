@@ -26,10 +26,10 @@
         <i-card title="Card with Actions">
           <p>This card includes footer content with action buttons.</p>
           <div slot="footer">
-            <i-button severity="primary">Primary Action</i-button>
-            <i-button severity="secondary" [outlined]="true"
-              >Secondary</i-button
-            >
+            <i-dialog-actions
+              (submitEvent)="onSubmit()"
+              (cancelEvent)="onCancel()"
+            />
           </div>
         </i-card>
       </div>

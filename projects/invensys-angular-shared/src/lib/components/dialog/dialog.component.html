@@ -15,16 +15,6 @@
       <div class="i-dialog-content" [ngStyle]="contentStyle">
         <ng-content></ng-content>
       </div>
-
-      <!-- Footer -->
-      <div class="i-dialog-footer" slot="footer">
-        <i-dialog-actions
-          [submitLabel]="submitLabel"
-          [cancelLabel]="cancelLabel"
-          (cancelEvent)="onCancel()"
-          (submitEvent)="onSubmit()"
-        ></i-dialog-actions>
-      </div>
     </i-card>
   </div>
 </div>
