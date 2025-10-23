@@ -33,7 +33,7 @@
       --surface-border: #e2e8f0;
       --surface-hover: #f1f5f9;
     }
-  } @else if $mode ==dark {
+  } @else if $mode == dark {
     .dark {
       --color-primary: #{color.get-color("yellow", 500)};
       --color-success: #{color.get-color("green", 400)};
