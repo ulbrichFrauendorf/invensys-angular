@@ -1,7 +1,0 @@
-@use "../../themes/color-variables.scss" as colors;
-
-@mixin i-dialog-theme() {
-  .i-dialog-overlay {
-    background: colors.$color-overlay-background;
-  }
-}

@@ -1,39 +1,12 @@
-import { Component, signal, OnInit } from '@angular/core';
-import {
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from '../dialog/services/dialog.interfaces';
-import { UniqueComponentId } from '../../utils/uniquecomponentid';
-import { IDialogActions } from '../dialog/inner/dialog-actions/dialog-actions.component';
+import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogActionsComponent } from '../dialog-actions/dialog-actions.component';
 
 @Component({
-  selector: 'i-confirmation-dialog',
-  imports: [IDialogActions],
-  templateUrl: './confirmation-dialog.component.html',
-  styleUrl: './confirmation-dialog.component.scss',
+    selector: 'i-confirmation-dialog',
+    imports: [ButtonModule, ConfirmDialogModule, DialogActionsComponent],
+    templateUrl: './confirmation-dialog.component.html',
+    styleUrl: './confirmation-dialog.component.scss'
 })
-export class ConfirmationDialogComponent implements OnInit {
-  public dialogRef?: DynamicDialogRef;
-  public config: DynamicDialogConfig = {};
-
-  componentId = UniqueComponentId('i-confirmation-dialog-');
-
-  message = signal('');
-  header = signal('Are you sure?');
-  acceptLabel: string = 'Confirm';
-  rejectLabel: string = 'Cancel';
-
-  ngOnInit() {
-    // Update signals after config is set by the dialog service
-    this.message.set(this.config.data?.message || '');
-    this.header.set(this.config.data?.header || 'Are you sure?');
-  }
-
-  onConfirm() {
-    this.dialogRef?.close(true);
-  }
-
-  onCancel() {
-    this.dialogRef?.close(false);
-  }
-}
+export class ConfirmationDialogComponent {}
