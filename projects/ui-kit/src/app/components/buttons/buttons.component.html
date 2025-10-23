@@ -1,0 +1,107 @@
+<div class="buttons-demo">
+  <header class="demo-header">
+    <h1>Button Components</h1>
+    <p>
+      Versatile button components with multiple styles, sizes, and variants.
+      Built for consistency and accessibility across your application.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Contrast Buttons -->
+    <app-demo-card
+      title="Contrast Text Buttons"
+      [sourceCode]="codeExamples.contrast"
+    >
+      <div class="button-examples">
+        @for (button of buttonExamples.contrast; track $index) {
+        <i-button
+          [severity]="button.severity"
+          [text]="button.text"
+          [icon]="button.icon"
+          [size]="button.size"
+        />
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Success Buttons -->
+    <app-demo-card
+      title="Success Raised Buttons"
+      [sourceCode]="codeExamples.success"
+    >
+      <div class="button-examples">
+        @for (button of buttonExamples.success; track $index) {
+        <i-button
+          [severity]="button.severity"
+          [raised]="button.raised"
+          [size]="button.size"
+          >{{ button.label }}</i-button
+        >
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Warning Buttons -->
+    <app-demo-card
+      title="Warning Outlined Buttons"
+      [sourceCode]="codeExamples.warning"
+    >
+      <div class="button-examples">
+        @for (button of buttonExamples.warning; track $index) {
+        <i-button
+          [severity]="button.severity"
+          [outlined]="button.outlined"
+          [size]="button.size"
+          >{{ button.label }}</i-button
+        >
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Info Buttons -->
+    <app-demo-card
+      title="Info Buttons with Icons"
+      [sourceCode]="codeExamples.info"
+    >
+      <div class="button-examples">
+        @for (button of buttonExamples.info; track $index) {
+        <i-button
+          [severity]="button.severity"
+          [text]="!!button.text"
+          [outlined]="!!button.outlined"
+          [icon]="button.icon"
+          >{{ button.label }}</i-button
+        >
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Fluid Buttons -->
+    <app-demo-card title="Fluid Buttons" [sourceCode]="codeExamples.fluid">
+      <div class="button-examples fluid">
+        @for (button of buttonExamples.fluid; track $index) {
+        <i-button
+          [severity]="button.severity"
+          [fluid]="!!button.fluid"
+          [outlined]="!!button.outlined"
+          [raised]="!!button.raised"
+          >{{ button.label }}</i-button
+        >
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+  </div>
+</div>

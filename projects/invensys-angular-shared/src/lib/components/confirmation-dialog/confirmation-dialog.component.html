@@ -1,22 +1,12 @@
-<p-confirmDialog #cd>
-  <ng-template pTemplate="headless" let-message>
-    <div
-      class="flex flex-column align-items-center p-6 surface-overlay border-round"
-    >
-      <div
-        class="border-circle bg-primary inline-flex justify-content-center align-items-center h-4rem w-4rem"
-      >
-        <i class="pi pi-question text-3xl"></i>
-      </div>
-      <span class="font-bold text-2xl block mb-2 mt-4">
-        {{ message.header }}
-      </span>
-      <p class="mb-2 mt-2">{{ message.message }}</p>
-      <i-dialog-actions
-        [submitLabel]="'Confirm'"
-        (cancelEvent)="cd.onReject()"
-        (submitEvent)="cd.onAccept()"
-      ></i-dialog-actions>
-    </div>
-  </ng-template>
-</p-confirmDialog>
+<div class="confirmation-dialog" [attr.id]="componentId">
+  <div class="confirmation-content">
+    <span class="confirmation-header">{{ header() }}</span>
+    <p class="confirmation-message">{{ message() }}</p>
+  </div>
+  <i-dialog-actions
+    [submitLabel]="acceptLabel"
+    [cancelLabel]="rejectLabel"
+    (cancelEvent)="onCancel()"
+    (submitEvent)="onConfirm()"
+  ></i-dialog-actions>
+</div>
