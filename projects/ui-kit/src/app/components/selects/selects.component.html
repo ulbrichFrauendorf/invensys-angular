@@ -1,0 +1,144 @@
+<div class="selects-demo">
+  <header class="demo-header">
+    <h1>Select Components</h1>
+    <p>
+      Dropdown select components with filtering, form integration, and reactive
+      forms support. Perfect for option selection with search capabilities.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Basic Select Examples -->
+    <app-demo-card
+      title="Basic Select Options"
+      [sourceCode]="codeExamples.basic"
+    >
+      <form [formGroup]="basicForm" class="demo-form">
+        <div class="input-grid">
+          <i-select
+            label="Country"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Select a country"
+            formControlName="country"
+          />
+
+          <i-select
+            label="Status"
+            [options]="selectData.statuses"
+            placeholder="Select status"
+            formControlName="status"
+          />
+
+          <i-select
+            label="Preselected Country"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Preselected value"
+            formControlName="preselected"
+          />
+
+          <i-select
+            label="Disabled Select"
+            [options]="selectData.countries"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="This is disabled"
+            formControlName="disabled"
+          />
+        </div>
+
+        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+          Submit Basic Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Validation Example -->
+    <app-demo-card
+      title="Required Validation"
+      [sourceCode]="codeExamples.validation"
+    >
+      <form [formGroup]="validationForm" class="demo-form">
+        <i-select
+          label="Status (Required)"
+          [options]="selectData.statuses"
+          placeholder="Select status"
+          formControlName="status"
+        />
+
+        <i-button
+          severity="primary"
+          (click)="onSubmit(validationForm, 'validation')"
+        >
+          Submit Validation Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Advanced Features -->
+    <app-demo-card
+      title="Advanced Features (Filtering & Clear)"
+      [sourceCode]="codeExamples.advanced"
+    >
+      <form [formGroup]="advancedForm" class="demo-form">
+        <i-select
+          [options]="selectData.reports"
+          [filter]="true"
+          [showClear]="true"
+          filterBy="name"
+          optionLabel="name"
+          optionValue="value"
+          placeholder="Select Report"
+          formControlName="selectedReport"
+          (onClear)="onReportClear()"
+          (onChange)="onReportChange()"
+        />
+
+        <i-button
+          severity="primary"
+          (click)="onSubmit(advancedForm, 'advanced')"
+        >
+          Submit Advanced Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Fluid Layout -->
+    <app-demo-card title="Fluid Layout" [sourceCode]="codeExamples.fluid">
+      <form [formGroup]="fluidForm" class="demo-form">
+        <i-select
+          label="Fluid Select"
+          [options]="selectData.countries"
+          optionLabel="label"
+          optionValue="value"
+          [fluid]="true"
+          placeholder="Select option"
+          formControlName="fluidSelect"
+        />
+
+        <i-button
+          severity="primary"
+          [fluid]="true"
+          (click)="onSubmit(fluidForm, 'fluid')"
+        >
+          Submit Fluid Form
+        </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+  </div>
+</div>

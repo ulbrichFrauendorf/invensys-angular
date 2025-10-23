@@ -1,0 +1,5 @@
+@import "../shared-demo-styles.scss";
+
+.multi-selects-demo {
+  @extend .demo-component;
+}
