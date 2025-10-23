@@ -1,0 +1,20 @@
+@import "../shared-demo-styles.scss";
+
+.input-texts-demo {
+  @extend .demo-component;
+}
+
+.input-grid {
+  display: grid;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.input-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

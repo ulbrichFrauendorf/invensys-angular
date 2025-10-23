@@ -1,0 +1,23 @@
+@import "../shared-demo-styles.scss";
+
+.cards-demo {
+  @extend .demo-component;
+}
+
+.card-example {
+  margin-bottom: 20px;
+}
+
+.closed-message {
+  padding: 2rem;
+  text-align: center;
+  border: 2px dashed var(--surface-400, #9ca3af);
+  border-radius: 8px;
+  background: var(--surface-50, #f9fafb);
+
+  p {
+    color: var(--text-color-secondary, #6c757d);
+    font-style: italic;
+    margin: 0;
+  }
+}

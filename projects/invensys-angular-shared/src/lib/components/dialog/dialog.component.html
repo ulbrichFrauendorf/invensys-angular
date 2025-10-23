@@ -1,0 +1,21 @@
+@if (visible) {
+<div
+  class="i-dialog-overlay"
+  (click)="onOverlayClick($event)"
+  [attr.id]="componentId"
+>
+  <div
+    #dialogElement
+    [style.width]="width"
+    [style.height]="height"
+    (click)="$event.stopPropagation()"
+  >
+    <i-card [title]="header" [closable]="closable" (closeCard)="onCloseClick()">
+      <!-- Main content -->
+      <div class="i-dialog-content" [ngStyle]="contentStyle">
+        <ng-content></ng-content>
+      </div>
+    </i-card>
+  </div>
+</div>
+}

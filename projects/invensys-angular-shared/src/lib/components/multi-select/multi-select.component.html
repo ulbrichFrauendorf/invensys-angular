@@ -1,0 +1,94 @@
+<div
+  class="i-multi-select-wrapper"
+  [class.i-multi-select--fluid]="fluid"
+  #dropdown
+>
+  <!-- Input container with click handler -->
+  <div class="i-multi-select-input-container" (click)="toggleDropdown()">
+    <!-- Reuse the input-text component for consistent styling and form integration -->
+    <i-input-text
+      #inputText
+      [label]="label"
+      [id]="id"
+      [fluid]="fluid"
+      [errorMessages]="errorMessages"
+      [ngModel]="inputValue"
+      [type]="'text'"
+      [disabled]="disabled"
+      [forceFloated]="value && value.length > 0"
+      [hideText]="
+        value && value.length > 0 && value.length <= maxSelectedLabels
+      "
+      [externalInvalid]="showErrors"
+      [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
+      readonly
+    >
+      <!-- Selected chips overlay (positioned above the input) -->
+      @if (value && value.length > 0 && value.length <= maxSelectedLabels) {
+      <div class="i-multi-select-chips-overlay">
+        <i-chip
+          *ngFor="let selectedValue of value; trackBy: trackByValue"
+          [label]="getSelectedLabels()[value.indexOf(selectedValue)]"
+          [removable]="!disabled"
+          (onRemove)="removeSelectedItem(selectedValue, $event)"
+        ></i-chip>
+      </div>
+      }
+
+      <!-- Icons overlay on the input -->
+      <div class="i-multi-select-icons-overlay">
+        @if (showClear && value && value.length > 0 && !disabled) {
+        <i
+          class="pi pi-times i-multi-select-clear"
+          (click)="clearSelection(); $event.stopPropagation()"
+        ></i>
+        }
+        <i
+          class="pi pi-chevron-down i-multi-select-arrow"
+          [class.flipped]="isOpen"
+        ></i>
+      </div>
+    </i-input-text>
+  </div>
+
+  @if (isOpen) {
+  <div class="i-multi-select-dropdown" [class.open]="isOpen">
+    @if (filter) {
+    <div class="i-multi-select-filter">
+      <i-input-text
+        #searchInput
+        [useFloatLabel]="false"
+        placeholder="Search..."
+        [(ngModel)]="filterValue"
+        (input)="onFilterChange()"
+        [fluid]="true"
+      >
+      </i-input-text>
+    </div>
+    }
+
+    <div class="i-multi-select-options">
+      <div
+        *ngFor="let option of filteredOptions"
+        class="i-multi-select-option"
+        [class.selected]="isOptionSelected(option)"
+        (click)="toggleOption(option)"
+      >
+        <i-checkbox
+          [checked]="isOptionSelected(option)"
+          [readonly]="true"
+          size="small"
+          class="i-multi-select-checkbox"
+        ></i-checkbox>
+        <span class="i-multi-select-option-label">
+          {{ getOptionLabel(option) }}
+        </span>
+      </div>
+
+      @if (filteredOptions.length === 0) {
+      <div class="i-multi-select-no-options">No options found</div>
+      }
+    </div>
+  </div>
+  }
+</div>
