@@ -8,9 +8,8 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
-      "invensys-angular-shared": [
-        "./dist/invensys-angular-shared"
-      ]
+      "invensys-angular-shared": ["./dist/invensys-angular-shared"],
+      "@shared/*": ["./projects/invensys-angular-shared/src/lib/*"]
     },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -24,15 +23,20 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    {
+      "path": "./projects/ui-kit/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ui-kit/tsconfig.spec.json"
+    }
+  ]
 }
