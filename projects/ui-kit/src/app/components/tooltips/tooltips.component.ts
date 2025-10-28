@@ -12,7 +12,19 @@ import { DemoCardComponent } from '../demo-card/demo-card.component';
 export class TooltipsComponent {
   // Code examples organized by category
   codeExamples = {
-    basic: `<i-button iTooltip="This is a tooltip above" tooltipPosition="above">Hover Above</i-button>
+    basic: `// 1. Import the directive and components
+import { TooltipDirective } from 'invensys-angular-shared/directives/tooltip/tooltip.directive';
+import { IButton } from 'invensys-angular-shared/components/button/button.component';
+
+// 2. Use in your component imports
+@Component({
+  selector: 'your-component',
+  imports: [TooltipDirective, IButton],
+  // ...
+})
+
+// 3. Use in template
+<i-button iTooltip="This is a tooltip above" tooltipPosition="above">Hover Above</i-button>
 <i-button iTooltip="This is a tooltip below" tooltipPosition="below">Hover Below</i-button>
 <i-button iTooltip="This is a tooltip to the left" tooltipPosition="left">Hover Left</i-button>
 <i-button iTooltip="This is a tooltip to the right" tooltipPosition="right">Hover Right</i-button>`,

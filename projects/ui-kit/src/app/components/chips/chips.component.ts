@@ -37,18 +37,37 @@ export class ChipsComponent implements OnInit {
 <i-chip label="Thriller" [removable]="true" (onRemove)="onChipRemove($event)" />
 <i-chip label="Apple" icon="pi pi-apple" />`,
 
-    chipsInput: `<i-chips
-  placeholder="Enter tags and press Enter"
-  formControlName="tags"
-></i-chips>`,
+    chipsInput: `// 1. Import required modules and component
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { IChips } from 'invensys-angular-shared/components/chips/chips.component';
 
-    validation: `<i-chips
-  placeholder="Enter at least 2 tags"
-  formControlName="requiredTags"
-></i-chips>
-@if (form.get('requiredTags')?.invalid && form.get('requiredTags')?.touched) {
-  <div class="error-message">At least 2 tags are required</div>
-}`,
+// 2. Create your form
+form = this.fb.group({
+  tags: [['angular', 'typescript']]
+});
+
+// 3. Use in template
+<form [formGroup]="form">
+  <i-chips
+    placeholder="Enter tags and press Enter"
+    formControlName="tags">
+  </i-chips>
+</form>`,
+
+    validation: `// With validation
+form = this.fb.group({
+  requiredTags: [[], [Validators.required, this.minArrayLengthValidator(2)]]
+});
+
+<form [formGroup]="form">
+  <i-chips
+    placeholder="Enter at least 2 tags"
+    formControlName="requiredTags">
+  </i-chips>
+  @if (form.get('requiredTags')?.invalid && form.get('requiredTags')?.touched) {
+    <div class="error-message">At least 2 tags are required</div>
+  }
+</form>`,
   };
 
   // Chip examples data
