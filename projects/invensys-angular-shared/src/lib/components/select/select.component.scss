@@ -1,4 +1,5 @@
 @use "./select.component.theme.scss" as theme;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
 
 @include theme.i-select-theme();
 
@@ -86,6 +87,7 @@
     .i-select-options {
       max-height: 160px;
       overflow-y: auto;
+      @include scrollbar.dropdown-scrollbar();
 
       .i-select-option {
         font-size: 14px;

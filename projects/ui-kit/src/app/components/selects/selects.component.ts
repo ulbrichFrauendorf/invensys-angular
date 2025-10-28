@@ -64,25 +64,55 @@ export class SelectsComponent implements OnInit {
 
   // Code examples organized by category
   codeExamples = {
-    basic: `<i-select 
-  label="Country" 
-  [options]="countries" 
-  optionLabel="label" 
-  optionValue="value" 
-  placeholder="Select a country" 
-  formControlName="country">
-</i-select>
+    basic: `// 1. Import required modules and component
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ISelect } from 'invensys-angular-shared/components/select/select.component';
 
-<i-select 
-  label="Status" 
-  [options]="statuses" 
-  placeholder="Select status" 
-  formControlName="status">
-</i-select>`,
+// 2. Define your data (any object structure now supported)
+countries = [
+  { value: 'us', label: 'United States' },
+  { value: 'uk', label: 'United Kingdom' },
+  { value: 'de', label: 'Germany' }
+];
+
+statuses = [
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'pending', label: 'Pending' }
+];
+
+// 3. Create your form
+form = this.fb.group({
+  country: [''],
+  status: ['']
+});
+
+// 4. Use in template (optionLabel and optionValue are now required)
+<form [formGroup]="form">
+  <i-select 
+    label="Country" 
+    [options]="countries" 
+    optionLabel="label" 
+    optionValue="value" 
+    placeholder="Select a country" 
+    formControlName="country">
+  </i-select>
+
+  <i-select 
+    label="Status" 
+    [options]="statuses" 
+    optionLabel="label" 
+    optionValue="value"
+    placeholder="Select status" 
+    formControlName="status">
+  </i-select>
+</form>`,
 
     validation: `<i-select 
   label="Status (Required)" 
   [options]="statuses" 
+  optionLabel="label" 
+  optionValue="value"
   placeholder="Select status" 
   formControlName="status">
 </i-select>`,
@@ -101,6 +131,8 @@ export class SelectsComponent implements OnInit {
     fluid: `<i-select 
   label="Fluid Select" 
   [options]="countries" 
+  optionLabel="label" 
+  optionValue="value"
   [fluid]="true" 
   placeholder="Select option" 
   formControlName="fluidSelect">

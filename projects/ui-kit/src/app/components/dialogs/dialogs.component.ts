@@ -23,22 +23,33 @@ export class DialogsComponent {
 
   // Code examples organized by category
   codeExamples = {
-    dynamic: `// Component
-this.ref = this.dialogService.open(ExampleDialogComponent, {
-  header: 'Example Dynamic Dialog',
-  width: '300px',
-  data: { message: 'Hello from Dialog Service!' },
-  onSubmit: () => {
-    console.log('Submit clicked!');
-    // Handle submit logic
-  },
-  onCancel: () => {
-    console.log('Cancel clicked!');
-    // Handle cancel logic
-  }
-});
+    dynamic: `// 1. Import and inject the service
+import { DialogService } from 'invensys-angular-shared/components/dialog/services/dialog.service';
+import { DynamicDialogRef } from 'invensys-angular-shared/components/dialog/services/dialog.interfaces';
 
-// Button
+// In your component
+ref: DynamicDialogRef | undefined;
+
+constructor(private dialogService = inject(DialogService)) {}
+
+// 2. Create your method
+displayExampleDialog() {
+  this.ref = this.dialogService.open(ExampleDialogComponent, {
+    header: 'Example Dynamic Dialog',
+    width: '300px',
+    data: { message: 'Hello from Dialog Service!' },
+    onSubmit: () => {
+      console.log('Submit clicked!');
+      // Handle submit logic
+    },
+    onCancel: () => {
+      console.log('Cancel clicked!');
+      // Handle cancel logic
+    }
+  });
+}
+
+// 3. Use in template
 <i-button severity="primary" (clicked)="displayExampleDialog()">
   Open Dynamic Dialog
 </i-button>`,
