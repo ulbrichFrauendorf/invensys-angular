@@ -24,8 +24,6 @@ import { IChip } from '../chip/chip.component';
 import { ICheckbox } from '../checkbox/checkbox.component';
 
 export interface MultiSelectOption {
-  value: any;
-  label?: string;
   [key: string]: any;
 }
 
@@ -46,8 +44,8 @@ export interface MultiSelectOption {
 export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   @Input() label = 'Multi Select';
   @Input() options: MultiSelectOption[] = [];
-  @Input() optionLabel = 'label';
-  @Input() optionValue = 'value';
+  @Input({ required: true }) optionLabel!: string;
+  @Input({ required: true }) optionValue!: string;
   @Input() placeholder = 'Select options';
   @Input() id?: string;
   @Input() fluid = false;
@@ -190,11 +188,11 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getOptionLabel(option: MultiSelectOption): string {
-    return option[this.optionLabel] || option.label || String(option);
+    return option[this.optionLabel] || option['label'] || String(option);
   }
 
   getOptionValue(option: MultiSelectOption): any {
-    return option[this.optionValue] || option.value || option;
+    return option[this.optionValue] || option['value'] || option;
   }
 
   getOptionSearchValue(option: MultiSelectOption): string {
@@ -294,6 +292,8 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
         return `${this.label} is required`;
       case 'minlength':
         return `Minimum ${err['minlength']?.requiredLength} items required`;
+      case 'minArrayLength':
+        return `Minimum ${err['minArrayLength']?.requiredLength} items required`;
       case 'maxlength':
         return `Maximum ${err['maxlength']?.requiredLength} items allowed`;
       default:

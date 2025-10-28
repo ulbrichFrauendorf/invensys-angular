@@ -1,4 +1,5 @@
 @use "./multi-select.component.theme.scss" as theme;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
 
 @include theme.i-multi-select-theme();
 
@@ -99,6 +100,7 @@
     .i-multi-select-options {
       max-height: 160px;
       overflow-y: auto;
+      @include scrollbar.dropdown-scrollbar();
 
       .i-multi-select-option {
         font-size: 14px;

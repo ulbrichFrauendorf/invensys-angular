@@ -22,8 +22,6 @@ import {
 import { IInputText } from '../input-text/input-text.component';
 
 export interface SelectOption {
-  value: any;
-  label?: string;
   [key: string]: any;
 }
 
@@ -44,8 +42,8 @@ export interface SelectOption {
 export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
   @Input() label = 'Select';
   @Input() options: SelectOption[] = [];
-  @Input() optionLabel = 'label';
-  @Input() optionValue = 'value';
+  @Input({ required: true }) optionLabel!: string;
+  @Input({ required: true }) optionValue!: string;
   @Input() placeholder = 'Select an option';
   @Input() id?: string;
   @Input() fluid = false;
@@ -160,11 +158,11 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getOptionLabel(option: SelectOption): string {
-    return option[this.optionLabel] || option.label || String(option);
+    return option[this.optionLabel] || option['label'] || String(option);
   }
 
   getOptionValue(option: SelectOption): any {
-    return option[this.optionValue] || option.value || option;
+    return option[this.optionValue] || option['value'] || String(option);
   }
 
   getOptionSearchValue(option: SelectOption): string {
