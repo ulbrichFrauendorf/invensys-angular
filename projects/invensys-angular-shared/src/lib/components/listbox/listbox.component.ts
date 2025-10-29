@@ -22,31 +22,32 @@ import {
 import { IInputText } from '../input-text/input-text.component';
 import { IChip } from '../chip/chip.component';
 import { ICheckbox } from '../checkbox/checkbox.component';
+import { IMultiSelect } from '../multi-select/multi-select.component';
 
-export interface MultiSelectOption {
+export interface ListboxOption {
   [key: string]: any;
 }
 
 @Component({
-  selector: 'i-multi-select',
+  selector: 'i-listbox',
   standalone: true,
   imports: [CommonModule, FormsModule, IInputText, IChip, ICheckbox],
-  templateUrl: './multi-select.component.html',
-  styleUrls: ['./multi-select.component.scss'],
+  templateUrl: './listbox.component.html',
+  styleUrls: ['./listbox.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => IMultiSelect),
+      useExisting: forwardRef(() => IListbox),
       multi: true,
     },
   ],
 })
-export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
-  @Input() label = 'Multi Select';
-  @Input() options: MultiSelectOption[] = [];
+export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
+  @Input() label = 'List Box';
+  @Input() options: ListboxOption[] = [];
   @Input({ required: true }) optionLabel!: string;
   @Input({ required: true }) optionValue!: string;
-  @Input() placeholder = 'Select options';
+  @Input() placeholder?: string;
   @Input() id?: string;
   @Input() fluid = false;
   @Input() showClear = false;
@@ -56,26 +57,30 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   @Input() selectedItemsLabel = '{0} items selected';
   @Input() errorMessages: { [key: string]: string } = {};
   @Input() disabled = false;
+  @Input() multiple = true;
 
-  @Output() onChange = new EventEmitter<any[]>();
+  @Output() onChange = new EventEmitter<any[] | any>();
   @Output() onClear = new EventEmitter<void>();
 
   @ViewChild('inputText') inputTextRef!: IInputText;
   @ViewChild('dropdown', { static: false }) dropdownRef!: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInputRef!: ElementRef;
 
-  isOpen = false;
   filterValue = '';
-  filteredOptions: MultiSelectOption[] = [];
+  filteredOptions: ListboxOption[] = [];
 
-  private _value: any[] = [];
+  private _value: any[] | any = [];
 
-  get value(): any[] {
+  get value(): any[] | any {
     return this._value;
   }
 
-  set value(val: any[]) {
-    this._value = val || [];
+  set value(val: any[] | any) {
+    if (this.multiple) {
+      this._value = val || [];
+    } else {
+      this._value = val;
+    }
     // Update the underlying input-text component through ngModel
     if (this.inputTextRef) {
       this.inputTextRef.value = this.getDisplayLabel() || null;
@@ -83,7 +88,7 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   // ControlValueAccessor properties
-  private onChangeCallback: (value: any[]) => void = () => {};
+  private onChangeCallback: (value: any[] | any) => void = () => {};
   private onTouchedCallback: () => void = () => {};
 
   public ngControl: NgControl | null = null;
@@ -112,62 +117,72 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
     this.updateFilteredOptions();
   }
 
-  toggleDropdown() {
-    this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.filterValue = '';
-      this.updateFilteredOptions();
-      setTimeout(() => {
-        if (
-          this.filter &&
-          this.searchInputRef &&
-          this.searchInputRef.nativeElement
-        ) {
-          this.searchInputRef.nativeElement.focus();
-        }
-      });
-    }
-  }
-
-  toggleOption(option: MultiSelectOption) {
+  toggleOption(option: ListboxOption) {
     const optionValue = this.getOptionValue(option);
-    const currentValues = [...this.value];
-    const index = currentValues.findIndex((val) => val === optionValue);
 
-    if (index > -1) {
-      currentValues.splice(index, 1);
+    if (this.multiple) {
+      const currentValues = Array.isArray(this.value) ? [...this.value] : [];
+      const index = currentValues.findIndex((val) => val === optionValue);
+
+      if (index > -1) {
+        currentValues.splice(index, 1);
+      } else {
+        currentValues.push(optionValue);
+      }
+
+      this.value = currentValues;
+      this.onChange.emit(currentValues);
+      this.onChangeCallback(currentValues); // Notify form control
+      this.onTouchedCallback(); // Mark as touched
     } else {
-      currentValues.push(optionValue);
+      // Single select mode
+      const newValue = this.value === optionValue ? null : optionValue;
+      this.value = newValue;
+      this.onChange.emit(newValue);
+      this.onChangeCallback(newValue); // Notify form control
+      this.onTouchedCallback(); // Mark as touched
     }
-
-    this.value = currentValues;
-    this.onChange.emit(currentValues);
-    this.onChangeCallback(currentValues); // Notify form control
-    this.onTouchedCallback(); // Mark as touched
   }
 
-  isOptionSelected(option: MultiSelectOption): boolean {
+  isOptionSelected(option: ListboxOption): boolean {
     const optionValue = this.getOptionValue(option);
-    return this.value.includes(optionValue);
+
+    if (this.multiple) {
+      return Array.isArray(this.value) && this.value.includes(optionValue);
+    } else {
+      return this.value === optionValue;
+    }
   }
 
   clearSelection() {
-    this.value = [];
+    const newValue = this.multiple ? [] : null;
+    this.value = newValue;
     this.onClear.emit();
-    this.onChangeCallback([]); // Notify form control
+    this.onChangeCallback(newValue); // Notify form control
     this.onTouchedCallback(); // Mark as touched
   }
 
   removeSelectedItem(value: any, event: Event) {
     event.stopPropagation();
-    const currentValues = [...this.value];
-    const index = currentValues.findIndex((val) => val === value);
-    if (index > -1) {
-      currentValues.splice(index, 1);
-      this.value = currentValues;
-      this.onChange.emit(currentValues);
-      this.onChangeCallback(currentValues); // Notify form control
-      this.onTouchedCallback(); // Mark as touched
+
+    if (this.multiple) {
+      const currentValues = Array.isArray(this.value) ? [...this.value] : [];
+      const index = currentValues.findIndex((val) => val === value);
+      if (index > -1) {
+        currentValues.splice(index, 1);
+        this.value = currentValues;
+        this.onChange.emit(currentValues);
+        this.onChangeCallback(currentValues); // Notify form control
+        this.onTouchedCallback(); // Mark as touched
+      }
+    } else {
+      // Single select mode - clear the selection
+      if (this.value === value) {
+        this.value = null;
+        this.onChange.emit(null);
+        this.onChangeCallback(null); // Notify form control
+        this.onTouchedCallback(); // Mark as touched
+      }
     }
   }
 
@@ -187,15 +202,15 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
     }
   }
 
-  getOptionLabel(option: MultiSelectOption): string {
+  getOptionLabel(option: ListboxOption): string {
     return option[this.optionLabel] || option['label'] || String(option);
   }
 
-  getOptionValue(option: MultiSelectOption): any {
+  getOptionValue(option: ListboxOption): any {
     return option[this.optionValue] || option['value'] || option;
   }
 
-  getOptionSearchValue(option: MultiSelectOption): string {
+  getOptionSearchValue(option: ListboxOption): string {
     if (this.filterBy && option[this.filterBy]) {
       return String(option[this.filterBy]);
     }
@@ -203,7 +218,18 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getSelectedLabels(): string[] {
-    return this.value.map((val) => {
+    if (!this.multiple) {
+      if (this.value === null || this.value === undefined) {
+        return [];
+      }
+      const option = this.options.find(
+        (opt) => this.getOptionValue(opt) === this.value
+      );
+      return option ? [this.getOptionLabel(option)] : [String(this.value)];
+    }
+
+    const values = Array.isArray(this.value) ? this.value : [];
+    return values.map((val: any) => {
       const option = this.options.find(
         (opt) => this.getOptionValue(opt) === val
       );
@@ -212,7 +238,17 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getDisplayLabel(): string {
-    if (!this.value || this.value.length === 0) {
+    if (!this.multiple) {
+      if (this.value === null || this.value === undefined) {
+        return '';
+      }
+      const option = this.options.find(
+        (opt) => this.getOptionValue(opt) === this.value
+      );
+      return option ? this.getOptionLabel(option) : String(this.value);
+    }
+
+    if (!this.value || (Array.isArray(this.value) && this.value.length === 0)) {
       return '';
     }
 
@@ -232,27 +268,75 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
     return value;
   }
 
+  hasValue(): boolean {
+    if (this.multiple) {
+      return Array.isArray(this.value) && this.value.length > 0;
+    } else {
+      return this.value !== null && this.value !== undefined;
+    }
+  }
+
+  shouldHideText(): boolean {
+    if (this.multiple) {
+      return this.value.length <= this.maxSelectedLabels;
+    } else {
+      return true; // Hide text when showing chip in single select mode
+    }
+  }
+
+  shouldShowChips(): boolean {
+    if (this.multiple) {
+      return (
+        Array.isArray(this.value) &&
+        this.value.length > 0 &&
+        this.value.length <= this.maxSelectedLabels
+      );
+    } else {
+      return this.hasValue();
+    }
+  }
+
+  getValueArray(): any[] {
+    if (this.multiple) {
+      return Array.isArray(this.value) ? this.value : [];
+    } else {
+      return this.value !== null && this.value !== undefined
+        ? [this.value]
+        : [];
+    }
+  }
+
+  getPlaceholder(): string {
+    return (
+      this.placeholder ||
+      (this.multiple ? 'Select options' : 'Select an option')
+    );
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (
       this.dropdownRef &&
       !this.dropdownRef.nativeElement.contains(event.target)
     ) {
-      this.isOpen = false;
       this.filterValue = '';
       this.updateFilteredOptions();
     }
   }
 
   // ControlValueAccessor implementation
-  writeValue(value: any[]): void {
-    this._value = value || [];
+  writeValue(value: any[] | any): void {
+    if (this.multiple) {
+      this._value = value || [];
+    } else {
+      this._value = value;
+    }
     if (this.inputTextRef) {
       this.inputTextRef.value = this.getDisplayLabel() || null;
     }
   }
 
-  registerOnChange(fn: (value: any[]) => void): void {
+  registerOnChange(fn: (value: any[] | any) => void): void {
     this.onChangeCallback = fn;
   }
 

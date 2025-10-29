@@ -41,7 +41,6 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
   }
 
   show() {
-    console.log('show dialog');
     this.visible = true;
     this.visibleChange.emit(true);
     document.body.style.overflow = 'hidden';
@@ -49,7 +48,6 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
   }
 
   hide() {
-    console.log('hide dialog');
     this.visible = false;
     this.visibleChange.emit(false);
     document.body.style.overflow = '';

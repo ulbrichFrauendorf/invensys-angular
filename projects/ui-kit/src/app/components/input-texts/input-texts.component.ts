@@ -87,15 +87,42 @@ export class InputTextsComponent implements OnInit {
 
   // Code examples organized by category
   codeExamples = {
-    basic: `<i-input-text label="Text Input" type="text" formControlName="textInput" />
-<i-input-text label="Email Input" type="email" formControlName="emailInput" />
-<i-input-text label="Password Input" type="password" formControlName="passwordInput" />
-<i-input-text label="Number Input" type="number" formControlName="numberInput" />`,
+    basic: `// 1. Import required modules and component
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { IInputText } from 'invensys-angular-shared/components/input-text/input-text.component';
 
-    validation: `<i-input-text label="Required Field" type="text" formControlName="requiredField" />
-<i-input-text label="Min Length (5 chars)" type="text" formControlName="minLengthField" />
-<i-input-text label="Email Validation" type="email" formControlName="emailValidation" />
-<i-input-text label="Pattern (Letters only)" type="text" formControlName="patternField" />`,
+// 2. Create your form
+form = this.fb.group({
+  textInput: [''],
+  emailInput: [''],
+  passwordInput: [''],
+  numberInput: ['']
+});
+
+// 3. Use in template
+<form [formGroup]="form">
+  <i-input-text label="Text Input" type="text" formControlName="textInput" />
+  <i-input-text label="Email Input" type="email" formControlName="emailInput" />
+  <i-input-text label="Password Input" type="password" formControlName="passwordInput" />
+  <i-input-text label="Number Input" type="number" formControlName="numberInput" />
+</form>`,
+
+    validation: `// With validation
+import { Validators } from '@angular/forms';
+
+validationForm = this.fb.group({
+  requiredField: ['', [Validators.required]],
+  minLengthField: ['', [Validators.minLength(5)]],
+  emailValidation: ['', [Validators.required, Validators.email]],
+  patternField: ['', [Validators.pattern(/^[A-Za-z]+$/)]]
+});
+
+<form [formGroup]="validationForm">
+  <i-input-text label="Required Field" type="text" formControlName="requiredField" />
+  <i-input-text label="Min Length (5 chars)" type="text" formControlName="minLengthField" />
+  <i-input-text label="Email Validation" type="email" formControlName="emailValidation" />
+  <i-input-text label="Pattern (Letters only)" type="text" formControlName="patternField" />
+</form>`,
 
     fluid: `<i-input-text label="Fluid Text Input" type="text" formControlName="fluidText" [fluid]="true" />
 <i-input-text label="Fluid Email Input" type="email" formControlName="fluidEmail" [fluid]="true" />

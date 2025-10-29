@@ -8,6 +8,7 @@ import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { MultiSelectsComponent } from './components/multi-selects/multi-selects.component';
 import { SelectsComponent } from './components/selects/selects.component';
 import { ChipsComponent } from './components/chips/chips.component';
+import { ListboxesComponent } from './components/listboxes/listboxes.component';
 
 export const routes: Routes = [
   { path: 'buttons', component: ButtonsComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'selects', component: SelectsComponent },
   { path: 'multi-selects', component: MultiSelectsComponent },
   { path: 'chips', component: ChipsComponent },
+  { path: 'listboxes', component: ListboxesComponent },
   { path: '', redirectTo: '/input-texts', pathMatch: 'full' },
 ];

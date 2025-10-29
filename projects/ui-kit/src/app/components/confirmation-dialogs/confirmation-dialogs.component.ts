@@ -14,16 +14,24 @@ export class ConfirmationDialogsComponent {
 
   // Code examples organized by category
   codeExamples = {
-    basic: `await this.confirmationService.confirm({
-  message: 'Are you sure you want to delete this item?',
-  header: 'Confirm Delete',
-  accept: () => {
-    console.log('Item deleted');
-  },
-  reject: () => {
-    console.log('Delete cancelled');
-  },
-});`,
+    basic: `// 1. Import and inject the service
+import { ConfirmationDialogService } from 'invensys-angular-shared/components/confirmation-dialog/services/confirmation-dialog.service';
+
+constructor(private confirmationService = inject(ConfirmationDialogService)) {}
+
+// 2. Use in your method
+async showConfirmation() {
+  await this.confirmationService.confirm({
+    message: 'Are you sure you want to delete this item?',
+    header: 'Confirm Delete',
+    accept: () => {
+      console.log('Item deleted');
+    },
+    reject: () => {
+      console.log('Delete cancelled');
+    },
+  });
+}`,
 
     custom: `await this.confirmationService.confirm({
   message: 'Please confirm if you would like to unlink the report.',

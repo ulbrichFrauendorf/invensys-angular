@@ -87,27 +87,89 @@ export class MultiSelectsComponent implements OnInit {
 
   // Code examples organized by category
   codeExamples = {
-    basic: `<i-multi-select
-  label="Skills"
+    basic: `// 1. Import required modules and component
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { IMultiSelect } from 'invensys-angular-shared/components/multi-select/multi-select.component';
+
+// 2. Define your data (any object structure now supported)
+skills = [
+  { value: 'javascript', label: 'JavaScript' },
+  { value: 'typescript', label: 'TypeScript' },
+  { value: 'angular', label: 'Angular' }
+];
+
+departments = [
+  { value: 1, label: 'Sales' },
+  { value: 2, label: 'Marketing' },
+  { value: 3, label: 'Engineering' }
+];
+
+// 3. Create your form
+form = this.fb.group({
+  skills: [[]],
+  departments: [[]]
+});
+
+// 4. Use in template (optionLabel and optionValue are now required)
+<form [formGroup]="form">
+  <i-multi-select
+    label="Skills"
+    [options]="skills"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select skills"
+    formControlName="skills">
+  </i-multi-select>
+
+  <i-multi-select
+    label="Departments"
+    [options]="departments"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Select departments"
+    formControlName="departments">
+  </i-multi-select>
+</form>`,
+
+    validation: `// Form setup with different validation requirements
+form = this.fb.group({
+  requiredSkills: [[], [Validators.required]], // At least 1 selection required
+  minimumSkills: [[], [this.minArrayLengthValidator(2)]] // At least 2 selections required
+});
+
+// Custom validator for minimum array length
+private minArrayLengthValidator(minLength: number) {
+  return (control: any) => {
+    const value = control.value;
+    if (!value || !Array.isArray(value) || value.length < minLength) {
+      return {
+        minArrayLength: {
+          requiredLength: minLength,
+          actualLength: value?.length || 0,
+        },
+      };
+    }
+    return null;
+  };
+}
+
+<!-- Template usage -->
+<i-multi-select
+  label="Required Skills (At least 1)"
   [options]="skills"
   optionLabel="label"
   optionValue="value"
-  placeholder="Select skills"
-  formControlName="skills">
+  placeholder="Select at least 1 skill"
+  formControlName="requiredSkills">
 </i-multi-select>
 
 <i-multi-select
-  label="Departments"
-  [options]="departments"
-  placeholder="Select departments"
-  formControlName="departments">
-</i-multi-select>`,
-
-    validation: `<i-multi-select
-  label="Required Skills"
+  label="Minimum Skills (At least 2)"
   [options]="skills"
+  optionLabel="label"
+  optionValue="value"
   placeholder="Select at least 2 skills"
-  formControlName="requiredSkills">
+  formControlName="minimumSkills">
 </i-multi-select>`,
 
     advanced: `<i-multi-select
@@ -125,6 +187,8 @@ export class MultiSelectsComponent implements OnInit {
     fluid: `<i-multi-select
   label="Fluid Multi-Select"
   [options]="skills"
+  optionLabel="label"
+  optionValue="value"
   [fluid]="true"
   placeholder="Select options"
   formControlName="fluidSelect">
@@ -176,10 +240,8 @@ export class MultiSelectsComponent implements OnInit {
     });
 
     this.validationForm = this.fb.group({
-      requiredSkills: [
-        [],
-        [Validators.required, this.minArrayLengthValidator(2)],
-      ],
+      requiredSkills: [[], [Validators.required]], // Just requires at least 1 selection
+      minimumSkills: [[], [this.minArrayLengthValidator(2)]], // Requires at least 2 selections
     });
 
     this.advancedForm = this.fb.group({
@@ -195,6 +257,7 @@ export class MultiSelectsComponent implements OnInit {
     // Demo validation state
     setTimeout(() => {
       this.validationForm.get('requiredSkills')?.markAsTouched();
+      this.validationForm.get('minimumSkills')?.markAsTouched();
     }, 100);
   }
 

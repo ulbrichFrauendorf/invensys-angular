@@ -27,6 +27,8 @@
           <i-select
             label="Status"
             [options]="selectData.statuses"
+            optionLabel="label"
+            optionValue="value"
             placeholder="Select status"
             formControlName="status"
           />
@@ -65,6 +67,8 @@
         <i-select
           label="Status (Required)"
           [options]="selectData.statuses"
+          optionLabel="label"
+          optionValue="value"
           placeholder="Select status"
           formControlName="status"
         />

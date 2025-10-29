@@ -46,6 +46,9 @@
     }
 
     .i-multi-select-options {
+      background: colors.$color-surface-ground; // Ensure background is set
+      border-radius: 0 0 4px 4px; // Match container border radius
+
       .i-multi-select-option {
         color: colors.$color-text-primary;
 

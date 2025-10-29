@@ -131,7 +131,18 @@ export class ButtonsComponent {
 
   // Code examples organized by category
   codeExamples = {
-    contrast: `<i-button severity="contrast" [text]="true" icon="pi pi-cloud-download" size="small" />
+    contrast: `// 1. Import the component
+import { IButton } from 'invensys-angular-shared/components/button/button.component';
+
+// 2. Add to your component imports
+@Component({
+  selector: 'your-component',
+  imports: [IButton],
+  // ...
+})
+
+// 3. Use in template
+<i-button severity="contrast" [text]="true" icon="pi pi-cloud-download" size="small" />
 <i-button severity="contrast" [text]="true" icon="pi pi-cloud-download" size="medium" />
 <i-button severity="contrast" [text]="true" icon="pi pi-cloud-download" size="large" />`,
 
