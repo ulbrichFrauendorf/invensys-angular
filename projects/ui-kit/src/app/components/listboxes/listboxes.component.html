@@ -1,0 +1,109 @@
+<div class="listboxes-demo">
+  <header class="demo-header">
+    <h1>Listbox Components</h1>
+    <p>
+      Always visible option lists with single and multiple selection modes.
+      Perfect for compact interfaces where dropdowns aren't ideal, featuring
+      chip display and built-in filtering.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Multiple Selection -->
+    <app-demo-card
+      title="Multiple Selection Listbox"
+      [sourceCode]="codeExamples.multiple"
+    >
+      <i-listbox
+        label="Select Countries (Multiple)"
+        [options]="countries"
+        optionLabel="name"
+        optionValue="code"
+        [multiple]="true"
+        [showClear]="true"
+        [(ngModel)]="selectedCountriesMultiple"
+        (onChange)="onMultipleSelectionChange($event)"
+        (onClear)="onClear()"
+      ></i-listbox>
+    </app-demo-card>
+
+    <!-- Single Selection -->
+    <app-demo-card
+      title="Single Selection Listbox"
+      [sourceCode]="codeExamples.single"
+    >
+      <i-listbox
+        label="Select Country (Single)"
+        [options]="countries"
+        optionLabel="name"
+        optionValue="code"
+        [multiple]="false"
+        [showClear]="true"
+        [(ngModel)]="selectedCountrySingle"
+        (onChange)="onSingleSelectionChange($event)"
+        (onClear)="onClear()"
+      ></i-listbox>
+    </app-demo-card>
+
+    <!-- Advanced Features -->
+    <app-demo-card
+      title="Advanced Features (Filtering & Clear)"
+      [sourceCode]="codeExamples.filter"
+    >
+      <div class="demo-form">
+        <i-listbox
+          label="Searchable Countries"
+          [options]="countries"
+          optionLabel="name"
+          optionValue="code"
+          [multiple]="true"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+        ></i-listbox>
+      </div>
+    </app-demo-card>
+
+    <!-- Fluid Layout -->
+    <app-demo-card title="Fluid Layout" [sourceCode]="codeExamples.fluid">
+      <div class="demo-form">
+        <i-listbox
+          label="Full Width Listbox"
+          [options]="countries"
+          optionLabel="name"
+          optionValue="code"
+          [multiple]="true"
+          [fluid]="true"
+          [showClear]="true"
+        ></i-listbox>
+      </div>
+    </app-demo-card>
+
+    <!-- Disabled State -->
+    <app-demo-card title="Disabled State" [sourceCode]="codeExamples.disabled">
+      <div class="demo-form">
+        <i-listbox
+          label="Disabled Listbox"
+          [options]="countries"
+          optionLabel="name"
+          optionValue="code"
+          [multiple]="true"
+          [disabled]="true"
+          [ngModel]="['US', 'CA']"
+        ></i-listbox>
+      </div>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+  </div>
+</div>
