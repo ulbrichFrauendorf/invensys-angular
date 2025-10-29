@@ -69,10 +69,36 @@
 
   // Additional styling for dropdown contexts
   &::-webkit-scrollbar {
-    width: 5px; // Even thinner for dropdowns
+    width: 6px; // Slightly wider for better visibility
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05); // Subtle track background
+    border-radius: 3px;
+    margin: 2px 0; // Add margin to prevent cutoff
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 2.5px;
+    border-radius: 3px;
+    min-height: 20px; // Ensure minimum thumb size
+
+    // More visible colors for dropdowns
+    background: colors.$color-text-secondary;
+    opacity: 0.6;
+
+    &:hover {
+      background: colors.$color-text-primary;
+      opacity: 0.8;
+    }
+
+    &:active {
+      background: colors.$color-primary;
+      opacity: 0.9;
+    }
   }
+
+  // Better Firefox scrollbar visibility
+  scrollbar-width: thin;
+  scrollbar-color: colors.$color-text-secondary rgba(0, 0, 0, 0.05);
 }

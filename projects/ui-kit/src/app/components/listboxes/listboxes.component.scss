@@ -1,0 +1,5 @@
+@import "../shared-demo-styles.scss";
+
+.listboxes-demo {
+  @extend .demo-component;
+}

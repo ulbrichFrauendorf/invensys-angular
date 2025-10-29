@@ -1,7 +1,7 @@
 @use "../../themes/color-variables.scss" as colors;
 
-@mixin i-select-theme() {
-  .i-select-trigger {
+@mixin i-listbox-theme() {
+  .i-listbox-trigger {
     color: colors.$color-text-primary;
     border: 1px solid colors.$color-surface-border;
     background: colors.$color-surface-ground;
@@ -20,13 +20,21 @@
     }
   }
 
-  .i-select-dropdown {
+  .i-label {
+    color: colors.$color-text-secondary;
+  }
+
+  .i-label.floated {
+    background: transparent;
+  }
+
+  .i-listbox-dropdown {
     background: colors.$color-surface-ground;
     border: 1px solid colors.$color-surface-border;
 
-    .i-select-filter {
-      .i-select-search {
-        border: 1px solid colors.$color-surface-border;
+    .i-listbox-filter {
+      .i-listbox-search {
+        border-color: colors.$color-surface-border;
         background: colors.$color-surface-ground;
         color: colors.$color-text-primary;
 
@@ -37,11 +45,11 @@
       }
     }
 
-    .i-select-options {
+    .i-listbox-options {
       background: colors.$color-surface-ground; // Ensure background is set
       border-radius: 0 0 4px 4px; // Match container border radius
 
-      .i-select-option {
+      .i-listbox-option {
         color: colors.$color-text-primary;
 
         &:hover {
@@ -50,18 +58,21 @@
 
         &.selected {
           background-color: colors.$color-surface-hover;
-          color: colors.$color-primary;
+        }
+
+        .i-listbox-checkbox {
+          accent-color: colors.$color-primary;
         }
       }
 
-      .i-select-no-options {
+      .i-listbox-no-options {
         color: colors.$color-text-secondary;
       }
     }
   }
 
   .invalid {
-    .i-select-trigger {
+    .i-listbox-trigger {
       border-color: colors.$color-danger;
     }
 
