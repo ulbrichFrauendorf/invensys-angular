@@ -8,6 +8,7 @@ import {
   EnvironmentInjector,
   inject,
 } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 import { IDialog } from '../dialog.component';
 import { DynamicDialogConfig, DynamicDialogRef } from './dialog.interfaces';
 
@@ -41,7 +42,7 @@ export class DialogService {
     dialogRef.instance.modal = config.modal !== false;
 
     // Create the dialog reference first so we can pass it to the component
-    let resolveClose: (result?: any) => void;
+    const closeSubject = new Subject<any>();
     let isClosing = false; // Flag to prevent circular calls
 
     const ref: DynamicDialogRef = {
@@ -57,24 +58,26 @@ export class DialogService {
         }
         componentRef.destroy();
         dialogRef.destroy();
-        if (resolveClose) resolveClose(result);
+        closeSubject.next(result);
+        closeSubject.complete();
       },
-      onClose: new Promise((resolve) => {
-        resolveClose = resolve;
-      }),
+      onClose: closeSubject.asObservable(),
       instance: dialogRef.instance,
     };
 
     // Inject data and dialog reference into the dynamic component
     if (componentRef.instance && typeof componentRef.instance === 'object') {
-      if (config.data && 'data' in componentRef.instance) {
-        (componentRef.instance as any).data = config.data;
+      // Always set config if the property exists
+      if ('config' in componentRef.instance) {
+        (componentRef.instance as any).config = config;
       }
+      // Always set dialogRef if the property exists
       if ('dialogRef' in componentRef.instance) {
         (componentRef.instance as any).dialogRef = ref;
       }
-      if ('config' in componentRef.instance) {
-        (componentRef.instance as any).config = config;
+      // Set data from config if it exists and the property exists on the component
+      if ('data' in componentRef.instance) {
+        (componentRef.instance as any).data = config.data || {};
       }
     }
 

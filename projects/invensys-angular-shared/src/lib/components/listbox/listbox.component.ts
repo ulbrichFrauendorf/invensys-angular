@@ -6,10 +6,12 @@ import {
   HostListener,
   Output,
   EventEmitter,
-  OnInit,
-  OnChanges,
   forwardRef,
   Injector,
+  signal,
+  computed,
+  InputSignal,
+  input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -22,7 +24,6 @@ import {
 import { IInputText } from '../input-text/input-text.component';
 import { IChip } from '../chip/chip.component';
 import { ICheckbox } from '../checkbox/checkbox.component';
-import { IMultiSelect } from '../multi-select/multi-select.component';
 
 export interface ListboxOption {
   [key: string]: any;
@@ -42,9 +43,12 @@ export interface ListboxOption {
     },
   ],
 })
-export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
+export class IListbox implements ControlValueAccessor {
   @Input() label = 'List Box';
-  @Input() options: ListboxOption[] = [];
+  // Convert options to signal input
+  options: InputSignal<ListboxOption[] | null | undefined> = input<
+    ListboxOption[] | null | undefined
+  >([]);
   @Input({ required: true }) optionLabel!: string;
   @Input({ required: true }) optionValue!: string;
   @Input() placeholder?: string;
@@ -66,8 +70,29 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
   @ViewChild('dropdown', { static: false }) dropdownRef!: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInputRef!: ElementRef;
 
-  filterValue = '';
-  filteredOptions: ListboxOption[] = [];
+  // Convert filter value to signal
+  filterValue = signal('');
+
+  // Create computed signal for filtered options
+  filteredOptions = computed(() => {
+    const currentOptions = this.options() || [];
+    const currentFilterValue = this.filterValue();
+
+    // Guard against null/undefined options
+    if (!Array.isArray(currentOptions)) {
+      return [];
+    }
+
+    if (!this.filter || !currentFilterValue.trim()) {
+      return [...currentOptions];
+    } else {
+      const filterText = currentFilterValue.toLowerCase();
+      return currentOptions.filter((option) => {
+        const searchValue = this.getOptionSearchValue(option).toLowerCase();
+        return searchValue.includes(filterText);
+      });
+    }
+  });
 
   private _value: any[] | any = [];
 
@@ -107,14 +132,6 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
 
   set inputValue(value: string) {
     // Read-only, prevents any text input in the display field
-  }
-
-  ngOnInit() {
-    this.updateFilteredOptions();
-  }
-
-  ngOnChanges() {
-    this.updateFilteredOptions();
   }
 
   toggleOption(option: ListboxOption) {
@@ -186,28 +203,6 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
     }
   }
 
-  onFilterChange() {
-    this.updateFilteredOptions();
-  }
-
-  updateFilteredOptions() {
-    // Guard against null/undefined options (e.g., when using async pipe)
-    if (!this.options || !Array.isArray(this.options)) {
-      this.filteredOptions = [];
-      return;
-    }
-
-    if (!this.filter || !this.filterValue.trim()) {
-      this.filteredOptions = [...this.options];
-    } else {
-      const filterText = this.filterValue.toLowerCase();
-      this.filteredOptions = this.options.filter((option) => {
-        const searchValue = this.getOptionSearchValue(option).toLowerCase();
-        return searchValue.includes(filterText);
-      });
-    }
-  }
-
   getOptionLabel(option: ListboxOption): string {
     return option[this.optionLabel] || option['label'] || String(option);
   }
@@ -225,7 +220,8 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
 
   getSelectedLabels(): string[] {
     // Guard against null/undefined options
-    if (!this.options || !Array.isArray(this.options)) {
+    const currentOptions = this.options() || [];
+    if (!Array.isArray(currentOptions)) {
       return [];
     }
 
@@ -233,23 +229,24 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
       if (this.value === null || this.value === undefined) {
         return [];
       }
-      const option = this.options.find(
-        (opt) => this.getOptionValue(opt) === this.value
+      const option = currentOptions.find(
+        (opt: ListboxOption) => this.getOptionValue(opt) === this.value
       );
       return option ? [this.getOptionLabel(option)] : [String(this.value)];
     }
 
     const values = Array.isArray(this.value) ? this.value : [];
     return values.map((val: any) => {
-      const option = this.options.find(
-        (opt) => this.getOptionValue(opt) === val
+      const option = currentOptions.find(
+        (opt: ListboxOption) => this.getOptionValue(opt) === val
       );
       return option ? this.getOptionLabel(option) : String(val);
     });
   }
 
   getDisplayLabel(): string {
-    if (!this.options || !Array.isArray(this.options)) {
+    const currentOptions = this.options() || [];
+    if (!Array.isArray(currentOptions)) {
       return '';
     }
 
@@ -257,8 +254,8 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
       if (this.value === null || this.value === undefined) {
         return '';
       }
-      const option = this.options.find(
-        (opt) => this.getOptionValue(opt) === this.value
+      const option = currentOptions.find(
+        (opt: ListboxOption) => this.getOptionValue(opt) === this.value
       );
       return option ? this.getOptionLabel(option) : String(this.value);
     }
@@ -334,8 +331,7 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
       this.dropdownRef &&
       !this.dropdownRef.nativeElement.contains(event.target)
     ) {
-      this.filterValue = '';
-      this.updateFilteredOptions();
+      this.filterValue.set('');
     }
   }
 

@@ -49,8 +49,8 @@
         #searchInput
         [useFloatLabel]="false"
         placeholder="Search..."
-        [(ngModel)]="filterValue"
-        (input)="onFilterChange()"
+        [ngModel]="filterValue()"
+        (ngModelChange)="filterValue.set($event)"
         [fluid]="true"
       >
       </i-input-text>
@@ -59,7 +59,7 @@
 
     <div class="i-listbox-options">
       <div
-        *ngFor="let option of filteredOptions"
+        *ngFor="let option of filteredOptions()"
         class="i-listbox-option"
         [class.selected]="isOptionSelected(option)"
         (click)="toggleOption(option)"
@@ -77,7 +77,7 @@
         </span>
       </div>
 
-      @if (filteredOptions.length === 0) {
+      @if (filteredOptions().length === 0) {
       <div class="i-listbox-no-options">No options found</div>
       }
     </div>

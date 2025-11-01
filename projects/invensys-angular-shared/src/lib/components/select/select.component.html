@@ -38,8 +38,8 @@
         #searchInput
         [useFloatLabel]="false"
         placeholder="Search..."
-        [(ngModel)]="filterValue"
-        (input)="onFilterChange()"
+        [ngModel]="filterValue()"
+        (ngModelChange)="filterValue.set($event)"
         [fluid]="true"
       >
       </i-input-text>
@@ -48,7 +48,7 @@
 
     <div class="i-select-options">
       <div
-        *ngFor="let option of filteredOptions"
+        *ngFor="let option of filteredOptions()"
         class="i-select-option"
         [class.selected]="getOptionValue(option) === value"
         (click)="selectOption(option)"
@@ -56,7 +56,7 @@
         {{ getOptionLabel(option) }}
       </div>
 
-      @if (filteredOptions.length === 0) {
+      @if (filteredOptions().length === 0) {
       <div class="i-select-no-options">No options found</div>
       }
     </div>

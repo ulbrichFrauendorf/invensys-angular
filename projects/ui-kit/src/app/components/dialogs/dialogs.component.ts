@@ -145,7 +145,7 @@ displayExampleDialog() {
       },
     });
 
-    this.ref.onClose.then((result) => {
+    this.ref.onClose.subscribe((result) => {
       console.log('Dialog closed with result:', result);
     });
   }

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { AbstractDialog } from '../dialog-base';
 
 export interface DynamicDialogConfig {
@@ -14,6 +15,6 @@ export interface DynamicDialogConfig {
 
 export interface DynamicDialogRef {
   close(result?: any): void;
-  onClose: Promise<any>;
+  onClose: Observable<any>;
   instance?: AbstractDialog;
 }
