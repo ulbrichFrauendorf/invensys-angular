@@ -8,7 +8,7 @@ import {
 import {
   DynamicDialogConfig,
   DynamicDialogRef,
-} from '../../../../../invensys-angular-shared/src/lib/components/dialog/services/dialog.interfaces';
+} from '@shared/components/dialog/services/dialog.interfaces';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { IInputText } from '@shared/components/input-text/input-text.component';
 

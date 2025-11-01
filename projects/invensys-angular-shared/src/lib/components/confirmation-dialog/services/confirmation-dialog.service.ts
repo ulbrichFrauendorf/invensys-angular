@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { DialogService } from '../../dialog/services/dialog.service';
 import { DynamicDialogRef } from '../../dialog/services/dialog.interfaces';
 
@@ -43,7 +44,7 @@ export class ConfirmationDialogService {
     });
 
     // Subscribe to dialog close event to execute callbacks
-    ref.onClose.then((result: boolean) => {
+    ref.onClose.pipe(take(1)).subscribe((result: boolean) => {
       if (result === true && config.accept) {
         config.accept();
       } else if (result === false && config.reject) {
