@@ -129,21 +129,54 @@
         width="80vw"
       >
         <div class="dialog-content">
-          <h4>Large Dialog</h4>
+          <h4>Large Dialog with Listbox</h4>
           <p>
-            This dialog demonstrates larger viewport dimensions for content that
-            needs more space.
+            This dialog demonstrates larger viewport dimensions with a reactive
+            listbox component.
           </p>
-          <p>Features:</p>
-          <ul>
-            <li>Large viewport dimensions (80vw × 80vh)</li>
-            <li>Modal overlay</li>
-            <li>Full height and width usage</li>
-            <li>Suitable for complex content</li>
-          </ul>
-          <p>
-            Perfect for displaying detailed forms, data tables, or rich content.
-          </p>
+
+          <form [formGroup]="largeDialogForm" class="listbox-demo-form">
+            <div class="form-field">
+              <label for="selectedDepartments">Select Departments:</label>
+              <i-listbox
+                id="selectedDepartments"
+                label="Departments (Reactive Forms + Observable)"
+                [options]="departmentOptions$ | async"
+                optionLabel="label"
+                optionValue="value"
+                formControlName="selectedDepartments"
+                [multiple]="true"
+                [filter]="true"
+                [showClear]="true"
+                [maxSelectedLabels]="2"
+                selectedItemsLabel="{0} departments selected"
+              >
+              </i-listbox>
+
+              @if (largeDialogForm.get('selectedDepartments')?.invalid &&
+              largeDialogForm.get('selectedDepartments')?.touched) {
+              <small class="error-message">
+                Please select at least one department
+              </small>
+              }
+            </div>
+          </form>
+
+          <div class="demo-info">
+            <h5>Dynamic Data Features:</h5>
+            <ul>
+              <li>Options update automatically every 10 seconds</li>
+              <li>Random departments may become disabled</li>
+              <li>New temporary departments may appear</li>
+              <li>Form validation ensures at least one selection</li>
+            </ul>
+
+            <h5>Current Form State:</h5>
+            <pre>{{ largeDialogForm.value | json }}</pre>
+
+            <h5>Form Valid:</h5>
+            <p>{{ largeDialogForm.valid ? "Yes" : "No" }}</p>
+          </div>
         </div>
       </i-dialog>
     </app-demo-card>

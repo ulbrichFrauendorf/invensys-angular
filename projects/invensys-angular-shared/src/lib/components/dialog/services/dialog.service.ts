@@ -7,6 +7,7 @@ import {
   createComponent,
   EnvironmentInjector,
   inject,
+  ApplicationRef,
 } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { IDialog } from '../dialog.component';
@@ -17,6 +18,7 @@ import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
 })
 export class DialogService {
   private environmentInjector = inject(EnvironmentInjector);
+  private appRef = inject(ApplicationRef);
 
   open<T>(
     component: Type<T>,
@@ -51,6 +53,11 @@ export class DialogService {
         isClosing = true;
 
         dialogRef.instance.hide();
+
+        // Properly detach views from Angular's change detection before destroying
+        this.appRef.detachView(componentRef.hostView);
+        this.appRef.detachView(dialogRef.hostView);
+
         if (dialogRef.location.nativeElement.parentNode) {
           dialogRef.location.nativeElement.parentNode.removeChild(
             dialogRef.location.nativeElement
@@ -80,6 +87,11 @@ export class DialogService {
         (componentRef.instance as any).data = config.data || {};
       }
     }
+
+    // Attach both components to Angular's change detection cycle
+    // This is critical for proper change detection in dynamic components
+    this.appRef.attachView(dialogRef.hostView);
+    this.appRef.attachView(componentRef.hostView);
 
     // Trigger change detection to ensure ngOnInit is called with the injected data
     componentRef.changeDetectorRef.detectChanges();

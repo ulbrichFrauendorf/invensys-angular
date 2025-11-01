@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
 import { IDialog } from '@shared/components/dialog/dialog.component';
 import { IButton } from '@shared/components/button/button.component';
@@ -6,20 +6,117 @@ import { IDynamicDialogRef } from '@shared/components/dialog/services/dialog.int
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
+import { CommonModule } from '@angular/common';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Observable, BehaviorSubject, interval } from 'rxjs';
+import {
+  IListbox,
+  ListboxOption,
+} from '@shared/components/listbox/listbox.component';
 
 @Component({
   selector: 'app-dialogs',
-  imports: [IDialog, IButton, DemoCardComponent, IDialogActions],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    AsyncPipe,
+    JsonPipe,
+    IDialog,
+    IButton,
+    DemoCardComponent,
+    IDialogActions,
+    IListbox,
+  ],
   templateUrl: './dialogs.component.html',
   styleUrl: './dialogs.component.scss',
 })
-export class DialogsComponent {
+export class DialogsComponent implements OnInit, OnDestroy {
   ref: IDynamicDialogRef | undefined;
   dialogService = inject(DialogService);
+  private fb = inject(FormBuilder);
 
   showBasicDialog = false;
   showResponsiveDialog = false;
   showFullscreenDialog = false;
+
+  // Form for the large dialog listbox
+  largeDialogForm: FormGroup;
+
+  // Observable data for the listbox
+  departmentOptions$: Observable<ListboxOption[]>;
+  private departmentSubject = new BehaviorSubject<ListboxOption[]>([]);
+
+  // Initial data
+  private initialDepartments: ListboxOption[] = [
+    { label: 'Engineering', value: 'eng', selected: false },
+    { label: 'Marketing', value: 'mkt', selected: false },
+    { label: 'Sales', value: 'sales', selected: false },
+    { label: 'Human Resources', value: 'hr', selected: false },
+    { label: 'Finance', value: 'fin', selected: false },
+    { label: 'Operations', value: 'ops', selected: false },
+    { label: 'Customer Support', value: 'support', selected: false },
+    { label: 'Product Management', value: 'pm', selected: false },
+  ];
+
+  private intervalSub: any;
+
+  constructor() {
+    // Initialize the form with the selectedDepartments field
+    this.largeDialogForm = this.fb.group({
+      selectedDepartments: [[], [Validators.required, Validators.minLength(1)]],
+    });
+
+    // Set up the observable
+    this.departmentOptions$ = this.departmentSubject.asObservable();
+  }
+
+  ngOnInit() {
+    // Initialize with the initial data
+    this.departmentSubject.next([...this.initialDepartments]);
+
+    // Start simulating dynamic data updates
+    this.simulateDynamicData();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalSub) {
+      clearInterval(this.intervalSub);
+    }
+  }
+
+  simulateDynamicData() {
+    // Simulate dynamic updates every 10 seconds
+    this.intervalSub = setInterval(() => {
+      const currentOptions = [...this.initialDepartments];
+
+      // Randomly add/remove a "New Department" option
+      const hasNewDept = Math.random() > 0.5;
+      if (hasNewDept) {
+        currentOptions.push({
+          label: `New Department (${new Date().getSeconds()})`,
+          value: `new-dept-${Date.now()}`,
+          selected: false,
+        });
+      }
+
+      // Randomly modify availability of some departments
+      currentOptions.forEach((option) => {
+        if (option['value'] !== 'eng') {
+          // Keep Engineering always available
+          option['disabled'] = Math.random() > 0.8; // 20% chance to be disabled
+        }
+      });
+
+      console.log('Updated department options:', currentOptions);
+      this.departmentSubject.next(currentOptions);
+    }, 10000);
+  }
 
   // Code examples organized by category
   codeExamples = {
