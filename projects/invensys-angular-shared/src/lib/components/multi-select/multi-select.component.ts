@@ -6,10 +6,12 @@ import {
   HostListener,
   Output,
   EventEmitter,
-  OnInit,
-  OnChanges,
   forwardRef,
   Injector,
+  signal,
+  computed,
+  InputSignal,
+  input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -41,9 +43,12 @@ export interface MultiSelectOption {
     },
   ],
 })
-export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
+export class IMultiSelect implements ControlValueAccessor {
   @Input() label = 'Multi Select';
-  @Input() options: MultiSelectOption[] = [];
+  // Convert options to signal input
+  options: InputSignal<MultiSelectOption[] | null | undefined> = input<
+    MultiSelectOption[] | null | undefined
+  >([]);
   @Input({ required: true }) optionLabel!: string;
   @Input({ required: true }) optionValue!: string;
   @Input() placeholder = 'Select options';
@@ -65,8 +70,29 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   @ViewChild('searchInput', { static: false }) searchInputRef!: ElementRef;
 
   isOpen = false;
-  filterValue = '';
-  filteredOptions: MultiSelectOption[] = [];
+  // Convert filter value to signal
+  filterValue = signal('');
+
+  // Create computed signal for filtered options
+  filteredOptions = computed(() => {
+    const currentOptions = this.options() || [];
+    const currentFilterValue = this.filterValue();
+
+    // Guard against null/undefined options
+    if (!Array.isArray(currentOptions)) {
+      return [];
+    }
+
+    if (!this.filter || !currentFilterValue.trim()) {
+      return [...currentOptions];
+    } else {
+      const filterText = currentFilterValue.toLowerCase();
+      return currentOptions.filter((option) => {
+        const searchValue = this.getOptionSearchValue(option).toLowerCase();
+        return searchValue.includes(filterText);
+      });
+    }
+  });
 
   private _value: any[] = [];
 
@@ -104,19 +130,10 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
     // Read-only, prevents any text input in the display field
   }
 
-  ngOnInit() {
-    this.updateFilteredOptions();
-  }
-
-  ngOnChanges() {
-    this.updateFilteredOptions();
-  }
-
   toggleDropdown() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      this.filterValue = '';
-      this.updateFilteredOptions();
+      this.filterValue.set('');
       setTimeout(() => {
         if (
           this.filter &&
@@ -171,22 +188,6 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
     }
   }
 
-  onFilterChange() {
-    this.updateFilteredOptions();
-  }
-
-  updateFilteredOptions() {
-    if (!this.filter || !this.filterValue.trim()) {
-      this.filteredOptions = [...this.options];
-    } else {
-      const filterText = this.filterValue.toLowerCase();
-      this.filteredOptions = this.options.filter((option) => {
-        const searchValue = this.getOptionSearchValue(option).toLowerCase();
-        return searchValue.includes(filterText);
-      });
-    }
-  }
-
   getOptionLabel(option: MultiSelectOption): string {
     return option[this.optionLabel] || option['label'] || String(option);
   }
@@ -203,9 +204,14 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getSelectedLabels(): string[] {
+    const currentOptions = this.options() || [];
+    if (!Array.isArray(currentOptions)) {
+      return [];
+    }
+
     return this.value.map((val) => {
-      const option = this.options.find(
-        (opt) => this.getOptionValue(opt) === val
+      const option = currentOptions.find(
+        (opt: MultiSelectOption) => this.getOptionValue(opt) === val
       );
       return option ? this.getOptionLabel(option) : String(val);
     });
@@ -239,8 +245,7 @@ export class IMultiSelect implements OnInit, OnChanges, ControlValueAccessor {
       !this.dropdownRef.nativeElement.contains(event.target)
     ) {
       this.isOpen = false;
-      this.filterValue = '';
-      this.updateFilteredOptions();
+      this.filterValue.set('');
     }
   }
 

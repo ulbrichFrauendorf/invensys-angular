@@ -6,10 +6,12 @@ import {
   HostListener,
   Output,
   EventEmitter,
-  OnInit,
-  OnChanges,
   forwardRef,
   Injector,
+  signal,
+  computed,
+  InputSignal,
+  input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -39,9 +41,12 @@ export interface SelectOption {
     },
   ],
 })
-export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
+export class ISelect implements ControlValueAccessor {
   @Input() label = 'Select';
-  @Input() options: SelectOption[] = [];
+  // Convert options to signal input
+  options: InputSignal<SelectOption[] | null | undefined> = input<
+    SelectOption[] | null | undefined
+  >([]);
   @Input({ required: true }) optionLabel!: string;
   @Input({ required: true }) optionValue!: string;
   @Input() placeholder = 'Select an option';
@@ -60,8 +65,29 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
   @ViewChild('searchInput', { static: false }) searchInputRef!: ElementRef;
 
   isOpen = false;
-  filterValue = '';
-  filteredOptions: SelectOption[] = [];
+  // Convert filter value to signal
+  filterValue = signal('');
+
+  // Create computed signal for filtered options
+  filteredOptions = computed(() => {
+    const currentOptions = this.options() || [];
+    const currentFilterValue = this.filterValue();
+
+    // Guard against null/undefined options
+    if (!Array.isArray(currentOptions)) {
+      return [];
+    }
+
+    if (!this.filter || !currentFilterValue.trim()) {
+      return [...currentOptions];
+    } else {
+      const filterText = currentFilterValue.toLowerCase();
+      return currentOptions.filter((option) => {
+        const searchValue = this.getOptionSearchValue(option).toLowerCase();
+        return searchValue.includes(filterText);
+      });
+    }
+  });
 
   // This will be bound to the underlying input-text component
   get inputValue(): string {
@@ -99,19 +125,10 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
     });
   }
 
-  ngOnInit() {
-    this.updateFilteredOptions();
-  }
-
-  ngOnChanges() {
-    this.updateFilteredOptions();
-  }
-
   toggleDropdown() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      this.filterValue = '';
-      this.updateFilteredOptions();
+      this.filterValue.set('');
       setTimeout(() => {
         if (
           this.filter &&
@@ -131,8 +148,7 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
     this.onChangeCallback(newValue); // Notify form control
     this.onTouchedCallback(); // Mark as touched
     this.isOpen = false;
-    this.filterValue = '';
-    this.updateFilteredOptions();
+    this.filterValue.set('');
   }
 
   clearSelection() {
@@ -140,21 +156,6 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
     this.onClear.emit();
     this.onChangeCallback(null); // Notify form control
     this.onTouchedCallback(); // Mark as touched
-  }
-  onFilterChange() {
-    this.updateFilteredOptions();
-  }
-
-  updateFilteredOptions() {
-    if (!this.filter || !this.filterValue.trim()) {
-      this.filteredOptions = [...this.options];
-    } else {
-      const filterText = this.filterValue.toLowerCase();
-      this.filteredOptions = this.options.filter((option) => {
-        const searchValue = this.getOptionSearchValue(option).toLowerCase();
-        return searchValue.includes(filterText);
-      });
-    }
   }
 
   getOptionLabel(option: SelectOption): string {
@@ -177,8 +178,13 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
       return '';
     }
 
-    const selectedOption = this.options.find(
-      (option) => this.getOptionValue(option) === this.value
+    const currentOptions = this.options() || [];
+    if (!Array.isArray(currentOptions)) {
+      return String(this.value);
+    }
+
+    const selectedOption = currentOptions.find(
+      (option: SelectOption) => this.getOptionValue(option) === this.value
     );
 
     return selectedOption
@@ -193,8 +199,7 @@ export class ISelect implements OnInit, OnChanges, ControlValueAccessor {
       !this.dropdownRef.nativeElement.contains(event.target)
     ) {
       this.isOpen = false;
-      this.filterValue = '';
-      this.updateFilteredOptions();
+      this.filterValue.set('');
     }
   }
 
