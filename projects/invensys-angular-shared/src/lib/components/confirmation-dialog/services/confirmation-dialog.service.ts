@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DialogService } from '../../dialog/services/dialog.service';
 import { DynamicDialogRef } from '../../dialog/services/dialog.interfaces';
 
