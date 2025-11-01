@@ -191,6 +191,12 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   updateFilteredOptions() {
+    // Guard against null/undefined options (e.g., when using async pipe)
+    if (!this.options || !Array.isArray(this.options)) {
+      this.filteredOptions = [];
+      return;
+    }
+
     if (!this.filter || !this.filterValue.trim()) {
       this.filteredOptions = [...this.options];
     } else {
@@ -218,6 +224,11 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getSelectedLabels(): string[] {
+    // Guard against null/undefined options
+    if (!this.options || !Array.isArray(this.options)) {
+      return [];
+    }
+
     if (!this.multiple) {
       if (this.value === null || this.value === undefined) {
         return [];
@@ -238,6 +249,10 @@ export class IListbox implements OnInit, OnChanges, ControlValueAccessor {
   }
 
   getDisplayLabel(): string {
+    if (!this.options || !Array.isArray(this.options)) {
+      return '';
+    }
+
     if (!this.multiple) {
       if (this.value === null || this.value === undefined) {
         return '';
