@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
 import { IDialog } from '@shared/components/dialog/dialog.component';
 import { IButton } from '@shared/components/button/button.component';
-import { DynamicDialogRef } from '@shared/components/dialog/services/dialog.interfaces';
+import { IDynamicDialogRef } from '@shared/components/dialog/services/dialog.interfaces';
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
@@ -14,7 +14,7 @@ import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/d
   styleUrl: './dialogs.component.scss',
 })
 export class DialogsComponent {
-  ref: DynamicDialogRef | undefined;
+  ref: IDynamicDialogRef | undefined;
   dialogService = inject(DialogService);
 
   showBasicDialog = false;

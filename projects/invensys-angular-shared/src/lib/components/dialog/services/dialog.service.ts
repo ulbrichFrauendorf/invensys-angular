@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { IDialog } from '../dialog.component';
-import { DynamicDialogConfig, DynamicDialogRef } from './dialog.interfaces';
+import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,8 @@ export class DialogService {
 
   open<T>(
     component: Type<T>,
-    config: DynamicDialogConfig = {}
-  ): DynamicDialogRef {
+    config: IDynamicDialogConfig = {}
+  ): IDynamicDialogRef {
     // Create the dialog wrapper component
     const dialogRef = createComponent(IDialog, {
       environmentInjector: this.environmentInjector,
@@ -45,7 +45,7 @@ export class DialogService {
     const closeSubject = new Subject<any>();
     let isClosing = false; // Flag to prevent circular calls
 
-    const ref: DynamicDialogRef = {
+    const ref: IDynamicDialogRef = {
       close: (result?: any) => {
         if (isClosing) return; // Prevent circular calls
         isClosing = true;

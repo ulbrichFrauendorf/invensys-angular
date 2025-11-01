@@ -5,10 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from '@shared/components/dialog/services/dialog.interfaces';
+import { IDialogBase } from '@shared/components/dialog/base-dialog.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { IInputText } from '@shared/components/input-text/input-text.component';
 
@@ -18,24 +15,26 @@ import { IInputText } from '@shared/components/input-text/input-text.component';
   templateUrl: './example-dialog.component.html',
   styleUrl: './example-dialog.component.scss',
 })
-export class ExampleDialogComponent implements OnInit {
-  public dialogRef?: DynamicDialogRef;
-  public config: DynamicDialogConfig = {};
+export class ExampleDialogComponent extends IDialogBase implements OnInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder) {
+    super();
     this.form = this.fb.group({
       message: ['', [Validators.required]],
       user: ['', [Validators.required]],
     });
   }
 
-  ngOnInit() {
+  override ngOnInit() {
+    super.ngOnInit();
+
     // Initialize form with data from config
-    if (this.config.data) {
+    const data = this.getData();
+    if (data) {
       this.form.patchValue({
-        message: this.config.data.message || '',
-        user: this.config.data.user || '',
+        message: data.message || '',
+        user: data.user || '',
       });
     }
   }
@@ -44,13 +43,13 @@ export class ExampleDialogComponent implements OnInit {
     if (this.form.valid) {
       const formData = this.form.value;
       // Close dialog and pass the form data as result
-      this.dialogRef?.close(formData);
+      this.close(formData);
     } else {
       this.form.markAllAsTouched();
     }
   }
 
   onHide() {
-    this.dialogRef?.close();
+    this.close();
   }
 }

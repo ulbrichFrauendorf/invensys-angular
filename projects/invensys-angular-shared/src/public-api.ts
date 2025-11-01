@@ -12,6 +12,7 @@ export * from './lib/components/confirmation-dialog/confirmation-dialog.componen
 export * from './lib/components/confirmation-dialog/services/confirmation-dialog.service';
 export * from './lib/components/dialog/dialog.component';
 export * from './lib/components/dialog/dialog-base';
+export * from './lib/components/dialog/base-dialog.component';
 export * from './lib/components/dialog/inner/dialog-actions/dialog-actions.component';
 export * from './lib/components/dialog/services/dialog.service';
 export * from './lib/components/dialog/services/dialog.interfaces';
