@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { DialogService } from '../../dialog/services/dialog.service';
-import { DynamicDialogRef } from '../../dialog/services/dialog.interfaces';
+import { IDynamicDialogRef } from '../../dialog/services/dialog.interfaces';
 
 export interface ConfirmationDialogConfig {
   message: string;
@@ -21,7 +21,7 @@ export class ConfirmationDialogService {
   acceptLabel?: string;
   rejectLabel?: string;
 
-  async confirm(config: ConfirmationDialogConfig): Promise<DynamicDialogRef> {
+  async confirm(config: ConfirmationDialogConfig): Promise<IDynamicDialogRef> {
     const { ConfirmationDialogComponent } = await import(
       '../confirmation-dialog.component'
     );

@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { AbstractDialog } from '../dialog-base';
 
-export interface DynamicDialogConfig {
+export interface IDynamicDialogConfig {
   header?: string;
   message?: string;
   width?: string;
@@ -13,7 +13,7 @@ export interface DynamicDialogConfig {
   data?: any;
 }
 
-export interface DynamicDialogRef {
+export interface IDynamicDialogRef {
   close(result?: any): void;
   onClose: Observable<any>;
   instance?: AbstractDialog;

@@ -1,7 +1,7 @@
 import { Component, signal, OnInit } from '@angular/core';
 import {
-  DynamicDialogConfig,
-  DynamicDialogRef,
+  IDynamicDialogConfig,
+  IDynamicDialogRef,
 } from '../dialog/services/dialog.interfaces';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IDialogActions } from '../dialog/inner/dialog-actions/dialog-actions.component';
@@ -13,8 +13,8 @@ import { IDialogActions } from '../dialog/inner/dialog-actions/dialog-actions.co
   styleUrl: './confirmation-dialog.component.scss',
 })
 export class ConfirmationDialogComponent implements OnInit {
-  public dialogRef?: DynamicDialogRef;
-  public config: DynamicDialogConfig = {};
+  public dialogRef?: IDynamicDialogRef;
+  public config: IDynamicDialogConfig = {};
 
   componentId = UniqueComponentId('i-confirmation-dialog-');
 
