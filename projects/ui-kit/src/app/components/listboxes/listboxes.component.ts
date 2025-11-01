@@ -1,17 +1,48 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IListbox } from '@shared/components/listbox/listbox.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule, AsyncPipe, JsonPipe } from '@angular/common';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Observable, BehaviorSubject, interval, map, takeWhile } from 'rxjs';
+import {
+  IListbox,
+  ListboxOption,
+} from '@shared/components/listbox/listbox.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 
 @Component({
   selector: 'app-listboxes',
   standalone: true,
-  imports: [CommonModule, FormsModule, IListbox, DemoCardComponent],
+  imports: [
+    CommonModule,
+    AsyncPipe,
+    JsonPipe,
+    FormsModule,
+    ReactiveFormsModule,
+    IListbox,
+    DemoCardComponent,
+  ],
   templateUrl: './listboxes.component.html',
   styleUrls: ['./listboxes.component.scss', '../shared-demo-styles.scss'],
 })
-export class ListboxesComponent {
+export class ListboxesComponent implements OnInit, OnDestroy {
+  // Reactive form for departments example
+  public departmentsForm: FormGroup;
+  public departmentOptions$: Observable<ListboxOption[]>;
+  private departmentSubject = new BehaviorSubject<ListboxOption[]>([]);
+  private isComponentActive = true;
+
+  // Simulated departments data that updates over time
+  private initialDepartments: ListboxOption[] = [
+    { id: 1, name: 'Engineering', code: 'ENG', employees: 25 },
+    { id: 2, name: 'Marketing', code: 'MKT', employees: 12 },
+    { id: 3, name: 'Sales', code: 'SAL', employees: 18 },
+  ];
+
   // Sample data for the listbox
   countries = [
     { name: 'United States', code: 'US' },
@@ -31,6 +62,67 @@ export class ListboxesComponent {
 
   // Single selection listbox value
   selectedCountrySingle: string | null = 'UK';
+
+  constructor(private fb: FormBuilder) {
+    // Initialize reactive form
+    this.departmentsForm = this.fb.group({
+      selectedDepartments: [
+        [1, 2],
+        [Validators.required, Validators.minLength(1)],
+      ],
+    });
+
+    // Initialize the observable with the subject
+    this.departmentOptions$ = this.departmentSubject.asObservable();
+
+    // Start with initial data
+    this.departmentSubject.next(this.initialDepartments);
+  }
+
+  ngOnInit() {
+    // Simulate dynamic data updates every 5 seconds
+    this.simulateDynamicData();
+
+    // Debug form changes - listbox with reactive forms and observable data
+    this.departmentsForm
+      .get('selectedDepartments')
+      ?.valueChanges.subscribe((value) => {
+        console.log('Departments form value changed:', value);
+      });
+  }
+
+  ngOnDestroy() {
+    this.isComponentActive = false;
+  }
+
+  private simulateDynamicData() {
+    // Simulate adding new departments over time
+    const additionalDepartments = [
+      { id: 4, name: 'Human Resources', code: 'HR', employees: 8 },
+      { id: 5, name: 'Finance', code: 'FIN', employees: 15 },
+      { id: 6, name: 'Operations', code: 'OPS', employees: 22 },
+      { id: 7, name: 'Research & Development', code: 'RND', employees: 30 },
+    ];
+
+    // Add a new department every 5 seconds
+    interval(5000)
+      .pipe(
+        takeWhile(() => this.isComponentActive),
+        map((index) => index % additionalDepartments.length)
+      )
+      .subscribe((index) => {
+        const currentDepartments = this.departmentSubject.value;
+        const newDepartment = additionalDepartments[index];
+
+        // Check if department already exists to avoid duplicates
+        if (
+          !currentDepartments.some((dept) => dept['id'] === newDepartment['id'])
+        ) {
+          const updatedDepartments = [...currentDepartments, newDepartment];
+          this.departmentSubject.next(updatedDepartments);
+        }
+      });
+  }
 
   onMultipleSelectionChange(value: string[]) {
     console.log('Multiple selection changed:', value);
@@ -72,6 +164,16 @@ export class ListboxesComponent {
       title: 'Form Integration',
       description:
         'Full support for Angular reactive forms and template-driven forms.',
+    },
+    {
+      title: 'Observable Data Support',
+      description:
+        'Real-time data updates through RxJS observables with automatic change detection.',
+    },
+    {
+      title: 'Dynamic Content',
+      description:
+        'Options can be updated dynamically at runtime with proper visual feedback.',
     },
     {
       title: 'Accessibility',
@@ -150,5 +252,44 @@ selectedCountrySingle: string | null = 'UK';
   [disabled]="true"
   [ngModel]="['US', 'CA']">
 </i-listbox>`,
+
+    reactive: `// Component setup with reactive forms and observable data
+departmentsForm = this.fb.group({
+  selectedDepartments: [[1, 2], [Validators.required, Validators.minLength(1)]]
+});
+
+departmentOptions$ = this.departmentSubject.asObservable();
+
+private initialDepartments = [
+  { id: 1, name: 'Engineering', code: 'ENG', employees: 25 },
+  { id: 2, name: 'Marketing', code: 'MKT', employees: 12 },
+  { id: 3, name: 'Sales', code: 'SAL', employees: 18 }
+];
+
+// Simulate dynamic data updates every 5 seconds
+simulateDynamicData() {
+  interval(5000).pipe(
+    takeWhile(() => this.isComponentActive)
+  ).subscribe(() => {
+    // Add new departments over time
+    this.departmentSubject.next([...this.departmentSubject.value, newDept]);
+  });
+}
+
+// Template usage with reactive forms
+<form [formGroup]="departmentsForm">
+  <i-listbox
+    label="Departments (Reactive Forms + Observable)"
+    [options]="departmentOptions$ | async"
+    optionLabel="name"
+    optionValue="id"
+    formControlName="selectedDepartments"
+    [multiple]="true"
+    [filter]="true"
+    [showClear]="true"
+    [maxSelectedLabels]="2"
+    selectedItemsLabel="{0} departments selected">
+  </i-listbox>
+</form>`,
   };
 }
