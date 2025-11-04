@@ -15,7 +15,6 @@
     position: relative;
     cursor: pointer;
 
-    // Chips overlay positioned over the input area
     .i-listbox-chips-overlay {
       position: absolute;
       top: 50%;
@@ -39,7 +38,6 @@
       }
     }
 
-    // Icons overlay positioned in the right side of the input
     .i-listbox-icons-overlay {
       position: absolute;
       top: 50%;
@@ -74,14 +72,9 @@
 
   .i-listbox-dropdown {
     border-radius: 4px;
-    max-height: min(
-      200px,
-      calc(100vh - 100px)
-    ); // Ensure it doesn't exceed viewport with safe margin
-    overflow: visible; // Allow scrollbar to be fully visible
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: visible;
     margin-top: 4px;
-    margin-bottom: 8px; // Increased bottom margin for better spacing
+    margin-bottom: 8px;
 
     .i-listbox-filter {
       padding: 8px;
@@ -102,12 +95,9 @@
         calc(100vh - 150px)
       ); // Better viewport calculation with safe margin
       overflow-y: auto;
-      overflow-x: hidden; // Hide horizontal overflow
-      border-radius: 0 0 4px 4px; // Round bottom corners
+      overflow-x: hidden;
+      border-radius: 0 0 4px 4px;
       @include scrollbar.dropdown-scrollbar();
-
-      // Ensure scrollbar area is properly visible
-      padding-right: 2px; // Small padding to prevent scrollbar cutoff
 
       .i-listbox-option {
         font-size: 14px;
@@ -134,7 +124,6 @@
           font-weight: 500;
         }
 
-        // Better styling for single select mode without checkbox
         &:not(:has(.i-listbox-checkbox)) {
           padding-left: 16px; // More padding when no checkbox
         }

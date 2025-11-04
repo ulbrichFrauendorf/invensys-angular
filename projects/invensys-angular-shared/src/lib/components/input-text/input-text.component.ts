@@ -27,6 +27,9 @@ export class IInputText implements ControlValueAccessor {
   @Input() externalInvalid = false; // Allow parent to override validation state
   @Input() externalErrorMessage?: string; // Allow parent to provide error message
 
+  /** Optional icon name or path to display on the left of the input */
+  @Input() icon?: string;
+
   value: string | null = null;
   disabled = false;
 
@@ -110,5 +113,16 @@ export class IInputText implements ControlValueAccessor {
           ? err[key]
           : 'Invalid value';
     }
+  }
+
+  isImageIcon(): boolean {
+    return !!(
+      this.icon &&
+      (this.icon.endsWith('.svg') ||
+        this.icon.endsWith('.png') ||
+        this.icon.endsWith('.jpg') ||
+        this.icon.endsWith('.jpeg') ||
+        this.icon.startsWith('data:'))
+    );
   }
 }

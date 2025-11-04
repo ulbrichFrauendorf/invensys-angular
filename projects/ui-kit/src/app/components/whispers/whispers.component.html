@@ -1,0 +1,142 @@
+<div class="whispers-demo">
+  <i-whisper [position]="'top-left'" [key]="'left'" />
+  <i-whisper [position]="'top-right'" [key]="'right'" />
+  <i-whisper [position]="'top-center'" [key]="'global'" />
+
+  <header class="demo-header">
+    <h1>Whisper Notifications</h1>
+    <p>
+      Toast-style notifications for user feedback and status updates. Similar to
+      PrimeNG MessageService but with a creative whisper theme.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Basic Message Types -->
+    <app-demo-card title="Message Types" [sourceCode]="codeExamples.usage">
+      <div class="button-grid">
+        <i-button
+          severity="success"
+          (clicked)="showSuccessMessage()"
+          icon="check_circle"
+        >
+          Success
+        </i-button>
+        <i-button severity="info" (clicked)="showInfoMessage()" icon="info">
+          Info
+        </i-button>
+        <i-button
+          severity="warning"
+          (clicked)="showWarningMessage()"
+          icon="warning"
+        >
+          Warning
+        </i-button>
+        <i-button severity="danger" (clicked)="showErrorMessage()">
+          Error
+        </i-button>
+        <i-button
+          severity="primary"
+          (clicked)="showStackingDemo()"
+          icon="layers"
+          [outlined]="true"
+        >
+          Test Stacking
+        </i-button>
+      </div>
+    </app-demo-card>
+
+    <!-- Key-based Messages -->
+    <app-demo-card
+      title="Key-based Messages"
+      [sourceCode]="codeExamples.advanced"
+    >
+      <div class="demo-section">
+        <p class="section-description">
+          Messages with keys will show in specific whisper containers:
+        </p>
+        <div class="button-grid">
+          <i-button
+            severity="info"
+            (clicked)="showMultipleMessages()"
+            icon="queue"
+          >
+            Multiple Messages
+          </i-button>
+          <i-button
+            severity="secondary"
+            (clicked)="showLeftMessage()"
+            icon="arrow_back"
+          >
+            Left Message
+          </i-button>
+          <i-button
+            severity="secondary"
+            (clicked)="showRightMessage()"
+            icon="arrow_forward"
+          >
+            Right Message
+          </i-button>
+          <i-button
+            severity="primary"
+            (clicked)="showGlobalMessage()"
+            icon="public"
+          >
+            Global Message
+          </i-button>
+          <i-button
+            severity="contrast"
+            (clicked)="clearAllMessages()"
+            icon="clear_all"
+            [outlined]="true"
+          >
+            Clear All
+          </i-button>
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- Real-world Example -->
+    <app-demo-card title="Real-world Example" [sourceCode]="codeExamples.basic">
+      <div class="demo-section">
+        <p class="section-description">
+          Simulate a user link action like the one in your request:
+        </p>
+        <i-button
+          severity="success"
+          (clicked)="simulateUserLinkAction()"
+          icon="link"
+          [raised]="true"
+        >
+          Link Users (Simulated)
+        </i-button>
+      </div>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card title="Features">
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+        }
+      </div>
+    </app-demo-card>
+
+    <!-- Positioning Setup -->
+    <app-demo-card
+      title="Setup & Positioning"
+      [sourceCode]="codeExamples.positioning"
+    >
+      <div class="setup-info">
+        <p>
+          Add the whisper component to your app.component.html template for
+          global notifications:
+        </p>
+        <code>&lt;i-whisper position="top-right"&gt;&lt;/i-whisper&gt;</code>
+      </div>
+    </app-demo-card>
+  </div>
+</div>

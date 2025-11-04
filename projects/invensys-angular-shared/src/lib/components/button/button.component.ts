@@ -10,16 +10,8 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
+import { ISeverity } from '@shared/enums/IButtonSeverity';
 
-export type IButtonSeverity =
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'success'
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'contrast';
 export type IButtonSize = 'small' | 'medium' | 'large';
 
 @Component({
@@ -30,7 +22,7 @@ export type IButtonSize = 'small' | 'medium' | 'large';
   styleUrl: './button.component.scss',
 })
 export class IButton implements AfterViewInit {
-  @Input() severity: IButtonSeverity = 'primary';
+  @Input() severity: ISeverity = 'primary';
   @Input() size: IButtonSize = 'medium';
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() disabled = false;
