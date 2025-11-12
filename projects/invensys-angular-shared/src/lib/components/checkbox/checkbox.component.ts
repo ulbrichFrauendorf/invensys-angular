@@ -49,9 +49,9 @@ export class ICheckbox implements ControlValueAccessor {
   toggle() {
     if (this.disabled || this.readonly) return;
 
-    this.checked = !this.checked;
-    this.onChange.emit(this.checked);
-    this.onChangeCallback(this.checked);
+    this._checked = !this._checked;
+    this.onChange.emit(this._checked);
+    this.onChangeCallback(this._checked);
     this.onTouchedCallback();
   }
 
