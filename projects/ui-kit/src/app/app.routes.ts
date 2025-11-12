@@ -9,6 +9,7 @@ import { MultiSelectsComponent } from './components/multi-selects/multi-selects.
 import { SelectsComponent } from './components/selects/selects.component';
 import { ChipsComponent } from './components/chips/chips.component';
 import { ListboxesComponent } from './components/listboxes/listboxes.component';
+import { WhispersComponent } from './components/whispers/whispers.component';
 
 export const routes: Routes = [
   { path: 'buttons', component: ButtonsComponent },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'multi-selects', component: MultiSelectsComponent },
   { path: 'chips', component: ChipsComponent },
   { path: 'listboxes', component: ListboxesComponent },
+  { path: 'whispers', component: WhispersComponent },
   { path: '', redirectTo: '/input-texts', pathMatch: 'full' },
 ];

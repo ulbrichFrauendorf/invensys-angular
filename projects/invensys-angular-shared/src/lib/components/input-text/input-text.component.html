@@ -5,7 +5,19 @@
   [class.i-input--no-float]="!useFloatLabel"
   [attr.id]="componentId"
 >
-  <div [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'">
+  <div
+    [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'"
+    class="i-input-container"
+  >
+    @if (icon) {
+    <span class="i-input-icon" [attr.aria-hidden]="true">
+      @if (isImageIcon()) {
+      <img [src]="icon" [attr.alt]="''" width="16" height="16" />
+      } @else {
+      <i class="material-icons" [attr.aria-hidden]="true">{{ icon }}</i>
+      }
+    </span>
+    }
     <input
       [id]="id || componentId"
       [type]="type"
