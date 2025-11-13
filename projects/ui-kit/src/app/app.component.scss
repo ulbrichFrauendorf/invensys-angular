@@ -1,4 +1,4 @@
-@import "app.component.theme.scss";
+@use "app.component.theme.scss" as *;
 
 @include app-theme();
 

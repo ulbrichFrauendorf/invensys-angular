@@ -31,11 +31,11 @@ export class ICheckbox implements ControlValueAccessor {
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
 
   @Input()
-  get checked(): boolean {
-    return this._checked;
-  }
   set checked(value: boolean) {
     this._checked = !!value;
+  }
+  get checked(): boolean {
+    return this._checked;
   }
 
   @Output() onChange = new EventEmitter<boolean>();
@@ -50,9 +50,13 @@ export class ICheckbox implements ControlValueAccessor {
     if (this.disabled || this.readonly) return;
 
     this._checked = !this._checked;
-    this.onChange.emit(this._checked);
     this.onChangeCallback(this._checked);
     this.onTouchedCallback();
+
+    // Emit onChange after the ngModel has been updated
+    setTimeout(() => {
+      this.onChange.emit(this._checked);
+    }, 0);
   }
 
   // ControlValueAccessor implementation

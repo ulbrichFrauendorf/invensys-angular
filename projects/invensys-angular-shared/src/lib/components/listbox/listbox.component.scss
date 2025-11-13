@@ -15,6 +15,11 @@
     position: relative;
     cursor: pointer;
 
+    // Ensure readonly input has pointer cursor
+    .i-input-text .i-input.readonly {
+      cursor: pointer !important;
+    }
+
     .i-listbox-chips-overlay {
       position: absolute;
       top: 50%;

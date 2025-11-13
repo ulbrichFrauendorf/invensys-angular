@@ -1,4 +1,4 @@
-@import "../../../invensys-angular-shared/src/lib/themes/color-variables.scss";
+@use "../../../invensys-angular-shared/src/lib/themes/color-variables.scss" as *;
 
 // App Container Theme Mixin
 @mixin app-container-theme() {

@@ -16,7 +16,7 @@
       [hideText]="shouldHideText()"
       [externalInvalid]="showErrors"
       [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
-      readonly
+      [readonly]="readonly"
     >
       <!-- Selected chips overlay (positioned above the input) -->
       @if (shouldShowChips()) {

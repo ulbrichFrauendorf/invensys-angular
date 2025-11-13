@@ -3,7 +3,7 @@
 @mixin i-checkbox-theme() {
   .i-checkbox-wrapper {
     .i-checkbox {
-      border-color: colors.$color-surface-border;
+      border: 1px solid colors.$color-surface-border;
       background-color: colors.$color-surface-ground;
 
       &:hover:not(.i-checkbox--disabled) {

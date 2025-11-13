@@ -10,9 +10,11 @@ import { SelectsComponent } from './components/selects/selects.component';
 import { ChipsComponent } from './components/chips/chips.component';
 import { ListboxesComponent } from './components/listboxes/listboxes.component';
 import { WhispersComponent } from './components/whispers/whispers.component';
+import { CheckboxesComponent } from './components/checkboxes/checkboxes.component';
 
 export const routes: Routes = [
   { path: 'buttons', component: ButtonsComponent },
+  { path: 'checkboxes', component: CheckboxesComponent },
   { path: 'input-texts', component: InputTextsComponent },
   { path: 'cards', component: CardsComponent },
   { path: 'dialogs', component: DialogsComponent },

@@ -56,6 +56,7 @@ export class ISelect implements ControlValueAccessor {
   @Input() filter = true;
   @Input() filterBy = 'label';
   @Input() errorMessages: { [key: string]: string } = {};
+  @Input() readonly = true;
 
   @Output() onChange = new EventEmitter<any>();
   @Output() onClear = new EventEmitter<void>();

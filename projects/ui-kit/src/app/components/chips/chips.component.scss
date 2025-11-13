@@ -1,4 +1,4 @@
-@import "../shared-demo-styles.scss";
+@use "../shared-demo-styles.scss" as *;
 
 .chips-demo {
   @extend .demo-component;
