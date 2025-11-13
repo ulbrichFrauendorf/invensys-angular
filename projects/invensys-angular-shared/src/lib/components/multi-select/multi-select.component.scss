@@ -15,6 +15,11 @@
     position: relative;
     cursor: pointer;
 
+    // Ensure readonly input has pointer cursor
+    .i-input-text .i-input.readonly {
+      cursor: pointer !important;
+    }
+
     // Chips overlay positioned over the input area
     .i-multi-select-chips-overlay {
       position: absolute;
@@ -74,14 +79,10 @@
     right: 0;
     z-index: 1000;
     border-radius: 4px;
-    max-height: min(
-      200px,
-      calc(100vh - 100px)
-    ); // Ensure it doesn't exceed viewport with safe margin
-    overflow: visible; // Allow scrollbar to be fully visible
+    overflow: visible;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin-top: 4px;
-    margin-bottom: 8px; // Increased bottom margin for better spacing
+    margin-bottom: 8px;
 
     .i-multi-select-filter {
       padding: 8px;

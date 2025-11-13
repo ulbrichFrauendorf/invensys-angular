@@ -1,0 +1,201 @@
+<div class="checkboxes-demo">
+  <header class="demo-header">
+    <h1>Checkbox Components</h1>
+    <p>
+      Versatile checkbox components with full form integration support.
+      Compatible with ngModel and reactive forms with proper accessibility.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Basic Usage -->
+    <app-demo-card
+      title="Basic ngModel Usage"
+      [sourceCode]="codeExamples.basic"
+    >
+      <div class="checkbox-examples">
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="basicChecked"
+            (onChange)="onBasicChange($event)"
+          />
+          <span class="status"
+            >Status: {{ basicChecked ? "Checked" : "Unchecked" }}</span
+          >
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- With Labels -->
+    <app-demo-card
+      title="Checkboxes with Labels"
+      [sourceCode]="codeExamples.withLabel"
+    >
+      <div class="checkbox-examples">
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="checkedWithLabel"
+            label="Accept terms and conditions"
+          />
+        </div>
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="basicChecked"
+            inputId="custom-id"
+            label="Custom input ID"
+          />
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- States -->
+    <app-demo-card title="Checkbox States" [sourceCode]="codeExamples.states">
+      <div class="checkbox-examples">
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="disabledChecked"
+            [disabled]="true"
+            label="Disabled checkbox"
+          />
+        </div>
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="readonlyChecked"
+            [readonly]="true"
+            label="Readonly checkbox"
+          />
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- Sizes -->
+    <app-demo-card title="Checkbox Sizes" [sourceCode]="codeExamples.sizes">
+      <div class="checkbox-examples">
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="smallChecked"
+            size="small"
+            label="Small checkbox"
+          />
+        </div>
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="mediumChecked"
+            size="medium"
+            label="Medium checkbox"
+          />
+        </div>
+        <div class="example-row">
+          <i-checkbox
+            [(ngModel)]="largeChecked"
+            size="large"
+            label="Large checkbox"
+          />
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- FormControl -->
+    <app-demo-card
+      title="Reactive Forms - FormControl"
+      [sourceCode]="codeExamples.formControl"
+    >
+      <div class="checkbox-examples">
+        <div class="example-row">
+          <i-checkbox
+            [formControl]="formControlExample"
+            label="FormControl checkbox"
+          />
+          <span class="status">Value: {{ formControlExample.value }}</span>
+        </div>
+        <div class="example-row">
+          <button
+            class="demo-button"
+            (click)="formControlExample.setValue(!formControlExample.value)"
+          >
+            Toggle via FormControl
+          </button>
+          <button
+            class="demo-button"
+            (click)="formControlExample.disable()"
+            [disabled]="formControlExample.disabled"
+          >
+            Disable
+          </button>
+          <button
+            class="demo-button"
+            (click)="formControlExample.enable()"
+            [disabled]="!formControlExample.disabled"
+          >
+            Enable
+          </button>
+        </div>
+      </div>
+    </app-demo-card>
+
+    <!-- FormGroup -->
+    <app-demo-card
+      title="Reactive Forms - FormGroup"
+      [sourceCode]="codeExamples.formGroup"
+    >
+      <div class="checkbox-examples">
+        <form [formGroup]="userPreferencesForm" (ngSubmit)="onFormSubmit()">
+          <div class="form-section">
+            <h4>User Preferences</h4>
+            <div class="example-row">
+              <i-checkbox
+                formControlName="notifications"
+                label="Email notifications"
+              />
+            </div>
+            <div class="example-row">
+              <i-checkbox
+                formControlName="newsletter"
+                label="Subscribe to newsletter"
+              />
+            </div>
+            <div class="example-row">
+              <i-checkbox
+                formControlName="marketing"
+                label="Marketing communications"
+              />
+            </div>
+            <div class="example-row">
+              <i-checkbox formControlName="analytics" label="Usage analytics" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="demo-button primary">Submit</button>
+            <button type="button" class="demo-button" (click)="selectAll()">
+              Select All
+            </button>
+            <button type="button" class="demo-button" (click)="resetForm()">
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <div class="form-output">
+          <h5>Form Value:</h5>
+          <pre>{{ userPreferencesForm.value | json }}</pre>
+          <h5>Form Status:</h5>
+          <pre>{{ userPreferencesForm.status }}</pre>
+        </div>
+      </div>
+    </app-demo-card>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <h2>Features</h2>
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+      <div class="feature-card">
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</div>

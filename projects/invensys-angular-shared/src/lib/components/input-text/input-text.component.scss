@@ -70,6 +70,12 @@
       cursor: pointer;
     }
 
+    .i-input.readonly {
+      cursor: pointer;
+      user-select: none;
+      caret-color: transparent;
+    }
+
     .i-label {
       position: absolute;
       left: 8px;
@@ -103,6 +109,12 @@
     .i-input.hide-text {
       color: transparent;
       text-shadow: none;
+    }
+
+    .i-input.readonly {
+      cursor: pointer;
+      user-select: none;
+      caret-color: transparent;
     }
 
     .i-input-icon {

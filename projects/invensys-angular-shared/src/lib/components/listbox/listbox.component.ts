@@ -62,6 +62,7 @@ export class IListbox implements ControlValueAccessor {
   @Input() errorMessages: { [key: string]: string } = {};
   @Input() disabled = false;
   @Input() multiple = true;
+  @Input() readonly = true;
 
   @Output() onChange = new EventEmitter<any[] | any>();
   @Output() onClear = new EventEmitter<void>();

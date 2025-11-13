@@ -61,6 +61,7 @@ export class IMultiSelect implements ControlValueAccessor {
   @Input() selectedItemsLabel = '{0} items selected';
   @Input() errorMessages: { [key: string]: string } = {};
   @Input() disabled = false;
+  @Input() readonly = true;
 
   @Output() onChange = new EventEmitter<any[]>();
   @Output() onClear = new EventEmitter<void>();

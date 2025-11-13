@@ -1,4 +1,4 @@
-@import "../shared-demo-styles.scss";
+@use "../shared-demo-styles.scss" as *;
 
 .dialogs-demo {
   @extend .demo-component;

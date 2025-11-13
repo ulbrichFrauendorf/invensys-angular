@@ -30,6 +30,9 @@ export class IInputText implements ControlValueAccessor {
   /** Optional icon name or path to display on the left of the input */
   @Input() icon?: string;
 
+  /** Make the input readonly with pointer cursor */
+  @Input() readonly = false;
+
   value: string | null = null;
   disabled = false;
 

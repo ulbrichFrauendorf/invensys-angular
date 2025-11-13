@@ -19,7 +19,7 @@
       [hideText]="value.length <= maxSelectedLabels"
       [externalInvalid]="showErrors"
       [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
-      readonly
+      [readonly]="readonly"
     >
       <!-- Selected chips overlay (positioned above the input) -->
       @if (value && value.length > 0 && value.length <= maxSelectedLabels) {
