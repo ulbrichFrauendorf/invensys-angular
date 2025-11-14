@@ -1,0 +1,159 @@
+@use "./tree-view.component.theme.scss" as theme;
+
+@include theme.i-tree-view-theme();
+
+.i-tree-view-wrapper {
+  position: relative;
+  overflow: auto;
+
+  .i-tree-view-filter-container {
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .i-tree-view-container {
+    overflow: auto;
+  }
+
+  .i-tree-view-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+    font-size: 14px;
+
+    .pi-spinner {
+      font-size: 16px;
+    }
+  }
+
+  .i-tree-view-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 14px;
+    font-style: italic;
+  }
+}
+
+.i-tree-view-root,
+.i-tree-view-children {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.i-tree-view-children {
+  padding-left: 0;
+}
+
+.i-tree-view-node {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  .i-tree-view-node-content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    min-height: 32px;
+  }
+
+  &.i-tree-view-node--temporary-highlight {
+    .i-tree-view-node-content {
+      animation: highlight-fade 400ms ease-out;
+    }
+  }
+
+  .i-tree-view-toggler {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+
+    &:focus {
+      outline: none;
+    }
+
+    i {
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+  }
+
+  .i-tree-view-toggler-spacer {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .i-tree-view-checkbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+
+    .i-tree-view-partial-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+
+      i {
+        font-size: 10px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .i-tree-view-node-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .i-tree-view-node-label {
+    font-size: 14px;
+    line-height: 1.4;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// Expanded state animations
+.i-tree-view-node.i-tree-view-node--expanded {
+  .i-tree-view-toggler i {
+    transform: rotate(0deg);
+  }
+}
+
+.i-tree-view-node.i-tree-view-node--collapsed {
+  .i-tree-view-toggler i {
+    transform: rotate(-90deg);
+  }
+}
+
+// Node level indentation is handled via inline styles for flexibility
