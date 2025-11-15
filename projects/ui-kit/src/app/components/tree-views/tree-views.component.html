@@ -119,16 +119,10 @@
     <app-demo-card title="Checkbox Selection">
       <p>
         Select nodes using checkboxes. Child selections propagate to parents.
+        The component includes an integrated "Select All" checkbox.
       </p>
 
       <div class="demo-actions">
-        <i-checkbox
-          [(ngModel)]="selectAllChecked"
-          label="Select All"
-          id="select-all-checkbox"
-          (onChange)="onSelectAllChange()"
-        >
-        </i-checkbox>
         <button
           type="button"
           class="demo-btn"
@@ -141,6 +135,7 @@
       <i-tree-view
         [value]="organizationData"
         selectionMode="checkbox"
+        [selectAll]="true"
         [(selection)]="checkboxSelection"
         (onNodeSelect)="onCheckboxNodeSelect($event)"
         (onNodeUnselect)="onCheckboxNodeUnselect($event)"
@@ -264,6 +259,15 @@
               <td>string</td>
               <td>'No data found'</td>
               <td>Message to display when no data</td>
+            </tr>
+            <tr>
+              <td>selectAll</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>
+                Show integrated "Select All" checkbox for checkbox selection
+                mode
+              </td>
             </tr>
           </tbody>
         </table>

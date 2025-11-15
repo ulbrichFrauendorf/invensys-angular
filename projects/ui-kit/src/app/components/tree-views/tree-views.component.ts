@@ -9,7 +9,6 @@ import { JsonPipe } from '@angular/common';
 import {
   ITreeView,
   ITreeNode,
-  ICheckbox,
 } from '../../../../../invensys-angular-shared/src/public-api';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 
@@ -17,7 +16,6 @@ import { DemoCardComponent } from '../demo-card/demo-card.component';
   selector: 'app-tree-views',
   imports: [
     ITreeView,
-    ICheckbox,
     DemoCardComponent,
     FormsModule,
     ReactiveFormsModule,
@@ -221,9 +219,6 @@ export class TreeViewsComponent {
   // Filter example
   filteredTreeData = [...this.basicTreeData];
 
-  // Select all checkbox for checkbox mode
-  selectAllChecked = false;
-
   // Features list
   features = [
     {
@@ -404,12 +399,10 @@ treeData: ITreeNode[] = [
 
   onCheckboxNodeSelect(event: any) {
     console.log('Checkbox node selected:', event.node);
-    this.updateSelectAllState();
   }
 
   onCheckboxNodeUnselect(event: any) {
     console.log('Checkbox node unselected:', event.node);
-    this.updateSelectAllState();
   }
 
   onNodeExpand(event: any) {
@@ -418,30 +411,6 @@ treeData: ITreeNode[] = [
 
   onNodeCollapse(event: any) {
     console.log('Node collapsed:', event.node);
-  }
-
-  onSelectAllChange() {
-    if (this.selectAllChecked) {
-      this.checkboxSelection = this.flattenNodes(this.organizationData);
-    } else {
-      this.checkboxSelection = [];
-    }
-  }
-
-  private updateSelectAllState() {
-    const allNodes = this.flattenNodes(this.organizationData);
-    this.selectAllChecked = this.checkboxSelection.length === allNodes.length;
-  }
-
-  private flattenNodes(nodes: ITreeNode[]): ITreeNode[] {
-    let result: ITreeNode[] = [];
-    nodes.forEach((node) => {
-      result.push(node);
-      if (node.children) {
-        result = result.concat(this.flattenNodes(node.children));
-      }
-    });
-    return result;
   }
 
   // Reset selections
@@ -455,7 +424,6 @@ treeData: ITreeNode[] = [
 
   clearCheckboxSelection() {
     this.checkboxSelection = [];
-    this.selectAllChecked = false;
   }
 
   // Expand/collapse all
@@ -496,6 +464,6 @@ treeData: ITreeNode[] = [
 
   // Helper method to create summaries for multiple nodes
   getMultipleNodesSummary(nodes: ITreeNode[]) {
-    return nodes.map(node => this.getNodeSummary(node));
+    return nodes.map((node) => this.getNodeSummary(node));
   }
 }

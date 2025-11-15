@@ -12,9 +12,20 @@
     >
     </i-input-text>
   </div>
+  } @if (selectAll && selectionMode === 'checkbox') {
+  <div class="i-tree-view-select-all-container">
+    <div class="select-box">
+      <i-checkbox
+        [(ngModel)]="selectAllChecked"
+        [id]="componentId + '-select-all'"
+        [label]="'Select All'"
+        (ngModelChange)="onSelectAllChange()"
+      />
+    </div>
+  </div>
   }
 
-  <div class="i-tree-view-container" [style.height]="scrollHeight">
+  <div class="i-tree-view-container">
     @if (loading) {
     <div class="i-tree-view-loading">
       <i class="pi pi-spin pi-spinner"></i>
@@ -76,8 +87,8 @@
       } @if (selectionMode === 'checkbox') {
       <div class="i-tree-view-checkbox-container">
         <i-checkbox
-          [checked]="isSelected(node)"
-          [indeterminate]="isPartiallySelected(node) && !isSelected(node)"
+          [checked]="isSelected(node) && !isPartiallySelected(node)"
+          [indeterminate]="isPartiallySelected(node)"
           (onChange)="onCheckboxChange($event, node)"
           [id]="getCheckboxId(node)"
           size="small"

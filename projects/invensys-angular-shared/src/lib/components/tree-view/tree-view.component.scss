@@ -3,15 +3,34 @@
 @include theme.i-tree-view-theme();
 
 .i-tree-view-wrapper {
-  padding: 16px 16px 0;
+  padding: 8px 0 0px 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   .i-tree-view-filter-container {
     position: relative;
     margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .i-tree-view-select-all-container {
+    margin-bottom: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    flex-shrink: 0;
+
+    .select-box {
+      padding-left: 10px;
+    }
   }
 
   .i-tree-view-container {
     overflow: auto;
+    flex: 1;
+    min-height: 0;
+    box-sizing: border-box;
   }
 
   .i-tree-view-loading {
