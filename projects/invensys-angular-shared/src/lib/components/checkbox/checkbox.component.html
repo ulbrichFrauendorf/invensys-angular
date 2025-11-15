@@ -12,7 +12,7 @@
     (click)="toggle()"
     [attr.id]="id || componentId"
     role="checkbox"
-    [attr.aria-checked]="checked"
+    [attr.aria-checked]="indeterminate ? 'mixed' : checked"
     [attr.aria-disabled]="disabled"
     [attr.aria-readonly]="readonly"
     [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
@@ -20,10 +20,14 @@
     (keydown.space)="$event.preventDefault(); toggle()"
     (keydown.enter)="$event.preventDefault(); toggle()"
   >
+    @if (!checked && indeterminate) {
+    <i class="pi pi-minus i-checkbox-icon"></i>
+    } @if (!indeterminate) {
     <i
       class="pi pi-check i-checkbox-icon"
       [style.opacity]="checked ? '1' : '0'"
     ></i>
+    }
   </div>
   @if (label) {
   <label

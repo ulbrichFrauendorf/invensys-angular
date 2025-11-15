@@ -34,7 +34,7 @@ export class IInputText implements ControlValueAccessor {
   @Input() readonly = false;
 
   value: string | null = null;
-  disabled = false;
+  @Input() disabled = false; // allow external disabling
 
   componentId = UniqueComponentId('i-input-text');
 
@@ -118,14 +118,5 @@ export class IInputText implements ControlValueAccessor {
     }
   }
 
-  isImageIcon(): boolean {
-    return !!(
-      this.icon &&
-      (this.icon.endsWith('.svg') ||
-        this.icon.endsWith('.png') ||
-        this.icon.endsWith('.jpg') ||
-        this.icon.endsWith('.jpeg') ||
-        this.icon.startsWith('data:'))
-    );
-  }
+  // PrimeIcon-only: icon should be a class like 'pi pi-search'
 }

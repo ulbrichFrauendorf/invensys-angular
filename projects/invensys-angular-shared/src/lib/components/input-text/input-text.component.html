@@ -8,32 +8,32 @@
   <div
     [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'"
     class="i-input-container"
+    [class.has-icon]="icon"
   >
-    @if (icon) {
-    <span class="i-input-icon" [attr.aria-hidden]="true">
-      @if (isImageIcon()) {
-      <img [src]="icon" [attr.alt]="''" width="16" height="16" />
-      } @else {
-      <i class="material-icons" [attr.aria-hidden]="true">{{ icon }}</i>
+    <div class="i-input-icon-wrapper">
+      @if (icon) {
+      <span class="i-input-icon" [attr.aria-hidden]="true">
+        <i [class]="icon" [attr.aria-hidden]="true"></i>
+      </span>
       }
-    </span>
-    }
-    <input
-      [id]="id || componentId"
-      [type]="type"
-      [disabled]="disabled"
-      [readonly]="readonly"
-      [value]="hideText ? '' : value || ''"
-      (input)="handleInput($event)"
-      (blur)="touch()"
-      [placeholder]="useFloatLabel ? ' ' : placeholder || label"
-      class="i-input"
-      [class.hide-text]="hideText"
-      [class.readonly]="readonly"
-      [iTooltip]="showErrors ? getErrorMessage() || '' : ''"
-      tooltipPosition="below"
-      [tooltipDelay]="100"
-    />
+      <input
+        [id]="id || componentId"
+        [type]="type"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [value]="hideText ? '' : value || ''"
+        (input)="handleInput($event)"
+        (blur)="touch()"
+        [placeholder]="useFloatLabel ? ' ' : placeholder || label"
+        class="i-input"
+        [class.has-icon]="icon"
+        [class.hide-text]="hideText"
+        [class.readonly]="readonly"
+        [iTooltip]="showErrors ? getErrorMessage() || '' : ''"
+        tooltipPosition="below"
+        [tooltipDelay]="100"
+      />
+    </div>
     @if (useFloatLabel) {
     <label
       [for]="id || componentId"

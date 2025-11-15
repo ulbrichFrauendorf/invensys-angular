@@ -59,6 +59,7 @@ export class ITreeView implements OnInit, OnChanges {
   @Input() validateDrop = false;
   @Input() propagateSelectionUp = true;
   @Input() propagateSelectionDown = true;
+  @Input() selectAll = false; // Show select all checkbox for checkbox mode
 
   @Output() onNodeSelect = new EventEmitter<{
     originalEvent: Event;
@@ -81,17 +82,23 @@ export class ITreeView implements OnInit, OnChanges {
   componentId = UniqueComponentId('i-tree-view-');
   filteredValue: ITreeNode[] = [];
   filterValue = '';
+  selectAllChecked = false;
   private temporaryHighlighted = new Set<ITreeNode>();
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.updateSerializedValue();
+    this.updateSelectAllState();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['value']) {
       this.updateSerializedValue();
+      this.updateSelectAllState();
+    }
+    if (changes['selection']) {
+      this.updateSelectAllState();
     }
   }
 
@@ -199,12 +206,16 @@ export class ITreeView implements OnInit, OnChanges {
       return false;
     }
 
+    const selection = Array.isArray(this.selection) ? this.selection : [];
     const selectedChildren = node.children.filter((child) =>
-      this.isSelected(child)
+      selection.includes(child)
     );
+    const totalChildren = node.children.length;
+
+    // Node is partially selected when some (but not all) children are selected
+    // This will trigger the indeterminate state in the checkbox
     return (
-      selectedChildren.length > 0 &&
-      selectedChildren.length < node.children.length
+      selectedChildren.length > 0 && selectedChildren.length < totalChildren
     );
   }
 
@@ -274,6 +285,7 @@ export class ITreeView implements OnInit, OnChanges {
     }
 
     this.selection = selection;
+    this.updateSelectAllState();
     this.selectionChange.emit(this.selection);
   }
 
@@ -322,13 +334,20 @@ export class ITreeView implements OnInit, OnChanges {
 
   propagateUp(node: ITreeNode, selection: ITreeNode[]) {
     if (node.children) {
-      const selectedChildrenCount = node.children.filter(
-        (child) => this.isSelected(child) || selection.includes(child)
-      ).length;
+      // Count selected children based on the working selection array
+      const selectedChildren = node.children.filter((child) =>
+        selection.includes(child)
+      );
+      const totalChildren = node.children.length;
 
-      if (selectedChildrenCount === node.children.length) {
+      if (selectedChildren.length === totalChildren) {
+        // All children selected - select parent (will show as fully checked)
+        this.selectNode(node, selection);
+      } else if (selectedChildren.length > 0) {
+        // Some children selected - select parent (will show as indeterminate)
         this.selectNode(node, selection);
       } else {
+        // No children selected - unselect parent
         this.unselectNode(node, selection);
       }
 
@@ -393,5 +412,37 @@ export class ITreeView implements OnInit, OnChanges {
       .replace(/^-+|-+$/g, '')
       .toLowerCase();
     return `${this.componentId}-checkbox-${safeKey}`;
+  }
+
+  // Select All functionality
+  onSelectAllChange() {
+    if (this.selectionMode !== 'checkbox') return;
+
+    if (this.selectAllChecked) {
+      this.selection = this.flattenNodes(this.filteredValue);
+    } else {
+      this.selection = [];
+    }
+    this.selectionChange.emit(this.selection);
+  }
+
+  private flattenNodes(nodes: ITreeNode[]): ITreeNode[] {
+    let result: ITreeNode[] = [];
+    nodes.forEach((node) => {
+      result.push(node);
+      if (node.children) {
+        result = result.concat(this.flattenNodes(node.children));
+      }
+    });
+    return result;
+  }
+
+  updateSelectAllState() {
+    if (this.selectionMode !== 'checkbox' || !this.selectAll) return;
+
+    const allNodes = this.flattenNodes(this.filteredValue);
+    const selectedNodes = Array.isArray(this.selection) ? this.selection : [];
+    this.selectAllChecked =
+      allNodes.length > 0 && selectedNodes.length === allNodes.length;
   }
 }

@@ -17,6 +17,7 @@
             [label]="input.label"
             [type]="input.type"
             [formControlName]="input.formControlName"
+            icon="pi pi-search"
           />
           }
         </div>
@@ -74,6 +75,31 @@
         >
           Submit Fluid Form
         </i-button>
+      </form>
+    </app-demo-card>
+
+    <!-- Disabled State Examples -->
+    <app-demo-card title="Disabled Inputs">
+      <form class="demo-form disabled-examples">
+        <div class="input-grid">
+          <i-input-text
+            label="Disabled Text"
+            placeholder="Cannot edit"
+            [disabled]="true"
+          />
+          <i-input-text
+            label="Disabled With Icon"
+            [icon]="'pi pi-search'"
+            placeholder="Search disabled"
+            [disabled]="true"
+          />
+          <i-input-text
+            label="Disabled Float"
+            [useFloatLabel]="true"
+            placeholder="Floating label"
+            [disabled]="true"
+          />
+        </div>
       </form>
     </app-demo-card>
 
