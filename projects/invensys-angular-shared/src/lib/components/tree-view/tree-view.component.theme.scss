@@ -47,10 +47,6 @@
         background-color: colors.$color-surface-hover;
         color: colors.$color-text-primary;
       }
-
-      &:focus {
-        box-shadow: colors.$color-box-shadow;
-      }
     }
 
     .i-tree-view-checkbox-container {

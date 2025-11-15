@@ -29,6 +29,7 @@ export class ICheckbox implements ControlValueAccessor {
   @Input() disabled = false;
   @Input() readonly = false;
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() indeterminate = false; // visual tri-state support
 
   @Input()
   set checked(value: boolean) {
@@ -48,8 +49,13 @@ export class ICheckbox implements ControlValueAccessor {
 
   toggle() {
     if (this.disabled || this.readonly) return;
-
-    this._checked = !this._checked;
+    // When indeterminate, treat next toggle as selecting the checkbox
+    if (this.indeterminate && !this._checked) {
+      this.indeterminate = false;
+      this._checked = true;
+    } else {
+      this._checked = !this._checked;
+    }
     this.onChangeCallback(this._checked);
     this.onTouchedCallback();
 

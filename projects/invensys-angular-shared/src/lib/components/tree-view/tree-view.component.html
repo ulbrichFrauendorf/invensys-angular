@@ -77,17 +77,13 @@
       <div class="i-tree-view-checkbox-container">
         <i-checkbox
           [checked]="isSelected(node)"
+          [indeterminate]="isPartiallySelected(node) && !isSelected(node)"
           (onChange)="onCheckboxChange($event, node)"
           [id]="getCheckboxId(node)"
           size="small"
           tabindex="-1"
         >
         </i-checkbox>
-        @if (isPartiallySelected(node) && !isSelected(node)) {
-        <div class="i-tree-view-partial-overlay">
-          <i class="pi pi-minus"></i>
-        </div>
-        }
       </div>
       }
 
