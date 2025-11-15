@@ -11,6 +11,7 @@ import { ChipsComponent } from './components/chips/chips.component';
 import { ListboxesComponent } from './components/listboxes/listboxes.component';
 import { WhispersComponent } from './components/whispers/whispers.component';
 import { CheckboxesComponent } from './components/checkboxes/checkboxes.component';
+import { TreeViewsComponent } from './components/tree-views/tree-views.component';
 
 export const routes: Routes = [
   { path: 'buttons', component: ButtonsComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'multi-selects', component: MultiSelectsComponent },
   { path: 'chips', component: ChipsComponent },
   { path: 'listboxes', component: ListboxesComponent },
+  { path: 'tree-views', component: TreeViewsComponent },
   { path: 'whispers', component: WhispersComponent },
   { path: '', redirectTo: '/input-texts', pathMatch: 'full' },
 ];

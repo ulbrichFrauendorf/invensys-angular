@@ -15,6 +15,7 @@
     [attr.aria-checked]="checked"
     [attr.aria-disabled]="disabled"
     [attr.aria-readonly]="readonly"
+    [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
     tabindex="0"
     (keydown.space)="$event.preventDefault(); toggle()"
     (keydown.enter)="$event.preventDefault(); toggle()"
@@ -25,7 +26,11 @@
     ></i>
   </div>
   @if (label) {
-  <label [for]="id || componentId" class="i-checkbox-label" (click)="toggle()">
+  <label
+    [id]="(id || componentId) + '-label'"
+    class="i-checkbox-label"
+    (click)="toggle()"
+  >
     {{ label }}
   </label>
   }

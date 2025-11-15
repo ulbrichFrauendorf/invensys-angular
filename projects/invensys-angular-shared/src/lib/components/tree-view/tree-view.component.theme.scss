@@ -1,0 +1,72 @@
+@use "../../themes/color-variables.scss" as colors;
+
+@mixin i-tree-view-theme() {
+  .i-tree-view-wrapper {
+    background-color: colors.$color-surface-ground;
+    color: colors.$color-text-primary;
+    border: 1px solid colors.$color-surface-border;
+
+    .i-tree-view-loading {
+      color: colors.$color-text-secondary;
+
+      .pi-spinner {
+        color: colors.$color-primary;
+      }
+    }
+
+    .i-tree-view-empty {
+      color: colors.$color-text-secondary;
+    }
+  }
+
+  .i-tree-view-node {
+    .i-tree-view-node-content {
+      &:hover {
+        background-color: colors.$color-surface-hover;
+      }
+    }
+
+    &.i-tree-view-node--selected {
+      .i-tree-view-node-content {
+        background-color: colors.$color-surface-hover;
+        border-color: colors.$color-surface-border;
+      }
+    }
+
+    &.i-tree-view-node--temporary-highlight {
+      .i-tree-view-node-content {
+        background-color: colors.$color-surface-hover;
+        border-color: colors.$color-surface-border;
+      }
+    }
+
+    .i-tree-view-toggler {
+      color: colors.$color-text-secondary;
+
+      &:hover {
+        background-color: colors.$color-surface-hover;
+        color: colors.$color-text-primary;
+      }
+
+      &:focus {
+        box-shadow: colors.$color-box-shadow;
+      }
+    }
+
+    .i-tree-view-checkbox-container {
+      .i-tree-view-partial-overlay {
+        i {
+          color: colors.$color-primary;
+        }
+      }
+    }
+
+    .i-tree-view-node-icon {
+      color: colors.$color-text-secondary;
+    }
+
+    .i-tree-view-node-label {
+      color: colors.$color-text-primary;
+    }
+  }
+}
